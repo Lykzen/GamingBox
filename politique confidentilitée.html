@@ -2,13 +2,13 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compte - Forum</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politique de Confidentialité - Forum</title>
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         * {
             box-sizing: border-box;
@@ -23,23 +23,18 @@
             background-position: center;
             background-attachment: fixed;
             color: #fff;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            /* Empêche la barre de défilement horizontale */
         }
 
         header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            background-color: rgba(0, 0, 0, 0.6);
             font-size: 32px;
-            font-weight: 600;
-            width: 100%;
+            font-weight: 700;
         }
 
         .orange-line {
@@ -51,10 +46,8 @@
         nav {
             display: flex;
             justify-content: center;
-            align-items: center;
             background-color: rgba(30, 30, 40, 0.9);
             padding: 15px 0;
-            width: 100%;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
@@ -71,163 +64,71 @@
             color: #ff6600;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            max-width: 450px;
-            width: 100%;
-            margin: 80px auto;
-            font-family: 'Roboto', sans-serif;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        h2 {
-            margin-bottom: 25px;
-            font-size: 26px;
-            text-align: center;
-            color: #333;
-            font-weight: 600;
-        }
-
-        label {
-            font-weight: 500;
-            display: block;
-            margin: 10px 0 5px;
-            color: #333;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 15px;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            input,
-            button {
-                font-size: 14px;
-            }
-
-            .password-container input {
-                font-size: 14px;
-            }
-        }
-
-        /* Style du container de texte */
         .content {
             display: flex;
-            padding: 20px;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            flex: 1;
         }
 
         .text-box {
-            width: 60%;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            color: #222;
+            text-align: left;
         }
 
+        .text-box h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #222;
+        }
 
+        .text-box p,
+        .text-box ul {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .text-box ul {
+            padding-left: 20px;
+        }
+
+        .text-box ul li {
+            margin-bottom: 8px;
+        }
 
         footer {
-            background-color: #333;
+            background-color: #222;
             color: white;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Style pour le bandeau de cookies */
-        #cookie-consent-banner {
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 15px;
-            text-align: center;
+            padding: 12px;
             font-size: 14px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
         }
 
-        #cookie-consent-banner a {
-            color: #aad4e3;
-            text-decoration: none;
-        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .text-box {
+                padding: 20px;
+                font-size: 15px;
+            }
 
-        #accept-cookies {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        /* Style du container de texte */
-        .text-box {
-            width: 60%;
-            background-color: rgba(255, 255, 255, 0.9);
-            /* Gris très clair */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
-            color: #000;
-            /* Texte noir */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            /* Centrer verticalement */
-            align-items: center;
-            /* Centrer horizontalement */
-            text-align: center;
-            /* Centrer le texte à l'intérieur */
-        }
-
-        /* Container principal pour centrer le texte et l'image */
-        .content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-            /* Disposition côte à côte */
-            width: 100%;
-            height: auto;
+            .text-box h2 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Politique de Confidentialitée</h1>
+        Politique de Confidentialité
     </header>
 
     <div class="orange-line"></div>
@@ -236,9 +137,7 @@
         <a href="index.html">Accueil</a>
     </nav>
 
-
     <div class="content">
-        <!-- Section texte avec case à bord de page -->
         <div class="text-box">
             <h2>Introduction</h2>
             <p>Votre vie privée est importante pour nous. Cette politique de confidentialité explique comment nous
@@ -260,13 +159,8 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        &copy; 2025 GamingBox. Tous droits réservés.
     </footer>
-
-
-    <script>
-
-    </script>
 </body>
 
 </html>
