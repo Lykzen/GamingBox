@@ -5,32 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Présentation et Notation des Jeux</title>
+    <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
     <style>
         /* Styles de base pour la mise en page */
-        body {
-            font-family: 'Poppins', sans-serif;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
             background-color: #1e1e2f;
             background-image: url('images-html/black-prism-concept-ai-generated.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #e0e0e0;
-            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Header modernisé */
         header {
             background-color: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
-            padding: 20px 30px;
+            padding: 20px 15px;
             text-align: center;
-            font-size: 26px;
+            border-bottom: 3px solid #ff6600;
+        }
+
+        header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border-bottom: 3px solid #ff6600;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
         /* Navigation avec effets */
@@ -39,7 +55,7 @@
             justify-content: center;
             align-items: center;
             background-color: rgba(30, 30, 40, 0.9);
-            padding: 12px 0;
+            padding: 12px 15px;
             width: 100%;
             position: sticky;
             top: 0;
@@ -51,7 +67,7 @@
             color: #e0e0e0;
             text-decoration: none;
             margin: 0 25px;
-            font-size: 18px;
+            font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
         }
@@ -62,83 +78,59 @@
             transform: scale(1.05);
         }
 
-        /* Barre de recherche améliorée */
-        .search-container {
-            display: flex;
-            align-items: center;
-            background-color: #333;
-            padding: 8px 20px;
-            border-radius: 30px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .search-container input {
-            border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
-            outline: none;
-            background-color: #fff;
-            font-size: 16px;
-            flex-grow: 1;
-        }
-
-        .search-container button {
-            border: none;
-            background: none;
-            color: #ff6600;
-            cursor: pointer;
-            font-size: 20px;
-        }
-
-        .search-container button:hover {
-            color: #ffffff;
-        }
-
         /* Contenu principal */
         main {
-            padding: 40px;
+            flex: 1;
+            padding: 20px 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         section {
             margin-bottom: 30px;
         }
 
-        /* Footer stylisé, mais sans position fixed */
-        footer {
-            background-color: rgba(20, 20, 30, 0.9);
-            color: #e0e0e0;
-            text-align: center;
-            padding: 15px;
+        .container {
             width: 100%;
-            border-top: 3px solid #ff6600;
         }
 
-        /* Style des jeux */
-        .game {
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 30px;
-            border: 1px solid #444;
-            border-radius: 10px;
-            overflow: hidden;
-            background-color: #2a2a3a;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .game img {
-            max-width: 200px;
+        .main-image {
+            max-width: 100%;
             height: auto;
             border-radius: 10px;
-        }
-
-        .game-details {
-            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
         .rating {
             font-weight: bold;
             color: #ff6600;
-            font-size: 20px;
+            font-size: clamp(18px, 3vw, 24px);
+            margin: 20px 0;
+        }
+
+        /* Style pour les titres */
+        h2,
+        h3 {
+            color: rgb(143, 137, 137);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Premier paragraphe avec le nouveau style */
+        .first-paragraph {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            line-height: 1.6;
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 1000px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: justify;
+            color: #333;
         }
 
         /* Petites images avec disposition moderne */
@@ -160,38 +152,38 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             background-color: #fff;
             flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .small-images div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .small-images img {
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
+            width: 300px;
+            height: 150px;
         }
 
         .small-images div p {
             text-align: center;
             margin-top: 10px;
             font-weight: bold;
+            color: #000;
         }
 
-        /* Nouveau style pour le premier paragraphe */
-        .first-paragraph {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin: 30px auto;
-            padding: 20px 30px;
-            max-width: 1000px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: justify;
-        }
-
-        /* Conteneur de démonstration */
-        .demo {
+        /* Footer stylisé */
+        footer {
+            background-color: rgba(20, 20, 30, 0.9);
+            color: #e0e0e0;
             text-align: center;
-            margin-top: 50px;
+            padding: 15px;
+            width: 100%;
+            border-top: 3px solid #ff6600;
+            margin-top: auto;
         }
 
         /* Styles généraux des liens */
@@ -204,7 +196,6 @@
             transition: all 0.3s ease-in-out;
         }
 
-        /* Animation lors du survol des liens */
         a::after {
             content: "";
             position: absolute;
@@ -224,114 +215,163 @@
             width: 100%;
         }
 
-        /* MEDIA QUERIES POUR L'ADAPTATION MOBILE */
+        /* MEDIA QUERIES AMÉLIORÉES */
 
-        /* Pour les petits écrans (tablettes et téléphones) */
+        /* Tablettes et écrans moyens */
         @media (max-width: 768px) {
+            body {
+                background-attachment: scroll;
+            }
+
             header {
-                padding: 12px;
+                padding: 15px 10px;
             }
 
             nav {
                 flex-direction: column;
-                padding: 12px 0;
+                padding: 15px 10px;
+                gap: 10px;
             }
 
             nav a {
-                margin: 6px 0;
+                margin: 5px 0;
+                font-size: 16px;
             }
 
-            .game {
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 20px;
+            main {
+                padding: 15px 10px;
             }
 
-            .game img {
-                max-width: 100%;
-                margin-bottom: 15px;
+            .main-image {
+                width: 100%;
+                height: auto;
+                max-width: 500px;
             }
 
             .small-images {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
             }
 
             .small-images div {
                 width: 100%;
-                height: auto;
+                height: 300px;
+            }
+
+            .small-images img {
+                width: 100%;
+                height: 150px;
             }
 
             .first-paragraph {
                 padding: 15px;
-                font-size: 1.1em;
-                max-width: 100%;
+                margin: 20px 10px;
+                text-align: left;
             }
 
-            .search-container {
-                flex-direction: row;
-                justify-content: space-between;
-                padding: 12px 5px;
-                width: 100%;
-            }
-
-            .search-container input {
-                flex-grow: 1;
+            .rating {
+                font-size: 20px;
             }
         }
 
-        /* Pour les très petits écrans (mobiles très petits ou anciens) */
+        /* Smartphones */
         @media (max-width: 480px) {
-            nav {
-                padding: 6px 0;
+            header {
+                padding: 12px 8px;
             }
 
-            .search-container {
-                flex-direction: column;
+            header h1 {
+                font-size: 1.3rem;
+                letter-spacing: 1px;
+            }
+
+            nav {
+                padding: 12px 8px;
+            }
+
+            main {
+                padding: 12px 8px;
             }
 
             .small-images {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
 
-            .game img {
+            .small-images div {
+                width: 100%;
+                height: 300px;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .small-images img {
+                width: 100%;
+                height: 150px;
+            }
+
+            .first-paragraph {
+                padding: 12px;
+                margin: 15px 5px;
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .main-image {
                 max-width: 100%;
-                height: auto;
+                margin: 0 auto;
             }
 
             footer {
                 font-size: 0.9em;
-                padding: 10px;
+                padding: 12px;
             }
         }
 
-        /* Le contenu principal (main) occupe toute la hauteur restante */
-        main {
-            flex-grow: 1;
-            padding: 20px;
-            background-image: "images-html/black-prism-concept-ai-generated.jpg";
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Très petits écrans */
+        @media (max-width: 320px) {
+            header h1 {
+                font-size: 1.1rem;
+            }
+
+            .small-images div {
+                width: 100%;
+                height: 300px;
+                max-width: 280px;
+            }
+
+            .small-images img {
+                width: 100%;
+                height: 150px;
+            }
+
+            .first-paragraph {
+                padding: 10px;
+                margin: 10px 2px;
+                font-size: 0.9rem;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
         }
 
-        /* Le header reste en haut */
-        header {
-            background-color: #1a2530;
-            color: white;
-            width: 100%;
-            padding: 30px 0;
-            text-align: center;
-            /* Responsif */
-        }
+        /* Grands écrans */
+        @media (min-width: 1200px) {
+            main {
+                padding: 40px 20px;
+            }
 
-        /* Le footer reste en bas */
-        footer {
-            background-color: #1a2530;
-            color: white;
-            width: 100%;
-            padding: 15px 0;
-            text-align: center;
-            font-size: 16px;
+            .small-images {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 1200px;
+                margin: 30px auto 0;
+            }
+
+            .first-paragraph {
+                max-width: 1000px;
+                padding: 30px;
+            }
         }
     </style>
 

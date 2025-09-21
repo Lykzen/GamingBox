@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GamingBox</title>
+    <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles de base pour la mise en page */
         body {
@@ -209,7 +212,12 @@
 
         /* Cacher les éléments lorsque la recherche est active */
         .hidden {
-            display: none;
+            display: none !important;
+        }
+
+        /* Style pour les éléments cachés lors de la recherche */
+        .search-hidden {
+            display: none !important;
         }
 
         /* Hauteur complète de la page */
@@ -301,6 +309,18 @@
         /* Lors de la recherche active, les résumés des jeux auront une couleur de texte blanche */
         .search-active {
             color: white !important;
+        }
+
+        /* Style pour le message "Aucun jeu trouvé" */
+        .no-results {
+            text-align: center;
+            color: #ccc;
+            font-size: 18px;
+            margin: 40px 0;
+            padding: 20px;
+            background-color: rgba(42, 42, 58, 0.5);
+            border-radius: 10px;
+            border: 1px solid #444;
         }
 
         /* Ajout de styles responsives pour garantir la même mise en page sur mobile */
@@ -438,6 +458,7 @@
             }
         }
     </style>
+</head>
 
 <body>
     <!-- En-tête du site web -->
@@ -445,7 +466,6 @@
         <h1>GamingBox : Présentation et Notation</h1>
         <p>Découvrez les jeux populaires et leur notation objective !</p>
     </header>
-
 
     <!-- Barre de navigation -->
     <nav>
@@ -461,54 +481,21 @@
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Rechercher..." onkeyup="searchGames()">
         </div>
-
     </nav>
-
-    <head>
-        <!-- Cookie Consent Banner -->
-        <div id="cookie-consent-banner"
-            style="position: fixed; bottom: 0; left: 0; right: 0; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 15px; text-align: center; font-size: 14px; z-index: 9999;">
-            <p>
-                Nous utilisons des cookies pour améliorer votre expérience. En naviguant sur notre site, vous acceptez
-                notre politique de cookies.
-                <a href="politique confidentilitée.html" style="color: #ff6600;">En savoir plus</a>
-            </p>
-            <button id="accept-cookies"
-                style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; cursor: pointer;">Accepter</button>
-        </div>
-
-
-
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </head>
-    <!-- Ajout du lien vers le fichier CSS -->
-    <link rel="stylesheet" href="styles.css">
-
-    <div id="gameList">
-        <!-- Exemples d'éléments de jeux -->
-
-        <h3></h3>
-    </div>
-
-    <h3></h3>
-    </div>
-
-    <h3></h3>
-    </div>
-    </div>
 
     <!-- Contenu principal -->
     <main>
         <!-- Section "Jeux" -->
-        <section id="ganb mes">
+        <section id="games">
             <h2 style="color: whitesmoke;">Les Jeux :</h2>
 
+            <!-- Message pour aucun résultat -->
+            <div id="noResults" class="no-results" style="display: none;">
+                Aucun jeu trouvé pour votre recherche.
+            </div>
+
             <!-- Exemple de jeu 1 : Ark -->
-            <div class="game">
+            <div class="game" data-game-name="ark survival evolved">
                 <img src="images-html/ark-html.jpg" width="300" height="150" alt="Image de ARK">
                 <div class="game-details">
                     <h3><a href="page-ark.html" style="color: inherit; text-decoration: none;">ARK : Survival
@@ -535,24 +522,10 @@
                 <button onclick="removeVote('Ark')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
             <!-- Exemple de jeu 2 : The Legend of Zelda: Breath of the Wild -->
-            <div class="game">
+            <div class="game" data-game-name="the legend of zelda breath of the wild botw">
                 <img src="images-html/Breath-of-the-Wild-html.webp" width="300" height="150"
                     alt="Image de Breath of the Wild">
                 <div class="game-details">
@@ -580,24 +553,10 @@
                 <button onclick="removeVote('The Legend of Zelda: Breath of the Wild')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
             <!-- Exemple de jeu 3 : Counter-Strike 2 -->
-            <div class="game">
+            <div class="game" data-game-name="counter-strike 2 cs2">
                 <img src="images-html/counter-strike-2-html.jpg" width="300" height="150"
                     alt="Image de Counter-Strike 2">
                 <div class="game-details">
@@ -624,24 +583,10 @@
                 <button onclick="removeVote('Counter-Strike 2')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
             <!-- Exemple de jeu 4 : Dark Souls -->
-            <div class="game">
+            <div class="game" data-game-name="dark souls">
                 <img src="images-html/ds-html.jpg" width="300" height="150" alt="Image de Dark Souls">
                 <div class="game-details">
                     <h3><a href="page-dark-souls.html" style="color: inherit; text-decoration: none;">Dark Souls</a>
@@ -662,28 +607,14 @@
                 <button onclick="rate('Dark Souls', 3)">3</button>
                 <button onclick="rate('Dark Souls', 4)">4</button>
                 <button onclick="rate('Dark Souls', 5)">5</button>
-                <p style="color: #ccc;">Note moyenne: <span id="Dark Souls">0</span></p>
+                <p style="color: #ccc;">Note moyenne: <span id="average-Dark Souls">0</span></p>
                 <button onclick="removeVote('Dark Souls')">Enlever ma note</button>
             </div>
-
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
 
             <br><br><br>
 
             <!-- Exemple de jeu 5 : Elden Ring -->
-            <div class="game">
+            <div class="game" data-game-name="elden ring">
                 <img src="images-html/elden-ring-html.jpg" width="300" height="150" alt="Image de Elden Ring">
                 <div class="game-details">
                     <h3><a href="page-elden_ring.html" style="color: inherit; text-decoration: none;">Elden Ring</a>
@@ -704,29 +635,14 @@
                 <button onclick="rate('EldenRing', 3)">3</button>
                 <button onclick="rate('EldenRing', 4)">4</button>
                 <button onclick="rate('EldenRing', 5)">5</button>
-                <p style="color: #ccc;">Note moyenne: <span id="EldenRing">0</span></p>
+                <p style="color: #ccc;">Note moyenne: <span id="average-EldenRing">0</span></p>
                 <button onclick="removeVote('EldenRing')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
-
             <!-- Exemple de jeu 6 : FIFA 25 -->
-            <div class="game">
+            <div class="game" data-game-name="fifa 25 fc25">
                 <img src="images-html/FC25-html.jpg" width="300" height="150" alt="Image de FIFA 25">
                 <div class="game-details">
                     <h3><a href="page-fifa-25.html" style="color: inherit; text-decoration: none;">FIFA 25</a></h3>
@@ -750,25 +666,10 @@
                 <button onclick="removeVote('fc25')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
-
             <!-- Exemple de jeu 7 : God of War -->
-            <div class="game">
+            <div class="game" data-game-name="god of war">
                 <img src="images-html/god of war 2018-html.jpg" width="300" height="150" alt="Image de God of War">
                 <div class="game-details">
                     <h3><a href="page god of war 2018.html" style="color: inherit; text-decoration: none;">God of
@@ -794,31 +695,16 @@
                 <button onclick="removeVote('gow')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
-
             <!-- Exemple de jeu 8 : Hollow Knight -->
-            <div class="game">
+            <div class="game" data-game-name="hollow knight">
                 <img src="images-html/hollow knight-html.jpg" width="300" height="150" alt="Image de Hollow Knight">
                 <div class="game-details">
                     <h3><a href="page hollow knight.html" style="color: inherit; text-decoration: none;">Hollow
                             Knight</a></h3>
                     <p>Un jeu d'action-aventure en 2D dans un monde souterrain où vous incarnez un chevalier explorant
-                        les ruines d’Hallownest, affrontant des ennemis coriaces et découvrant des secrets captivants.
+                        les ruines d'Hallownest, affrontant des ennemis coriaces et découvrant des secrets captivants.
                     </p>
                     <p class="rating">Note : 4.7/5</p>
                 </div>
@@ -840,8 +726,41 @@
 
             <br><br><br>
 
+            <!-- Exemple de jeu 20 : Hollow Knight : SILKSONG -->
+            <div class="game" data-game-name="hollow knight silksong">
+                <img src="images-html/silksong-html.jpg" width="300" height="150"
+                    alt="Image de Hollow Knight : SILKSONG">
+                <div class="game-details">
+                    <h3><a href="silksong.html" style="color: inherit; text-decoration: none;">Hollow Knight:
+                            Silksong</a></h3>
+                    <p>Un jeu d'action-aventure en 2D dans un royaume mystérieux appelé Pharloom, où vous incarnez
+                        Hornet,
+                        une princesse guerrière agile qui affronte des ennemis redoutables, relève des défis exigeants
+                        et découvre les secrets enfouis de ce monde vertical et dangereux.
+
+                    </p>
+                    <p class="rating">Note : 4.7/5</p>
+                </div>
+            </div>
+
+            <!-- Bouton flèche pour afficher/masquer les notes -->
+            <button class="toggle-rating" onclick="toggleRating('Hollow Knight Silksong')">&#9650;</button>
+
+            <!-- Section de notation masquée par défaut -->
+            <div class="rating-container" id="rating-Hollow Knight Silksong" style="display: none;">
+                <button onclick="rate('hollow_knight_silksong', 1)">1</button>
+                <button onclick="rate('hollow_knight_silksong', 2)">2</button>
+                <button onclick="rate('hollow_knight_silksong', 3)">3</button>
+                <button onclick="rate('hollow_knight_silksong', 4)">4</button>
+                <button onclick="rate('hollow_knight_silksong', 5)">5</button>
+                <p style="color: #ccc;">Note moyenne: <span id="average-hollow_knight_silksong">0</span></p>
+                <button onclick="removeVote('hollow_knight_silksong')">Enlever ma note</button>
+            </div>
+
+            <br><br><br>
+
             <!-- Exemple de jeu 9 : Immortals Fenyx Rising -->
-            <div class="game">
+            <div class="game" data-game-name="immortals fenyx rising ifr">
                 <img src="images-html/Immortals-Fenyx-Rising-html.webp" width="300" height="150"
                     alt="Image de Immortals Fenyx Rising">
                 <div class="game-details">
@@ -871,7 +790,7 @@
             <br><br><br>
 
             <!-- Exemple de jeu 10 : Minecraft -->
-            <div class="game">
+            <div class="game" data-game-name="minecraft mc">
                 <img src="images-html/minecraft-html.webp" width="300" height="150" alt="Image de Minecraft">
                 <div class="game-details">
                     <h3><a href="mincraft.html" style="color: inherit; text-decoration: none;">Minecraft</a></h3>
@@ -898,7 +817,7 @@
             <br><br><br>
 
             <!-- Exemple de jeu 11 : No Man's Sky -->
-            <div class="game">
+            <div class="game" data-game-name="no man's sky no mans sky">
                 <img src="images-html/no man s sky-html.jpg" width="300" height="150" alt="Image de No Man's Sky">
                 <div class="game-details">
                     <h3><a href="no man's sky.html" style="color: inherit; text-decoration: none;">No Man's Sky</a></h3>
@@ -925,7 +844,7 @@
             <br><br><br>
 
             <!-- Exemple de jeu 12 : Overwatch -->
-            <div class="game">
+            <div class="game" data-game-name="overwatch">
                 <img src="images-html/overwatche -html.webp" width="300" height="150" alt="Image de Overwatch">
                 <div class="game-details">
                     <h3><a href="page overwatch.html" style="color: inherit; text-decoration: none;">Overwatch</a></h3>
@@ -953,7 +872,7 @@
             <br><br><br>
 
             <!-- Exemple de jeu 13 : Palworld -->
-            <div class="game">
+            <div class="game" data-game-name="palworld">
                 <img src="images-html/palworld-html.jpg" width="300" height="150" alt="Image de Palworld">
                 <div class="game-details">
                     <h3><a href="palworld.html" style="color: inherit; text-decoration: none;">Palworld</a></h3>
@@ -981,7 +900,7 @@
             <br><br><br>
 
             <!-- Exemple de jeu 14 : Red Dead Redemption 2 -->
-            <div class="game">
+            <div class="game" data-game-name="red dead redemption 2 rdr2">
                 <img src="images-html/red-dead-redemption-2-html.webp" width="300" height="150"
                     alt="Image de Red Dead Redemption 2">
                 <div class="game-details">
@@ -1011,7 +930,7 @@
             <br><br><br>
 
             <!-- Exemple de jeu 15 : Sekiro -->
-            <div class="game">
+            <div class="game" data-game-name="sekiro">
                 <img src="images-html/sekiro-html.jpg" width="300" height="150" alt="Image de Sekiro">
                 <div class="game-details">
                     <h3><a href="sekiro.html" style="color: inherit; text-decoration: none;">Sekiro</a></h3>
@@ -1038,9 +957,8 @@
 
             <br><br><br>
 
-
-            <!-- Exemple de jeu : The Last of Us -->
-            <div class="game">
+            <!-- Exemple de jeu 16 : The Last of Us -->
+            <div class="game" data-game-name="the last of us">
                 <img src="images-html/The-Last-of-Us-html.webp" width="300" height="150" alt="Image de The Last of Us">
                 <div class="game-details">
                     <h3><a href="the last of us.html" style="color: inherit; text-decoration: none;">The Last of Us</a>
@@ -1065,25 +983,10 @@
                 <button onclick="removeVote('the_last_of_us')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
-
             <!-- Exemple de jeu 17 : Undertale -->
-            <div class="game">
+            <div class="game" data-game-name="undertale">
                 <img src="images-html/undertail-html.jpg" width="300" height="150" alt="Image de Undertale">
                 <div class="game-details">
                     <h3><a href="undertale.html" style="color: inherit; text-decoration: none;">Undertale</a></h3>
@@ -1107,30 +1010,16 @@
                 <button onclick="removeVote('Undertale')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
             <!-- Exemple de jeu 18 : Valorant -->
-            <div class="game">
+            <div class="game" data-game-name="valorant">
                 <img src="images-html/valorant-html.jpg" width="300" height="150" alt="Image de Valorant">
                 <div class="game-details">
                     <h3><a href="valorant.html" style="color: inherit; text-decoration: none;">Valorant</a></h3>
                     <p>Un jeu de tir tactique en équipe où chaque joueur choisit un agent doté de pouvoirs uniques. Le
                         jeu combine stratégie et compétences de tir dans des matchs compétitifs.</p>
-                    <p class="rating">Note :4.6/5</p>
+                    <p class="rating">Note : 4.6/5</p>
                 </div>
             </div>
 
@@ -1148,32 +1037,19 @@
                 <button onclick="removeVote('Valorant')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
 
             <!-- Exemple de jeu 19 : World of Warcraft -->
-            <div class="game">
+            <div class="game" data-game-name="world of warcraft wow">
                 <img src="images-html/worl-of-warcraft-html.jpg" width="300" height="150"
                     alt="Image de World of Warcraft">
                 <div class="game-details">
                     <h3><a href="world of warcraf.html" style="color: inherit; text-decoration: none;">World of
                             Warcraft</a></h3>
-                    <p>Un jeu de tir tactique en équipe où chaque joueur choisit un agent doté de pouvoirs uniques. Le
-                        jeu combine stratégie et compétences de tir dans des matchs compétitifs.</p>
-                    <p class="rating">Note :4.4/5</p>
+                    <p>Un MMORPG épique où les joueurs explorent le monde d'Azeroth, accomplissent des quêtes,
+                        combattent des créatures et collaborent avec d'autres joueurs dans un univers fantasy riche et
+                        évolutif.</p>
+                    <p class="rating">Note : 4.4/5</p>
                 </div>
             </div>
 
@@ -1191,23 +1067,7 @@
                 <button onclick="removeVote('World of Warcraft')">Enlever ma note</button>
             </div>
 
-            <script>
-                function toggleRating(gameId) {
-                    const ratingContainer = document.getElementById('rating-' + gameId);
-                    const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
-                    if (ratingContainer.style.display === 'none') {
-                        ratingContainer.style.display = 'block';
-                        toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
-                    } else {
-                        ratingContainer.style.display = 'none';
-                        toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
-                    }
-                }
-            </script>
-
             <br><br><br>
-
-            <!-- Autres jeux (ajoutez ici vos autres jeux comme dans votre code d'origine) -->
 
         </section>
     </main>
@@ -1218,40 +1078,71 @@
         <p>Nous contacter : GamingBox@gmail.com</p>
     </footer>
 
-
     <script>
-        // Fonction pour activer ou désactiver la visibilité des éléments
-        function toggleVisibility(isSearchActive) {
-            const allElements = document.querySelectorAll('header, footer, main > section');
-            allElements.forEach(element => {
-                if (isSearchActive) {
-                    element.classList.add('hidden');
-                } else {
-                    element.classList.remove('hidden');
-                }
-            });
+        // Fonction pour basculer l'affichage des notes
+        function toggleRating(gameId) {
+            const ratingContainer = document.getElementById('rating-' + gameId);
+            const toggleButton = document.querySelector(`[onclick="toggleRating('${gameId}')"]`);
+            if (ratingContainer.style.display === 'none') {
+                ratingContainer.style.display = 'block';
+                toggleButton.innerHTML = '&#9660;'; // Flèche vers le bas
+            } else {
+                ratingContainer.style.display = 'none';
+                toggleButton.innerHTML = '&#9650;'; // Flèche vers le haut
+            }
         }
 
-        // Fonction de recherche pour filtrer et réorganiser les jeux
+        // Fonction de recherche améliorée
         function searchGames() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const gameList = document.getElementById('gameList');
-            const games = Array.from(document.querySelectorAll('.game'));
+            const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
+            const games = document.querySelectorAll('.game');
+            const toggleButtons = document.querySelectorAll('.toggle-rating');
+            const ratingContainers = document.querySelectorAll('.rating-container');
+            const separators = document.querySelectorAll('br');
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+            const noResults = document.getElementById('noResults');
 
-            const matchingGames = games.filter(game =>
-                game.querySelector('h3').textContent.toLowerCase().includes(searchInput)
-            );
-            const nonMatchingGames = games.filter(game => !matchingGames.includes(game));
+            let hasResults = false;
 
-            games.forEach(game => {
-                game.style.display = matchingGames.includes(game) ? 'flex' : 'none';
+            if (searchInput === '') {
+                // Si la recherche est vide, réafficher tout
+                games.forEach(game => game.style.display = 'flex');
+                toggleButtons.forEach(btn => btn.style.display = 'block');
+                ratingContainers.forEach(container => container.style.display = 'none');
+                separators.forEach(br => br.style.display = 'block');
+                header.style.display = 'block';
+                footer.style.display = 'block';
+                noResults.style.display = 'none';
+
+                // Réinitialiser les flèches vers le haut
+                toggleButtons.forEach(btn => btn.innerHTML = '&#9650;');
+                return;
+            }
+
+            // Cacher le header et footer pendant la recherche
+            header.style.display = 'none';
+            footer.style.display = 'none';
+
+            games.forEach((game, index) => {
+                const gameName = game.getAttribute('data-game-name');
+                const gameTitle = game.querySelector('h3').textContent.toLowerCase();
+
+                if (gameName.includes(searchInput) || gameTitle.includes(searchInput)) {
+                    game.style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    game.style.display = 'none';
+                }
             });
 
-            gameList.innerHTML = '';
-            matchingGames.concat(nonMatchingGames).forEach(game => gameList.appendChild(game));
+            // Cacher tous les boutons de notation et conteneurs pendant la recherche
+            toggleButtons.forEach(btn => btn.style.display = 'none');
+            ratingContainers.forEach(container => container.style.display = 'none');
+            separators.forEach(br => br.style.display = 'none');
 
-            // Si la loupe est activée, masquer les autres éléments
-            toggleVisibility(searchInput.length > 0);
+            // Afficher ou cacher le message "Aucun résultat"
+            noResults.style.display = hasResults ? 'none' : 'block';
         }
 
         // Fonction pour obtenir et mettre à jour les notes pour chaque jeu
@@ -1263,12 +1154,14 @@
         function updateAverage(gameId) {
             const ratings = getRatings(gameId);
             const averageSpan = document.getElementById('average-' + gameId);
-            if (ratings.length > 0) {
-                const sum = ratings.reduce((a, b) => a + b, 0);
-                const average = (sum / ratings.length).toFixed(1);
-                averageSpan.textContent = average;
-            } else {
-                averageSpan.textContent = "0";
+            if (averageSpan) {
+                if (ratings.length > 0) {
+                    const sum = ratings.reduce((a, b) => a + b, 0);
+                    const average = (sum / ratings.length).toFixed(1);
+                    averageSpan.textContent = average;
+                } else {
+                    averageSpan.textContent = "0";
+                }
             }
         }
 
@@ -1314,84 +1207,46 @@
                 accountLink.addEventListener('click', function (e) {
                     const currentUser = localStorage.getItem('currentUser');
                     if (!currentUser) {
-                        e.preventDefault();  // Empêche l'action par défaut du lien
+                        e.preventDefault();
                         alert('Vous devez être connecté pour accéder à cette page.');
-                        window.location.href = 'index.html'; // Redirige vers la page d'accueil
+                        window.location.href = 'index.html';
                     }
                 });
             }
 
             const gameIds = [
-                'ark', 'botw', 'csgo', 'ds', 'elden_ring', 'fc25', 'gow', 'hollow_knight', 'immortals_fenyx_rising', 'minecraft',
-                'no_mans_sky', 'overwatch', 'palworld', 'red_dead_redemption_2', 'sekiro', 'the_last_of_us', 'undertale', 'valorant', 'world_of_warcraft'
+                'Ark', 'The Legend of Zelda: Breath of the Wild', 'Counter-Strike 2', 'Dark Souls', 'EldenRing',
+                'fc25', 'gow', 'hollow_knight', 'hollow_knight_silksong', 'immortals_fenyx_rising', 'minecraft',
+                'no_mans_sky', 'overwatch', 'palworld', 'red_dead_redemption_2', 'sekiro', 'the_last_of_us', 'Undertale', 'Valorant', 'World of Warcraft'
             ];
 
             gameIds.forEach(gameId => {
                 updateAverage(gameId);
             });
-        });
 
-        // Ajoutez ce script pour activer le changement de position lors du défilement
-        window.onscroll = function () {
-            if (window.scrollY > 50) {  // Ajustez la valeur selon vos préférences
-                document.body.classList.add('scrolled');
-            } else {
-                document.body.classList.remove('scrolled');
-            }
-        };
-
-
-        function searchGames() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const gameList = document.getElementById('gameList');
-            const games = Array.from(document.querySelectorAll('.game'));
-            const gameDetails = document.querySelectorAll('.game-details');  // Sélectionne tous les résumés des jeux
-
-            const matchingGames = games.filter(game =>
-                game.querySelector('h3').textContent.toLowerCase().includes(searchInput)
-            );
-            const nonMatchingGames = games.filter(game => !matchingGames.includes(game));
-
-            games.forEach(game => {
-                game.style.display = matchingGames.includes(game) ? 'flex' : 'none';
-            });
-
-            gameList.innerHTML = '';
-            matchingGames.concat(nonMatchingGames).forEach(game => gameList.appendChild(game));
-
-            // Si la recherche est active, changer la couleur des résumés des jeux
-            gameDetails.forEach(detail => {
-                if (searchInput.length > 0) {
-                    detail.classList.add('search-active');  // Ajouter la classe si la recherche est active
-                } else {
-                    detail.classList.remove('search-active');  // Retirer la classe sinon
-                }
-            });
-
-            // Masquer les autres éléments si la recherche est active
-            toggleVisibility(searchInput.length > 0);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
             // Vérifier si le consentement a déjà été donné aujourd'hui
             const lastConsentDate = localStorage.getItem('cookieConsentDate');
-            const today = new Date().toLocaleDateString(); // Date du jour au format "mm/jj/aaaa"
+            const today = new Date().toLocaleDateString();
 
-            // Si la date de consentement n'est pas aujourd'hui, afficher le message
             if (lastConsentDate !== today) {
                 document.getElementById('cookie-consent-banner').style.display = 'block';
             }
 
             // Gestion de l'acceptation des cookies
             document.getElementById('accept-cookies').addEventListener('click', function () {
-                // Enregistrer la date du consentement dans le localStorage
                 localStorage.setItem('cookieConsentDate', today);
                 document.getElementById('cookie-consent-banner').style.display = 'none';
             });
         });
 
-
-
+        // Ajout de l'effet de défilement pour la navigation
+        window.onscroll = function () {
+            if (window.scrollY > 50) {
+                document.body.classList.add('scrolled');
+            } else {
+                document.body.classList.remove('scrolled');
+            }
+        };
     </script>
 
 </body>
