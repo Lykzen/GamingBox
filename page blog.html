@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forum - Posez vos questions</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <!-- Ajouter le lien FontAwesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
-    <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             color: #e0e0e0;
@@ -25,30 +23,222 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
             background-color: rgba(26, 37, 48, 0.8);
             color: #e0e0e0;
             width: 100%;
-            padding: 30px 0;
+            padding: clamp(20px, 4vw, 30px) 0;
             text-align: center;
-            font-size: 26px;
+            font-size: clamp(18px, 4vw, 26px);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
             border-bottom: 4px solid #ff6600;
         }
 
-        main {
-            max-width: 900px;
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(30, 30, 40, 0.9);
+            padding: 15px 10px;
             width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin: 5px 15px;
+            font-size: clamp(14px, 3vw, 18px);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: #ff6600;
+            background-color: rgba(255, 102, 0, 0.1);
+        }
+
+        main {
+            width: 100%;
+            max-width: none;
             background: rgba(58, 75, 92, 0.85);
-            padding: 30px;
+            padding: clamp(20px, 4vw, 30px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            color: #e0e0e0;
+            min-height: calc(100vh - 200px);
+        }
+
+        section {
+            max-width: 600px;
+            width: calc(100% - 20px);
+            background: rgba(58, 75, 92, 0.85);
+            padding: clamp(20px, 4vw, 30px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            margin-top: 40px;
+            margin: 20px auto;
             color: #e0e0e0;
+        }
+
+        h2 {
+            font-size: clamp(18px, 3.5vw, 24px);
+            margin-bottom: 20px;
+            text-align: center;
+            color: #e0e0e0;
+        }
+
+        .conversations-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #5e6e7a;
+            border-radius: 8px;
+            background-color: rgba(224, 224, 224, 0.9);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+            background-color: #fff;
+        }
+
+        .add-conversation-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .add-conversation-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .toggle-conversations-btn {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-conversations-btn:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-1px);
+        }
+
+        .conversations-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .conversation-card {
+            background: #4a5d6a;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 6px solid #3498db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .conversation-card:hover {
+            background-color: #3b4d59;
+            transform: translateY(-2px);
+        }
+
+        .conversation-card.active {
+            border-left-color: #ff6600;
+            background-color: #3b4d59;
+            transform: translateY(-2px);
+        }
+
+        .conversation-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+        }
+
+        .conversation-info {
+            font-size: 14px;
+            color: #bdc3c7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-conversation-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .conversation-card:hover .delete-conversation-btn {
+            opacity: 1;
+        }
+
+        .delete-conversation-btn:hover {
+            background: #c0392b;
         }
 
         form {
@@ -61,16 +251,27 @@
         textarea,
         button {
             margin-bottom: 15px;
-            padding: 12px;
-            font-size: 18px;
+            padding: 12px 15px;
+            font-size: clamp(14px, 2.5vw, 16px);
             border: 1px solid #5e6e7a;
             border-radius: 8px;
-            background-color: #e0e0e0;
+            background-color: rgba(224, 224, 224, 0.95);
             color: #333;
+            width: 100%;
+            min-height: 44px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            background-color: #fff;
         }
 
         textarea {
-            resize: none;
+            resize: vertical;
+            min-height: 120px;
         }
 
         button {
@@ -78,16 +279,63 @@
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
         button:hover {
             background-color: #2980b9;
+            transform: translateY(-1px);
+        }
+
+        .current-conversation {
+            background: rgba(52, 152, 219, 0.1);
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .current-conversation h3 {
+            margin: 0;
+            color: #3498db;
+            font-size: 24px;
+        }
+
+        #questions-list {
+            width: 100%;
+            background-color: rgba(26, 37, 48, 0.8);
+            border-radius: 10px;
+            border: 2px solid #3498db;
+            padding: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        section#questions-list {
+            max-width: none;
+            width: 100%;
+        }
+
+        #questions-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #questions-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #questions-list::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 10px;
         }
 
         #questions-list ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         #questions-list li {
@@ -96,193 +344,76 @@
             margin-bottom: 15px;
             border-left: 6px solid #3498db;
             border-radius: 6px;
-            transition: all 0.3s ease-in-out;
-            word-wrap: break-word;
-            max-height: 200px;
-            overflow-y: auto;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         #questions-list li:hover {
             background-color: #3b4d59;
-            transform: scale(1.02);
-        }
-
-        #questions-list {
-            width: 95%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            padding: 20px;
-            background-color: rgba(26, 37, 48, 0.8);
-            border-radius: 10px;
-            border: 2px solid #3498db;
-            margin-top: 20px;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(30, 30, 40, 0.9);
-            padding: 15px 0;
-            width: 100%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        nav a {
-            color: #e0e0e0;
-            text-decoration: none;
-            margin: 0 25px;
-            font-size: 18px;
-            font-weight: 500;
-            transition: all 0.3s ease-in-out;
-        }
-
-        nav a:hover {
-            color: #ff6600;
-        }
-
-        a {
-            text-decoration: none;
-            color: #ff6600;
-            font-size: 18px;
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
-        }
-
-        a::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ff6600;
-            transition: width 0.3s ease-in-out;
-        }
-
-        a:hover {
-            color: #ffffff;
-        }
-
-        a:hover::after {
-            width: 100%;
+            transform: translateY(-2px);
         }
 
         .delete-btn {
             background-color: #e74c3c;
             color: white;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border: none;
             cursor: pointer;
             border-radius: 5px;
             font-size: 14px;
-            margin-left: 10px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .delete-btn:hover {
             background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        .delete-btn-small {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            min-width: auto;
+            width: auto;
+        }
+
+        .delete-btn-small:hover {
+            background-color: #c0392b;
+            transform: translateY(-1px);
+        }
+
+        #questions-list li {
+            background: #4a5d6a;
+            padding: 15px 18px;
+            margin-bottom: 15px;
+            border-left: 6px solid #3498db;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: auto;
         }
 
         .login-form input,
         .register-form input {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .login-form button,
         .register-form button {
             background-color: #27ae60;
-            color: white;
         }
 
-        .stay-disconnected {
-            color: #e74c3c;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        /* Ajout de styles responsives pour garantir la même mise en page sur mobile */
-        @media only screen and (max-width: 768px) {
-            body {
-                background-attachment: scroll;
-                /* Évite les problèmes de performance sur mobile */
-            }
-
-            nav {
-                flex-direction: column;
-                gap: 20px;
-                padding: 15px 0;
-            }
-
-            nav a {
-                padding: 12px 30px;
-                font-size: 16px;
-                text-align: center;
-                width: 80%;
-            }
-
-            .search-container {
-                flex-direction: column;
-                gap: 10px;
-                width: 90%;
-                margin: 0 auto;
-            }
-
-            .search-container input {
-                width: 100%;
-                font-size: 14px;
-                padding: 8px 15px;
-            }
-
-            .game {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .game img {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .game-details {
-                padding: 15px;
-            }
-
-            .rating {
-                font-size: 18px;
-            }
-
-            button {
-                width: 100%;
-                padding: 12px 20px;
-                font-size: 16px;
-            }
-
-            main {
-                padding: 20px;
-            }
-
-            footer {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-
-        .password-container input,
-        input {
-            width: 100%;
-            /* Pour que les champs aient la même largeur */
-            padding: 12px;
-            font-size: 18px;
-            border: 1px solid #5e6e7a;
-            border-radius: 8px;
-            background-color: #e0e0e0;
-            color: #333;
+        .login-form button:hover,
+        .register-form button:hover {
+            background-color: #219a52;
         }
 
         .password-container {
@@ -291,20 +422,159 @@
         }
 
         .password-container input {
-            padding-right: 15px;
-            /* Assure que le champ du mot de passe reste aligné avec l'icône */
+            width: 100%;
+            padding: 12px 45px 12px 15px;
         }
 
         .toggle-password {
             position: absolute;
-            right: 12px;
-            /* Espacement par rapport au bord droit */
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
-            /* Centrer verticalement */
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #3498db;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background: rgba(58, 75, 92, 0.95);
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h3 {
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #5e6e7a;
+            border-radius: 10px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-buttons button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .confirm-btn {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .confirmation-modal .modal-content {
+            background: rgba(231, 76, 60, 0.95);
+        }
+
+        .no-conversations {
+            text-align: center;
+            padding: 40px;
+            color: #bdc3c7;
+            font-size: 18px;
+        }
+
+        .no-questions {
+            text-align: center;
+            padding: 40px;
+            color: #bdc3c7;
+            font-size: 16px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ff6600;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .conversations-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-container {
+                min-width: auto;
+            }
+
+            .conversations-list {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 15px;
+            }
+
+            .modal-content {
+                margin: 25% auto;
+                padding: 20px;
+                width: 95%;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #questions-list {
+                max-height: 50vh;
+            }
+
+            .conversation-card {
+                padding: 15px;
+            }
+
+            .modal-content {
+                margin: 30% auto;
+            }
         }
     </style>
 </head>
@@ -319,7 +589,6 @@
         <a href="compt page.html"><i class="fa-solid fa-user"></i> Compte</a>
     </nav>
 
-
     <!-- Formulaire de création de compte -->
     <section id="register-form" style="display: block;">
         <h2>Créer un compte</h2>
@@ -327,8 +596,7 @@
             <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
             <div class="password-container">
                 <input type="password" id="register-password" placeholder="Mot de passe" required>
-                <i class="toggle-password" id="toggle-register-password">&#128065;</i>
-                <!-- Icône pour afficher/cacher -->
+                <i class="toggle-password" id="toggle-register-password"><i class="fa-solid fa-eye-slash"></i></i>
             </div>
             <button type="submit">Créer un compte</button>
         </form>
@@ -343,7 +611,6 @@
             <div class="password-container">
                 <input type="password" id="login-password" placeholder="Mot de passe" required>
                 <i class="toggle-password" id="toggle-login-password"><i class="fa-solid fa-eye-slash"></i></i>
-                <!-- Icône pour afficher/cacher -->
             </div>
             <button type="submit">Se connecter</button>
         </form>
@@ -353,98 +620,154 @@
         </p>
     </section>
 
-    <!-- Formulaire pour poser une question -->
+    <!-- Contenu principal -->
     <main id="main-content" style="display: none;">
-        <section id="question-form">
-            <h2>Posez votre question</h2>
-            <form id="form">
-                <input type="text" id="username" placeholder="Votre nom" readonly>
-                <textarea id="question" placeholder="Votre question" required></textarea>
-                <button type="submit">Envoyer</button>
-            </form>
-        </section>
-        <section id="questions-list">
-            <h2>Questions des utilisateurs</h2>
-            <ul id="questions"></ul>
-        </section>
+        <!-- Section des conversations -->
+        <div class="conversations-header">
+            <div class="search-container">
+                <input type="text" id="search-conversations" class="search-input"
+                    placeholder="Rechercher une conversation...">
+                <i class="fa-solid fa-search" style="color: #3498db; font-size: 18px;"></i>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="toggle-conversations-btn" id="toggle-conversations">
+                    <i class="fa-solid fa-eye-slash"></i>
+                    Masquer
+                </button>
+                <button class="add-conversation-btn" id="add-conversation">
+                    <i class="fa-solid fa-plus"></i>
+                    Nouvelle conversation
+                </button>
+            </div>
+        </div>
+
+        <div id="conversations-container">
+            <div class="conversations-list" id="conversations-list">
+                <div class="no-conversations">
+                    <i class="fa-solid fa-comments" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                    <p>Aucune conversation pour le moment.<br>Créez votre première conversation !</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section de conversation active -->
+        <div id="active-conversation" style="display: none;">
+            <div class="current-conversation">
+                <h3 id="current-conversation-title">Sélectionnez une conversation</h3>
+            </div>
+
+            <!-- Formulaire pour poser une question -->
+            <section id="question-form">
+                <h2>Posez votre question</h2>
+                <form id="form">
+                    <input type="text" id="username" placeholder="Votre nom" readonly>
+                    <textarea id="question" placeholder="Votre question" required></textarea>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </section>
+
+            <!-- Liste des questions -->
+            <section id="questions-list">
+                <h2 id="questions-list-title">Questions de la conversation</h2>
+                <ul id="questions">
+                    <div class="no-questions">
+                        <i class="fa-solid fa-message" style="font-size: 36px; margin-bottom: 10px; opacity: 0.5;"></i>
+                        <p>Aucune question dans cette conversation.<br>Soyez le premier à poser une question !</p>
+                    </div>
+                </ul>
+            </section>
+        </div>
     </main>
 
+    <!-- Modal pour créer une nouvelle conversation -->
+    <div id="new-conversation-modal" class="modal">
+        <div class="modal-content">
+            <h3>Nouvelle conversation</h3>
+            <input type="text" id="new-conversation-title" placeholder="Nom de la conversation" maxlength="50">
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirm-new-conversation">Créer</button>
+                <button class="cancel-btn" id="cancel-new-conversation">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation pour supprimer -->
+    <div id="confirmation-modal" class="modal confirmation-modal">
+        <div class="modal-content">
+            <h3 id="confirmation-text">Êtes-vous sûr ?</h3>
+            <div class="modal-buttons">
+                <button class="confirm-btn" id="confirm-delete">Confirmer</button>
+                <button class="cancel-btn" id="cancel-delete">Annuler</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const form = document.getElementById('form');
-        const questionsList = document.getElementById('questions');
-        const currentUser = localStorage.getItem('currentUser');
+        // Variables globales
+        let currentUser = null;
+        let currentConversationId = null;
+        let conversations = [];
+        let deleteCallback = null;
+        let conversationsVisible = true;
+
+        // Éléments du DOM
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const mainContent = document.getElementById('main-content');
-        const stayDisconnectedText = document.getElementById('stay-disconnected');
-        const questionInput = document.getElementById('question');
-        const stayLoggedOutBtn = document.getElementById('stay-logged-out');
+        const conversationsList = document.getElementById('conversations-list');
+        const activeConversation = document.getElementById('active-conversation');
+        const currentConversationTitle = document.getElementById('current-conversation-title');
+        const questionsList = document.getElementById('questions');
+        const questionsListTitle = document.getElementById('questions-list-title');
+        const form = document.getElementById('form');
+        const searchInput = document.getElementById('search-conversations');
 
-        // Fonction pour afficher le formulaire de connexion
-        document.getElementById('show-login').addEventListener('click', () => {
+        // Modals
+        const newConversationModal = document.getElementById('new-conversation-modal');
+        const confirmationModal = document.getElementById('confirmation-modal');
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedUser = JSON.parse(localStorage.getItem('userData') || '{}').currentUser;
+            currentUser = storedUser;
+            loadConversations();
+
+            if (currentUser) {
+                document.getElementById('username').value = currentUser;
+                showMainContent();
+            } else {
+                showAuthForms();
+            }
+        });
+
+        // Gestion des formulaires d'authentification
+        document.getElementById('show-login').addEventListener('click', (e) => {
+            e.preventDefault();
             registerForm.style.display = 'none';
             loginForm.style.display = 'block';
         });
 
-        // Fonction pour afficher le formulaire de création de compte
-        document.getElementById('show-register').addEventListener('click', () => {
+        document.getElementById('show-register').addEventListener('click', (e) => {
+            e.preventDefault();
             loginForm.style.display = 'none';
             registerForm.style.display = 'block';
         });
 
-        const loadQuestions = () => {
-            const questions = JSON.parse(localStorage.getItem('questions')) || [];
-            questionsList.innerHTML = '';
-
-            questions.forEach((data, index) => {
-                const listItem = document.createElement('li');
-                const borderColor = data.username === currentUser ? '#3498db' : '#e74c3c';
-                listItem.style.borderLeft = `6px solid ${borderColor}`;
-
-                listItem.innerHTML = `
-                    <strong>${data.username}</strong>: ${data.question}
-                    <button class="delete-btn" onclick="deleteQuestion(${index})">Supprimer</button>
-                `;
-                questionsList.appendChild(listItem);
-            });
-        };
-
-        // Fonction pour poser une question
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('username').value; // Le nom d'utilisateur sera pris ici
-            const question = document.getElementById('question').value;
-
-            if (username && question) {
-                const newQuestion = { username, question };
-                const questions = JSON.parse(localStorage.getItem('questions')) || [];
-                questions.push(newQuestion);
-                localStorage.setItem('questions', JSON.stringify(questions));
-                loadQuestions();
-                document.getElementById('question').value = ''; // clear textarea
-            }
-        });
-
-        // Fonction pour supprimer une question
-        const deleteQuestion = (index) => {
-            const questions = JSON.parse(localStorage.getItem('questions')) || [];
-            questions.splice(index, 1);
-            localStorage.setItem('questions', JSON.stringify(questions));
-            loadQuestions();
-        };
-
-        // Inscription d'un nouvel utilisateur
+        // Inscription
         document.getElementById('register').addEventListener('submit', (e) => {
             e.preventDefault();
             const username = document.getElementById('register-username').value;
             const password = document.getElementById('register-password').value;
 
             if (username && password) {
-                localStorage.setItem(username, password);
-                localStorage.setItem('currentUser', username); // Enregistrer le nom d'utilisateur lors de l'inscription
+                const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+                userData[username] = password;
+                userData.currentUser = username;
+                localStorage.setItem('userData', JSON.stringify(userData));
+                currentUser = username;
                 alert("Compte créé avec succès !");
-                registerForm.style.display = 'none';
-                loginForm.style.display = 'block';
+                document.getElementById('username').value = username;
+                showMainContent();
             }
         });
 
@@ -454,73 +777,375 @@
             const username = document.getElementById('login-username').value;
             const password = document.getElementById('login-password').value;
 
-            if (localStorage.getItem(username) === password) {
-                localStorage.setItem('currentUser', username);
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            if (userData[username] === password) {
+                userData.currentUser = username;
+                localStorage.setItem('userData', JSON.stringify(userData));
+                currentUser = username;
                 alert("Connecté avec succès !");
-                loginForm.style.display = 'none';
-                mainContent.style.display = 'block';
-                loadQuestions();
+                document.getElementById('username').value = username;
+                showMainContent();
             } else {
                 alert("Nom d'utilisateur ou mot de passe incorrect.");
             }
         });
 
-        // Vérifier si un utilisateur est connecté
-        if (currentUser) {
-            document.getElementById('username').value = currentUser;
+        // Rester déconnecté
+        document.getElementById('stay-logged-out').addEventListener('click', (e) => {
+            e.preventDefault();
+            showMainContent(true);
+        });
+
+        // Toggle password visibility
+        document.getElementById('toggle-register-password').addEventListener('click', () => {
+            togglePasswordVisibility('register-password', 'toggle-register-password');
+        });
+
+        document.getElementById('toggle-login-password').addEventListener('click', () => {
+            togglePasswordVisibility('login-password', 'toggle-login-password');
+        });
+
+        function togglePasswordVisibility(inputId, toggleId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = document.getElementById(toggleId);
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+            } else {
+                passwordInput.type = 'password';
+                icon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+            }
+        }
+
+        function showAuthForms() {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            mainContent.style.display = 'none';
+            document.getElementById('stay-disconnected').style.display = 'block';
+        }
+
+        function showMainContent(stayDisconnected = false) {
             loginForm.style.display = 'none';
             registerForm.style.display = 'none';
             mainContent.style.display = 'block';
-            loadQuestions();
-        } else {
-            loginForm.style.display = 'block';
-            registerForm.style.display = 'none';
-            stayDisconnectedText.style.display = 'block';
-            questionInput.setAttribute('disabled', 'true');
+
+            if (stayDisconnected) {
+                document.getElementById('question').disabled = true;
+                document.getElementById('form').querySelector('button').disabled = true;
+            }
+
+            loadConversations();
+            displayConversations();
         }
 
-        // Lorsque l'utilisateur clique sur "Rester déconnecté", il peut voir les questions
-        stayLoggedOutBtn.addEventListener('click', () => {
-            stayDisconnectedText.style.display = 'none';
-            mainContent.style.display = 'block';
-            questionInput.setAttribute('disabled', 'true');
-            loadQuestions();
+        // Gestion des conversations
+        document.getElementById('add-conversation').addEventListener('click', () => {
+            if (!currentUser) {
+                alert("Vous devez être connecté pour créer une conversation.");
+                return;
+            }
+            newConversationModal.style.display = 'block';
+            document.getElementById('new-conversation-title').focus();
         });
 
+        // Gestion du bouton masquer/afficher les conversations
+        document.getElementById('toggle-conversations').addEventListener('click', () => {
+            const conversationsContainer = document.getElementById('conversations-container');
+            const toggleBtn = document.getElementById('toggle-conversations');
+            const toggleIcon = toggleBtn.querySelector('i');
 
-        // Fonction pour afficher ou cacher le mot de passe dans le formulaire d'inscription
-        document.getElementById('toggle-register-password').addEventListener('click', () => {
-            const passwordInput = document.getElementById('register-password');
-            const icon = document.getElementById('toggle-register-password');
-
-            if (passwordInput.type === 'password') {
-                // Afficher le mot de passe
-                passwordInput.type = 'text';
-                icon.innerHTML = '<i class="fa-solid fa-eye"></i>'; // Icône pour afficher le mot de passe
+            if (conversationsVisible) {
+                conversationsContainer.style.display = 'none';
+                toggleIcon.className = 'fa-solid fa-eye';
+                toggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i> Afficher';
+                conversationsVisible = false;
             } else {
-                // Cacher le mot de passe
-                passwordInput.type = 'password';
-                icon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; // Icône pour cacher le mot de passe
+                conversationsContainer.style.display = 'block';
+                toggleIcon.className = 'fa-solid fa-eye-slash';
+                toggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Masquer';
+                conversationsVisible = true;
             }
         });
 
-        // Fonction pour afficher ou cacher le mot de passe dans le formulaire de connexion
-        document.getElementById('toggle-login-password').addEventListener('click', () => {
-            const passwordInput = document.getElementById('login-password');
-            const icon = document.getElementById('toggle-login-password');
-
-            if (passwordInput.type === 'password') {
-                // Afficher le mot de passe
-                passwordInput.type = 'text';
-                icon.innerHTML = '<i class="fa-solid fa-eye"></i>'; // Icône pour afficher le mot de passe
+        document.getElementById('confirm-new-conversation').addEventListener('click', () => {
+            const title = document.getElementById('new-conversation-title').value.trim();
+            if (title) {
+                createNewConversation(title);
+                newConversationModal.style.display = 'none';
+                document.getElementById('new-conversation-title').value = '';
             } else {
-                // Cacher le mot de passe
-                passwordInput.type = 'password';
-                icon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>'; // Icône pour cacher le mot de passe
+                alert("Veuillez saisir un nom pour la conversation.");
             }
         });
 
+        document.getElementById('cancel-new-conversation').addEventListener('click', () => {
+            newConversationModal.style.display = 'none';
+            document.getElementById('new-conversation-title').value = '';
+        });
 
+        // Recherche de conversations
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            displayConversations(searchTerm);
+        });
+
+        function loadConversations() {
+            conversations = JSON.parse(localStorage.getItem('forumConversations') || '[]');
+        }
+
+        function saveConversations() {
+            localStorage.setItem('forumConversations', JSON.stringify(conversations));
+        }
+
+        function createNewConversation(title) {
+            const newConversation = {
+                id: Date.now().toString(),
+                title: title,
+                createdBy: currentUser,
+                createdAt: new Date().toLocaleDateString(),
+                questions: []
+            };
+
+            conversations.unshift(newConversation);
+            saveConversations();
+            displayConversations();
+            selectConversation(newConversation.id);
+        }
+
+        function displayConversations(searchTerm = '') {
+            const filteredConversations = conversations.filter(conv =>
+                conv.title.toLowerCase().includes(searchTerm)
+            );
+
+            if (filteredConversations.length === 0) {
+                conversationsList.innerHTML = `
+                    <div class="no-conversations">
+                        <i class="fa-solid fa-comments" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
+                        <p>${searchTerm ? 'Aucune conversation trouvée.' : 'Aucune conversation pour le moment.<br>Créez votre première conversation !'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            conversationsList.innerHTML = '';
+            filteredConversations.forEach(conversation => {
+                const conversationCard = document.createElement('div');
+                conversationCard.className = 'conversation-card';
+                if (conversation.id === currentConversationId) {
+                    conversationCard.classList.add('active');
+                }
+
+                conversationCard.innerHTML = `
+                    <div class="conversation-title">${conversation.title}</div>
+                    <div class="conversation-info">
+                        <span><i class="fa-solid fa-user"></i> ${conversation.createdBy}</span>
+                        <span><i class="fa-solid fa-message"></i> ${conversation.questions.length}</span>
+                        ${currentUser === conversation.createdBy ?
+                        `<button class="delete-conversation-btn" onclick="confirmDeleteConversation('${conversation.id}', '${conversation.title}')">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>` : ''
+                    }
+                    </div>
+                `;
+
+                conversationCard.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('delete-conversation-btn') && !e.target.closest('.delete-conversation-btn')) {
+                        selectConversation(conversation.id);
+                    }
+                });
+
+                conversationsList.appendChild(conversationCard);
+            });
+        }
+
+        function selectConversation(conversationId) {
+            currentConversationId = conversationId;
+            const conversation = conversations.find(conv => conv.id === conversationId);
+
+            if (conversation) {
+                currentConversationTitle.textContent = conversation.title;
+                questionsListTitle.textContent = `Questions - ${conversation.title}`;
+                activeConversation.style.display = 'block';
+                displayConversations(); // Refresh pour mettre à jour la classe active
+                loadQuestions();
+            }
+        }
+
+        function confirmDeleteConversation(conversationId, conversationTitle) {
+            document.getElementById('confirmation-text').textContent =
+                `Êtes-vous sûr de vouloir supprimer la conversation "${conversationTitle}" ?`;
+
+            deleteCallback = () => deleteConversation(conversationId);
+            confirmationModal.style.display = 'block';
+        }
+
+        function deleteConversation(conversationId) {
+            conversations = conversations.filter(conv => conv.id !== conversationId);
+            saveConversations();
+
+            if (currentConversationId === conversationId) {
+                currentConversationId = null;
+                activeConversation.style.display = 'none';
+            }
+
+            displayConversations();
+        }
+
+        // Gestion des questions
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!currentUser) {
+                alert("Vous devez être connecté pour poser une question.");
+                return;
+            }
+
+            if (!currentConversationId) {
+                alert("Veuillez sélectionner une conversation.");
+                return;
+            }
+
+            const username = document.getElementById('username').value;
+            const question = document.getElementById('question').value.trim();
+
+            if (username && question) {
+                const conversation = conversations.find(conv => conv.id === currentConversationId);
+                if (conversation) {
+                    const newQuestion = {
+                        id: Date.now().toString(),
+                        username,
+                        question,
+                        timestamp: new Date().toLocaleString()
+                    };
+
+                    conversation.questions.push(newQuestion);
+                    saveConversations();
+                    loadQuestions();
+                    displayConversations(); // Refresh pour mettre à jour le compteur
+                    document.getElementById('question').value = '';
+                }
+            }
+        });
+
+        function loadQuestions() {
+            if (!currentConversationId) {
+                questionsList.innerHTML = `
+                    <div class="no-questions">
+                        <i class="fa-solid fa-message" style="font-size: 36px; margin-bottom: 10px; opacity: 0.5;"></i>
+                        <p>Sélectionnez une conversation pour voir les questions.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const conversation = conversations.find(conv => conv.id === currentConversationId);
+            if (!conversation || conversation.questions.length === 0) {
+                questionsList.innerHTML = `
+                    <div class="no-questions">
+                        <i class="fa-solid fa-message" style="font-size: 36px; margin-bottom: 10px; opacity: 0.5;"></i>
+                        <p>Aucune question dans cette conversation.<br>Soyez le premier à poser une question !</p>
+                    </div>
+                `;
+                return;
+            }
+
+            questionsList.innerHTML = '';
+            conversation.questions.forEach((data, index) => {
+                const listItem = document.createElement('li');
+                const borderColor = data.username === currentUser ? '#3498db' : '#e74c3c';
+                listItem.style.borderLeft = `6px solid ${borderColor}`;
+
+                listItem.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                        <strong style="color: #3498db;">${data.username}</strong>
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+                            <small style="color: #bdc3c7; font-size: 12px;">${data.timestamp}</small>
+                            ${data.username === currentUser || (currentUser && conversations.find(c => c.id === currentConversationId)?.createdBy === currentUser) ?
+                        `<button class="delete-btn-small" onclick="confirmDeleteQuestion('${currentConversationId}', ${index})">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>` : ''
+                    }
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px; line-height: 1.6;">${data.question}</div>
+                `;
+                questionsList.appendChild(listItem);
+            });
+        }
+
+        function confirmDeleteQuestion(conversationId, questionIndex) {
+            const conversation = conversations.find(conv => conv.id === conversationId);
+            const question = conversation?.questions[questionIndex];
+
+            if (question) {
+                document.getElementById('confirmation-text').textContent =
+                    `Êtes-vous sûr de vouloir supprimer cette question ?`;
+
+                deleteCallback = () => deleteQuestion(conversationId, questionIndex);
+                confirmationModal.style.display = 'block';
+            }
+        }
+
+        function deleteQuestion(conversationId, questionIndex) {
+            const conversation = conversations.find(conv => conv.id === conversationId);
+            if (conversation) {
+                conversation.questions.splice(questionIndex, 1);
+                saveConversations();
+                loadQuestions();
+                displayConversations(); // Refresh pour mettre à jour le compteur
+            }
+        }
+
+        // Gestion des modals de confirmation
+        document.getElementById('confirm-delete').addEventListener('click', () => {
+            if (deleteCallback) {
+                deleteCallback();
+                deleteCallback = null;
+            }
+            confirmationModal.style.display = 'none';
+        });
+
+        document.getElementById('cancel-delete').addEventListener('click', () => {
+            deleteCallback = null;
+            confirmationModal.style.display = 'none';
+        });
+
+        // Fermer les modals en cliquant à l'extérieur
+        window.addEventListener('click', (e) => {
+            if (e.target === newConversationModal) {
+                newConversationModal.style.display = 'none';
+                document.getElementById('new-conversation-title').value = '';
+            }
+            if (e.target === confirmationModal) {
+                confirmationModal.style.display = 'none';
+                deleteCallback = null;
+            }
+        });
+
+        // Raccourcis clavier
+        document.addEventListener('keydown', (e) => {
+            // Échap pour fermer les modals
+            if (e.key === 'Escape') {
+                if (newConversationModal.style.display === 'block') {
+                    newConversationModal.style.display = 'none';
+                    document.getElementById('new-conversation-title').value = '';
+                }
+                if (confirmationModal.style.display === 'block') {
+                    confirmationModal.style.display = 'none';
+                    deleteCallback = null;
+                }
+            }
+
+            // Entrée dans le modal de nouvelle conversation
+            if (e.key === 'Enter' && e.target.id === 'new-conversation-title') {
+                document.getElementById('confirm-new-conversation').click();
+            }
+        });
+
+        // Fonction globale pour les boutons de suppression (accessible depuis onclick)
+        window.confirmDeleteQuestion = confirmDeleteQuestion;
+        window.confirmDeleteConversation = confirmDeleteConversation;
     </script>
 </body>
 

@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
     <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles de base pour la mise en page */
         * {
@@ -57,16 +58,15 @@
             background-color: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
@@ -74,8 +74,96 @@
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
+        }
+
+        /* Sélecteur de langue */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content button:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .dropdown-content button:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
         }
 
         /* Contenu principal */
@@ -238,6 +326,13 @@
                 font-size: 16px;
             }
 
+            .language-selector {
+                position: static;
+                transform: none;
+                order: -1;
+                margin-bottom: 10px;
+            }
+
             main {
                 padding: 15px 10px;
             }
@@ -379,20 +474,62 @@
 <body>
     <!-- En-tête du site web -->
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
 
     <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
+        <a href="index.html" data-translate="nav-home">Accueil</a>
+
+        <!-- Sélecteur de langue -->
+        <div class="language-selector">
+            <div class="language-dropdown">
+                <button class="language-button" onclick="toggleLanguageDropdown()">
+                    <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                        <rect width="3" height="2" fill="#002654" />
+                        <rect width="2" height="2" fill="#FFFFFF" />
+                        <rect width="1" height="2" fill="#ED2939" />
+                    </svg>
+                    <span id="currentLang">FR</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <button onclick="changeLanguage('fr')">
+                        <svg class="flag-icon" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        Français
+                    </button>
+                    <button onclick="changeLanguage('en')">
+                        <svg class="flag-icon" viewBox="0 0 5 3">
+                            <rect width="5" height="3" fill="#012169" />
+                            <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                            <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                            <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                            <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                        </svg>
+                        English
+                    </button>
+                    <button onclick="changeLanguage('es')">
+                        <svg class="flag-icon" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#C60B1E" />
+                            <rect width="3" height="1" y="0.5" fill="#FFC400" />
+                        </svg>
+                        Español
+                    </button>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Contenu principal -->
     <main>
         <!-- Section "Jeux" -->
         <section id="games">
-            <h2>Ark : Survival Evolved</h2>
+            <h2 data-translate="ark-title">Ark : Survival Evolved</h2>
 
             <div class="container">
                 <center>
@@ -400,51 +537,51 @@
                 </center>
 
                 <center>
-                    <p class="rating">Note : 4.3/5</p>
+                    <p class="rating"><span data-translate="rating">Note :</span> 4.3/5</p>
                 </center>
 
                 <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph">
-                    &nbsp;&nbsp;&nbsp;&nbsp;Ark: Survival Evolved est un jeu vidéo de survie en monde ouvert développé
-                    par Studio Wildcard. Le jeu prend place sur une île mystérieuse appelée The Island, où des
-                    dinosaures et d'autres créatures préhistoriques coexistent avec des technologies avancées. Le joueur
-                    incarne un survivant qui doit naviguer dans ce monde hostile pour se défendre, se nourrir et se
-                    construire un abri.<br><br>
+                <div class="first-paragraph" data-translate="ark-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Ark: Survival Evolved est un jeu vidéo de survie en monde ouvert
+                        développé par Studio Wildcard. Le jeu prend place sur une île mystérieuse appelée The Island, où
+                        des dinosaures et d'autres créatures préhistoriques coexistent avec des technologies avancées.
+                        Le joueur incarne un survivant qui doit naviguer dans ce monde hostile pour se défendre, se
+                        nourrir et se construire un abri.</p>
+                    <br><br>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le but du jeu est de survivre en collectant des ressources, en fabriquant
+                        des objets, en construisant des structures et en apprivoisant des créatures. Ces dernières
+                        peuvent être utilisées pour diverses tâches, comme le transport, la chasse ou la défense.
+                        L'apprivoisement des dinosaures est une composante clé, et les joueurs peuvent dresser des
+                        créatures de différentes tailles, allant des petits dinosaures aux énormes reptiles volants.</p>
+                    <br><br>
+                    <p><strong data-translate="dynamic-environment">Un environnement dynamique :</strong></p>
+                    <p data-translate="dynamic-environment-desc">Ark: Survival Evolved propose un environnement
+                        dynamique avec des changements de météo, de température et de saisons, rendant la survie encore
+                        plus difficile. Les joueurs doivent gérer la faim, la soif et la santé, tout en évitant divers
+                        dangers tels que les prédateurs, d'autres survivants ou des phénomènes environnementaux.</p>
+                    <br><br>
+                    <p><strong data-translate="game-modes">Modes de jeu variés :</strong></p>
+                    <p data-translate="game-modes-desc">Le jeu offre plusieurs modes : un mode solo, un mode multijoueur
+                        en ligne et des serveurs privés. Dans le mode multijoueur, les joueurs peuvent former des tribus
+                        pour s'entraider et se défendre contre d'autres tribus.</p>
+                    <br><br>
+                    <p><strong data-translate="captivating-lore">Un lore captivant :</strong></p>
+                    <p data-translate="captivating-lore-desc">Le lore du jeu se dévoile à travers des artefacts, des
+                        journaux et des récits disséminés dans le monde. L'île est en réalité une gigantesque expérience
+                        menée par des entités mystérieuses, et la fin du jeu révèle une partie de ce secret.</p>
+                    <br><br>
+                    <p><strong data-translate="expansions">Extensions et cartes supplémentaires :</strong></p>
+                    <p data-translate="expansions-desc">En plus de The Island, le jeu comprend plusieurs extensions et
+                        cartes supplémentaires, comme Scorched Earth, Aberration, Extinction et Genesis. Ces ajouts
+                        introduisent de nouveaux biomes, créatures et mécanismes de jeu.</p>
+                    <br><br>
+                    <p><strong data-translate="unique-experience">Une expérience unique :</strong></p>
+                    <p data-translate="unique-experience-desc">Ark: Survival Evolved se distingue par sa forte
+                        composante de survie, son système d'apprivoisement complexe et ses mécaniques de jeu en monde
+                        ouvert, offrant aux joueurs une expérience immersive et pleine de défis.</p>
+                </div>
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le but du jeu est de survivre en collectant des ressources, en fabriquant
-                    des objets, en construisant des structures et en apprivoisant des créatures. Ces dernières peuvent
-                    être utilisées pour diverses tâches, comme le transport, la chasse ou la défense. L'apprivoisement
-                    des dinosaures est une composante clé, et les joueurs peuvent dresser des créatures de différentes
-                    tailles, allant des petits dinosaures aux énormes reptiles volants.<br><br>
-
-                    <strong>Un environnement dynamique :</strong><br>
-                    Ark: Survival Evolved propose un environnement dynamique avec des changements de météo, de
-                    température et de saisons, rendant la survie encore plus difficile. Les joueurs doivent gérer la
-                    faim, la soif et la santé, tout en évitant divers dangers tels que les prédateurs, d'autres
-                    survivants ou des phénomènes environnementaux.<br><br>
-
-                    <strong>Modes de jeu variés :</strong><br>
-                    Le jeu offre plusieurs modes : un mode solo, un mode multijoueur en ligne et des serveurs privés.
-                    Dans le mode multijoueur, les joueurs peuvent former des tribus pour s'entraider et se défendre
-                    contre d'autres tribus.<br><br>
-
-                    <strong>Un lore captivant :</strong><br>
-                    Le lore du jeu se dévoile à travers des artefacts, des journaux et des récits disséminés dans le
-                    monde. L'île est en réalité une gigantesque expérience menée par des entités mystérieuses, et la fin
-                    du jeu révèle une partie de ce secret.<br><br>
-
-                    <strong>Extensions et cartes supplémentaires :</strong><br>
-                    En plus de The Island, le jeu comprend plusieurs extensions et cartes supplémentaires, comme
-                    Scorched Earth, Aberration, Extinction et Genesis. Ces ajouts introduisent de nouveaux biomes,
-                    créatures et mécanismes de jeu.<br><br>
-
-                    <strong>Une expérience unique :</strong><br>
-                    Ark: Survival Evolved se distingue par sa forte composante de survie, son système d'apprivoisement
-                    complexe et ses mécaniques de jeu en monde ouvert, offrant aux joueurs une expérience immersive et
-                    pleine de défis.
-                </p>
-
-                <h3>Des jeux dans le même style :</h3>
+                <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
 
                 <div class="small-images">
                     <div>
@@ -470,8 +607,252 @@
 
     <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
+
+    <script>
+        // Traductions complètes
+        const translations = {
+            fr: {
+                'page-title': 'Présentation et Notation des Jeux',
+                'site-title': 'GamingBox : Présentation et Notation',
+                'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !',
+                'nav-home': 'Accueil',
+                'ark-title': 'Ark : Survival Evolved',
+                'rating': 'Note :',
+                'similar-games': 'Des jeux dans le même style :',
+                'copyright': '© 2025 GamingBox. Tous droits réservés.',
+                'contact': 'Nous contacter : GamingBox@gmail.com',
+                'ark-description': 'Ark: Survival Evolved est un jeu vidéo de survie en monde ouvert développé par Studio Wildcard. Le jeu prend place sur une île mystérieuse appelée The Island, où des dinosaures et d\'autres créatures préhistoriques coexistent avec des technologies avancées. Le joueur incarne un survivant qui doit naviguer dans ce monde hostile pour se défendre, se nourrir et se construire un abri. Le but du jeu est de survivre en collectant des ressources, en fabriquant des objets, en construisant des structures et en apprivoisant des créatures.',
+                'dynamic-environment': 'Un environnement dynamique :',
+                'dynamic-environment-desc': 'Ark: Survival Evolved propose un environnement dynamique avec des changements de météo, de température et de saisons, rendant la survie encore plus difficile. Les joueurs doivent gérer la faim, la soif et la santé, tout en évitant divers dangers.',
+                'game-modes': 'Modes de jeu variés :',
+                'game-modes-desc': 'Le jeu offre plusieurs modes : un mode solo, un mode multijoueur en ligne et des serveurs privés. Dans le mode multijoueur, les joueurs peuvent former des tribus pour s\'entraider.',
+                'captivating-lore': 'Un lore captivant :',
+                'captivating-lore-desc': 'Le lore du jeu se dévoile à travers des artefacts, des journaux et des récits disséminés dans le monde. L\'île est en réalité une gigantesque expérience menée par des entités mystérieuses.',
+                'expansions': 'Extensions et cartes supplémentaires :',
+                'expansions-desc': 'En plus de The Island, le jeu comprend plusieurs extensions et cartes supplémentaires, comme Scorched Earth, Aberration, Extinction et Genesis.',
+                'unique-experience': 'Une expérience unique :',
+                'unique-experience-desc': 'Ark: Survival Evolved se distingue par sa forte composante de survie, son système d\'apprivoisement complexe et ses mécaniques de jeu en monde ouvert.'
+            },
+            en: {
+                'page-title': 'Game Presentation and Rating',
+                'site-title': 'GamingBox: Presentation and Rating',
+                'site-subtitle': 'Discover popular games and their objective ratings!',
+                'nav-home': 'Home',
+                'ark-title': 'Ark: Survival Evolved',
+                'rating': 'Rating:',
+                'similar-games': 'Games in the same style:',
+                'copyright': '© 2025 GamingBox. All rights reserved.',
+                'contact': 'Contact us: GamingBox@gmail.com',
+                'ark-description': 'Ark: Survival Evolved is an open-world survival video game developed by Studio Wildcard. The game takes place on a mysterious island called The Island, where dinosaurs and other prehistoric creatures coexist with advanced technologies. The player plays a survivor who must navigate this hostile world to defend themselves, feed themselves and build shelter. The goal of the game is to survive by collecting resources, crafting objects, building structures and taming creatures.',
+                'dynamic-environment': 'A dynamic environment:',
+                'dynamic-environment-desc': 'Ark: Survival Evolved offers a dynamic environment with weather, temperature and seasonal changes, making survival even more difficult. Players must manage hunger, thirst and health, while avoiding various dangers.',
+                'game-modes': 'Various game modes:',
+                'game-modes-desc': 'The game offers several modes: a solo mode, an online multiplayer mode and private servers. In multiplayer mode, players can form tribes to help each other.',
+                'captivating-lore': 'A captivating lore:',
+                'captivating-lore-desc': 'The game\'s lore unfolds through artifacts, journals and stories scattered throughout the world. The island is actually a gigantic experiment conducted by mysterious entities.',
+                'expansions': 'Extensions and additional maps:',
+                'expansions-desc': 'In addition to The Island, the game includes several expansions and additional maps, such as Scorched Earth, Aberration, Extinction and Genesis.',
+                'unique-experience': 'A unique experience:',
+                'unique-experience-desc': 'Ark: Survival Evolved stands out for its strong survival component, its complex taming system and its open-world game mechanics.'
+            },
+            es: {
+                'page-title': 'Presentación y Calificación de Juegos',
+                'site-title': 'GamingBox: Presentación y Calificación',
+                'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!',
+                'nav-home': 'Inicio',
+                'ark-title': 'Ark: Survival Evolved',
+                'rating': 'Calificación:',
+                'similar-games': 'Juegos del mismo estilo:',
+                'copyright': '© 2025 GamingBox. Todos los derechos reservados.',
+                'contact': 'Contáctanos: GamingBox@gmail.com',
+                'ark-description': 'Ark: Survival Evolved es un videojuego de supervivencia de mundo abierto desarrollado por Studio Wildcard. El juego tiene lugar en una isla misteriosa llamada The Island, donde los dinosaurios y otras criaturas prehistóricas coexisten con tecnologías avanzadas. El jugador encarna a un superviviente que debe navegar por este mundo hostil para defenderse, alimentarse y construir un refugio. El objetivo del juego es sobrevivir recolectando recursos, fabricando objetos, construyendo estructuras y domando criaturas.',
+                'dynamic-environment': 'Un entorno dinámico:',
+                'dynamic-environment-desc': 'Ark: Survival Evolved ofrece un entorno dinámico con cambios climáticos, de temperatura y estacionales, haciendo que la supervivencia sea aún más difícil. Los jugadores deben gestionar el hambre, la sed y la salud, evitando varios peligros.',
+                'game-modes': 'Modos de juego variados:',
+                'game-modes-desc': 'El juego ofrece varios modos: un modo solo, un modo multijugador en línea y servidores privados. En modo multijugador, los jugadores pueden formar tribus para ayudarse mutuamente.',
+                'captivating-lore': 'Una historia cautivadora:',
+                'captivating-lore-desc': 'La historia del juego se despliega a través de artefactos, diarios y relatos esparcidos por el mundo. La isla es en realidad un experimento gigantesco dirigido por entidades misteriosas.',
+                'expansions': 'Expansiones y mapas adicionales:',
+                'expansions-desc': 'Además de The Island, el juego incluye varias expansiones y mapas adicionales, como Scorched Earth, Aberration, Extinction y Genesis.',
+                'unique-experience': 'Una experiencia única:',
+                'unique-experience-desc': 'Ark: Survival Evolved se destaca por su fuerte componente de supervivencia, su sistema de domesticación complejo y sus mecánicas de juego de mundo abierto.'
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        // Fonction pour changer la langue
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+
+            // Mettre à jour le drapeau actuel
+            updateCurrentFlag(lang);
+
+            // Traduire tous les éléments
+            translatePage();
+
+            // Fermer le dropdown
+            closeLanguageDropdown();
+        }
+
+        // Fonction pour mettre à jour le drapeau actuel
+        function updateCurrentFlag(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangSpan = document.getElementById('currentLang');
+
+            switch (lang) {
+                case 'fr':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `
+                        <rect width="3" height="2" fill="#002654"/>
+                        <rect width="2" height="2" fill="#FFFFFF"/>
+                        <rect width="1" height="2" fill="#ED2939"/>
+                    `;
+                    currentLangSpan.textContent = 'FR';
+                    break;
+                case 'en':
+                    currentFlag.setAttribute('viewBox', '0 0 50 30');
+                    currentFlag.innerHTML = `
+                        <rect width="50" height="30" fill="#012169"/>
+                        <path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/>
+                        <path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/>
+                        <path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/>
+                        <path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>
+                    `;
+                    currentLangSpan.textContent = 'EN';
+                    break;
+                case 'es':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `
+                        <rect width="3" height="2" fill="#C60B1E"/>
+                        <rect width="3" height="0.66" y="0.67" fill="#FFC400"/>
+                    `;
+                    currentLangSpan.textContent = 'ES';
+                    break;
+            }
+        }
+
+        // Fonction pour traduire la page
+        function translatePage() {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    // Pour les éléments avec du contenu HTML complexe comme la description d'ARK
+                    if (key === 'ark-description') {
+                        element.innerHTML = createArkDescription();
+                    } else {
+                        element.textContent = translations[currentLanguage][key];
+                    }
+                }
+            });
+
+            // Traduire le titre de la page
+            document.title = translations[currentLanguage]['page-title'] || 'Présentation et Notation des Jeux';
+        }
+
+        // Fonction pour créer la description d'ARK traduite
+        function createArkDescription() {
+            const lang = currentLanguage;
+
+            if (lang === 'en') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Ark: Survival Evolved is an open-world survival video game developed by Studio Wildcard. The game takes place on a mysterious island called The Island, where dinosaurs and other prehistoric creatures coexist with advanced technologies. The player plays a survivor who must navigate this hostile world to defend themselves, feed themselves and build shelter.</p>
+                    <br><br>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The goal of the game is to survive by collecting resources, crafting objects, building structures and taming creatures. These can be used for various tasks, such as transportation, hunting or defense. Taming dinosaurs is a key component, and players can train creatures of different sizes, ranging from small dinosaurs to huge flying reptiles.</p>
+                    <br><br>
+                    <p><strong>A dynamic environment:</strong></p>
+                    <p>Ark: Survival Evolved offers a dynamic environment with weather, temperature and seasonal changes, making survival even more difficult. Players must manage hunger, thirst and health, while avoiding various dangers such as predators, other survivors or environmental phenomena.</p>
+                    <br><br>
+                    <p><strong>Various game modes:</strong></p>
+                    <p>The game offers several modes: a solo mode, an online multiplayer mode and private servers. In multiplayer mode, players can form tribes to help each other and defend against other tribes.</p>
+                    <br><br>
+                    <p><strong>A captivating lore:</strong></p>
+                    <p>The game's lore unfolds through artifacts, journals and stories scattered throughout the world. The island is actually a gigantic experiment conducted by mysterious entities, and the end of the game reveals part of this secret.</p>
+                    <br><br>
+                    <p><strong>Extensions and additional maps:</strong></p>
+                    <p>In addition to The Island, the game includes several expansions and additional maps, such as Scorched Earth, Aberration, Extinction and Genesis. These additions introduce new biomes, creatures and game mechanics.</p>
+                    <br><br>
+                    <p><strong>A unique experience:</strong></p>
+                    <p>Ark: Survival Evolved stands out for its strong survival component, its complex taming system and its open-world game mechanics, offering players an immersive and challenging experience.</p>
+                `;
+            } else if (lang === 'es') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Ark: Survival Evolved es un videojuego de supervivencia de mundo abierto desarrollado por Studio Wildcard. El juego tiene lugar en una isla misteriosa llamada The Island, donde los dinosaurios y otras criaturas prehistóricas coexisten con tecnologías avanzadas. El jugador encarna a un superviviente que debe navegar por este mundo hostil para defenderse, alimentarse y construir un refugio.</p>
+                    <br><br>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El objetivo del juego es sobrevivir recolectando recursos, fabricando objetos, construyendo estructuras y domando criaturas. Estas pueden ser utilizadas para diversas tareas, como transporte, caza o defensa. La domesticación de dinosaurios es un componente clave, y los jugadores pueden entrenar criaturas de diferentes tamaños, desde pequeños dinosaurios hasta enormes reptiles voladores.</p>
+                    <br><br>
+                    <p><strong>Un entorno dinámico:</strong></p>
+                    <p>Ark: Survival Evolved ofrece un entorno dinámico con cambios climáticos, de temperatura y estacionales, haciendo que la supervivencia sea aún más difícil. Los jugadores deben gestionar el hambre, la sed y la salud, mientras evitan varios peligros como depredadores, otros supervivientes o fenómenos ambientales.</p>
+                    <br><br>
+                    <p><strong>Modos de juego variados:</strong></p>
+                    <p>El juego ofrece varios modos: un modo solo, un modo multijugador en línea y servidores privados. En modo multijugador, los jugadores pueden formar tribus para ayudarse mutuamente y defenderse contra otras tribus.</p>
+                    <br><br>
+                    <p><strong>Una historia cautivadora:</strong></p>
+                    <p>La historia del juego se despliega a través de artefactos, diarios y relatos esparcidos por el mundo. La isla es en realidad un experimento gigantesco dirigido por entidades misteriosas, y el final del juego revela parte de este secreto.</p>
+                    <br><br>
+                    <p><strong>Expansiones y mapas adicionales:</strong></p>
+                    <p>Además de The Island, el juego incluye varias expansiones y mapas adicionales, como Scorched Earth, Aberration, Extinction y Genesis. Estas adiciones introducen nuevos biomas, criaturas y mecánicas de juego.</p>
+                    <br><br>
+                    <p><strong>Una experiencia única:</strong></p>
+                    <p>Ark: Survival Evolved se destaca por su fuerte componente de supervivencia, su sistema de domesticación complejo y sus mecánicas de juego de mundo abierto, ofreciendo a los jugadores una experiencia inmersiva y llena de desafíos.</p>
+                `;
+            } else {
+                // Français (par défaut)
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Ark: Survival Evolved est un jeu vidéo de survie en monde ouvert développé par Studio Wildcard. Le jeu prend place sur une île mystérieuse appelée The Island, où des dinosaures et d'autres créatures préhistoriques coexistent avec des technologies avancées. Le joueur incarne un survivant qui doit naviguer dans ce monde hostile pour se défendre, se nourrir et se construire un abri.</p>
+                    <br><br>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le but du jeu est de survivre en collectant des ressources, en fabriquant des objets, en construisant des structures et en apprivoisant des créatures. Ces dernières peuvent être utilisées pour diverses tâches, comme le transport, la chasse ou la défense. L'apprivoisement des dinosaures est une composante clé, et les joueurs peuvent dresser des créatures de différentes tailles, allant des petits dinosaures aux énormes reptiles volants.</p>
+                    <br><br>
+                    <p><strong>Un environnement dynamique :</strong></p>
+                    <p>Ark: Survival Evolved propose un environnement dynamique avec des changements de météo, de température et de saisons, rendant la survie encore plus difficile. Les joueurs doivent gérer la faim, la soif et la santé, tout en évitant divers dangers tels que les prédateurs, d'autres survivants ou des phénomènes environnementaux.</p>
+                    <br><br>
+                    <p><strong>Modes de jeu variés :</strong></p>
+                    <p>Le jeu offre plusieurs modes : un mode solo, un mode multijoueur en ligne et des serveurs privés. Dans le mode multijoueur, les joueurs peuvent former des tribus pour s'entraider et se défendre contre d'autres tribus.</p>
+                    <br><br>
+                    <p><strong>Un lore captivant :</strong></p>
+                    <p>Le lore du jeu se dévoile à travers des artefacts, des journaux et des récits disséminés dans le monde. L'île est en réalité une gigantesque expérience menée par des entités mystérieuses, et la fin du jeu révèle une partie de ce secret.</p>
+                    <br><br>
+                    <p><strong>Extensions et cartes supplémentaires :</strong></p>
+                    <p>En plus de The Island, le jeu comprend plusieurs extensions et cartes supplémentaires, comme Scorched Earth, Aberration, Extinction et Genesis. Ces ajouts introduisent de nouveaux biomes, créatures et mécanismes de jeu.</p>
+                    <br><br>
+                    <p><strong>Une expérience unique :</strong></p>
+                    <p>Ark: Survival Evolved se distingue par sa forte composante de survie, son système d'apprivoisement complexe et ses mécaniques de jeu en monde ouvert, offrant aux joueurs une expérience immersive et pleine de défis.</p>
+                `;
+            }
+        }
+
+        // Fonction pour basculer le dropdown de langue
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // Fonction pour fermer le dropdown de langue
+        function closeLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            dropdown.classList.remove('show');
+        }
+
+        // Fermer le dropdown si on clique ailleurs
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (!dropdown.contains(event.target)) {
+                closeLanguageDropdown();
+            }
+        });
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Charger la langue sauvegardée
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'fr';
+            changeLanguage(savedLanguage);
+        });
+    </script>
+
 </body>
 
 </html>
