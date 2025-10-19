@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
     <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles de base pour la mise en page */
         * {
@@ -57,16 +58,50 @@
             background-color: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        /* Cacher le hamburger par défaut */
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .hamburger i {
+            margin: 0;
+            transform: none;
+        }
+
+        /* Liens de navigation - affichage normal sur desktop */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
@@ -74,8 +109,112 @@
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
+        }
+
+        /* Sélecteur de langue */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content button:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .dropdown-content button:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        /* Overlay pour le menu mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
         }
 
         /* Contenu principal */
@@ -142,7 +281,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -164,7 +303,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -217,6 +356,73 @@
 
         /* MEDIA QUERIES AMÉLIORÉES */
 
+        /* Responsive - Menu Hamburger apparaît quand l'écran devient trop petit */
+        @media only screen and (max-width: 1200px) {
+
+            /* Afficher le hamburger */
+            .hamburger {
+                display: block;
+            }
+
+            /* Menu mobile en sidebar */
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                text-align: center;
+                transition: left 0.3s ease-in-out;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+                justify-content: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            nav a {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            /* Mettre le sélecteur de langue dans le menu */
+            .language-selector {
+                position: static;
+                transform: none;
+                width: 100%;
+            }
+
+            .language-button {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .dropdown-content button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .language-dropdown.show .dropdown-content {
+                display: block;
+            }
+        }
+
         /* Tablettes et écrans moyens */
         @media (max-width: 768px) {
             body {
@@ -228,14 +434,7 @@
             }
 
             nav {
-                flex-direction: column;
                 padding: 15px 10px;
-                gap: 10px;
-            }
-
-            nav a {
-                margin: 5px 0;
-                font-size: 16px;
             }
 
             main {
@@ -249,8 +448,10 @@
             }
 
             .small-images {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
                 gap: 15px;
+                max-width: 400px;
+                margin: 30px auto 0;
             }
 
             .small-images div {
@@ -296,13 +497,13 @@
             .small-images {
                 grid-template-columns: 1fr;
                 gap: 15px;
+                max-width: 350px;
+                margin: 30px auto 0;
             }
 
             .small-images div {
                 width: 100%;
                 height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
             }
 
             .small-images img {
@@ -334,10 +535,16 @@
                 font-size: 1.1rem;
             }
 
+            .small-images {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                max-width: 280px;
+                margin: 30px auto 0;
+            }
+
             .small-images div {
                 width: 100%;
                 height: 300px;
-                max-width: 280px;
             }
 
             .small-images img {
@@ -378,17 +585,68 @@
 </head>
 
 <body>
+    <!-- Overlay pour le menu mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- En-tête du site web -->
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
 
     <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
+        <!-- Bouton hamburger -->
+        <button class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
+        <!-- Liens de navigation -->
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
 
+            <!-- Sélecteur de langue dans le menu -->
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>
+                            Français
+                        </button>
+                        <button onclick="changeLanguage('en')">
+                            <svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>
+                            English
+                        </button>
+                        <button onclick="changeLanguage('es')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="1" y="0.5" fill="#FFC400" />
+                            </svg>
+                            Español
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Contenu principal -->
@@ -396,8 +654,7 @@
         <!-- Section "Jeux" -->
         <section id="games">
             <center>
-                <h2 style="color: rgb(143, 137, 137);">Counter-Strike 2
-                </h2>
+                <h2 data-translate="cs2-title">Counter-Strike 2</h2>
             </center>
 
             <div class="container">
@@ -405,59 +662,61 @@
                         width="650 " height="400">
                 </center>
                 <center>
-                    <p class="rating">Note : 9.0/10</p>
+                    <p class="rating"><span data-translate="rating">Note :</span> 4.5/5</p>
                 </center>
 
                 <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph" style="color: #333;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 est un jeu de tir à la première personne compétitif
-                    développé par Valve. Le joueur peut incarner un membre des forces spéciales ou un terroriste, chaque
-                    équipe ayant des objectifs différents, comme poser ou désamorcer une bombe, ou éliminer l'équipe
-                    adverse.
+                <div class="first-paragraph" id="cs2-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 est un jeu de tir à la première personne compétitif
+                        développé par Valve. Le joueur peut incarner un membre des forces spéciales ou un terroriste,
+                        chaque
+                        équipe ayant des objectifs différents, comme poser ou désamorcer une bombe, ou éliminer l'équipe
+                        adverse.</p>
                     <br><br>
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par ses mécaniques de jeu tactiques et son approche
-                    réaliste des combats. Les joueurs doivent travailler en équipe pour réussir leurs missions, en
-                    utilisant des stratégies variées et une gestion des ressources comme l'argent pour acheter des armes
-                    et des équipements.
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par ses mécaniques de jeu tactiques et son approche
+                        réaliste des combats. Les joueurs doivent travailler en équipe pour réussir leurs missions, en
+                        utilisant des stratégies variées et une gestion des ressources comme l'argent pour acheter des
+                        armes
+                        et des équipements.</p>
                     <br><br>
 
-                    <strong>Un gameplay stratégique et compétitif :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'un des aspects majeurs du jeu est sa stratégie d'équipe. Les joueurs
-                    doivent coordonner leurs actions pour atteindre les objectifs tout en éliminant l'équipe adverse. Le
-                    jeu offre une grande variété d'armes et de tactiques, permettant à chaque partie d'être unique.
+                    <p><strong>Un gameplay stratégique et compétitif :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'un des aspects majeurs du jeu est sa stratégie d'équipe. Les joueurs
+                        doivent coordonner leurs actions pour atteindre les objectifs tout en éliminant l'équipe
+                        adverse. Le
+                        jeu offre une grande variété d'armes et de tactiques, permettant à chaque partie d'être unique.
+                    </p>
                     <br><br>
 
-                    <strong>Les cartes et les modes de jeu :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Les cartes sont variées et chaque carte présente des défis différents en
-                    fonction de l'objectif de la mission. Counter-Strike 2 propose plusieurs modes de jeu, incluant le
-                    classique mode bombe et les modes de jeu à mort, où les joueurs affrontent des vagues d'ennemis.
+                    <p><strong>Les cartes et les modes de jeu :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les cartes sont variées et chaque carte présente des défis différents en
+                        fonction de l'objectif de la mission. Counter-Strike 2 propose plusieurs modes de jeu, incluant
+                        le
+                        classique mode bombe et les modes de jeu à mort, où les joueurs affrontent des vagues d'ennemis.
+                    </p>
                     <br><br>
 
-                    <strong>Les skins et la personnalisation :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu permet également une personnalisation esthétique des armes et des
-                    personnages grâce à des skins que les joueurs peuvent acheter, échanger ou gagner. Ces skins
-                    n'affectent pas le gameplay mais ajoutent une dimension sociale et économique au jeu.
+                    <p><strong>Les skins et la personnalisation :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu permet également une personnalisation esthétique des armes et des
+                        personnages grâce à des skins que les joueurs peuvent acheter, échanger ou gagner. Ces skins
+                        n'affectent pas le gameplay mais ajoutent une dimension sociale et économique au jeu.</p>
                     <br><br>
 
-                    <strong>La communauté et les compétitions :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 possède une communauté active et dynamique. De nombreux
-                    tournois compétitifs ont lieu à travers le monde, avec des joueurs professionnels qui s'affrontent
-                    pour des récompenses importantes. Le jeu a une scène eSports bien établie.
+                    <p><strong>La communauté et les compétitions :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 possède une communauté active et dynamique. De nombreux
+                        tournois compétitifs ont lieu à travers le monde, avec des joueurs professionnels qui
+                        s'affrontent
+                        pour des récompenses importantes. Le jeu a une scène eSports bien établie.</p>
                     <br><br>
 
-                    <strong>Une évolution du genre :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 a été acclamé pour son gameplay solide et ses mises à jour
-                    régulières. Il continue d'évoluer tout en restant fidèle aux racines de la série, offrant une
-                    expérience de tir réaliste et tactique qui est devenue un standard dans le genre des jeux
-                    compétitifs.
-
-                </p>
+                    <p><strong>Une évolution du genre :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 a été acclamé pour son gameplay solide et ses mises à
+                        jour
+                        régulières. Il continue d'évoluer tout en restant fidèle aux racines de la série, offrant une
+                        expérience de tir réaliste et tactique qui est devenue un standard dans le genre des jeux
+                        compétitifs.</p>
+                </div>
 
                 <br>
                 <br>
@@ -465,7 +724,7 @@
                 <br>
 
                 <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
+                    <h3 data-translate="similar-games">Des jeux dans le même style : </h3>
                 </center>
 
                 <br>
@@ -473,8 +732,7 @@
 
                 <div class="small-images">
                     <div>
-                        <img src="images-html/valorant-html.jpg" width="300" height="150" alt="Valorant
-                        ">
+                        <img src="images-html/valorant-html.jpg" width="300" height="150" alt="Valorant">
                         <p>Valorant</p>
                     </div>
                     <div>
@@ -501,10 +759,282 @@
 
     <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        // Gestion du menu hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('overlay');
 
+        if (hamburger) {
+            hamburger.addEventListener('click', toggleMenu);
+        }
+        if (overlay) {
+            overlay.addEventListener('click', closeMenu);
+        }
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            overlay.classList.remove('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+
+        // Fermer le menu lors du clic sur un lien
+        if (navLinks) {
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        // Traductions complètes
+        const translations = {
+            fr: {
+                'page-title': 'Présentation et Notation des Jeux',
+                'site-title': 'GamingBox : Présentation et Notation',
+                'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !',
+                'nav-home': 'Accueil',
+                'cs2-title': 'Counter-Strike 2',
+                'rating': 'Note :',
+                'similar-games': 'Des jeux dans le même style :',
+                'copyright': '© 2025 GamingBox. Tous droits réservés.'
+            },
+            en: {
+                'page-title': 'Game Presentation and Rating',
+                'site-title': 'GamingBox: Presentation and Rating',
+                'site-subtitle': 'Discover popular games and their objective ratings!',
+                'nav-home': 'Home',
+                'cs2-title': 'Counter-Strike 2',
+                'rating': 'Rating:',
+                'similar-games': 'Games in the same style:',
+                'copyright': '© 2025 GamingBox. All rights reserved.'
+            },
+            es: {
+                'page-title': 'Presentación y Calificación de Juegos',
+                'site-title': 'GamingBox: Presentación y Calificación',
+                'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!',
+                'nav-home': 'Inicio',
+                'cs2-title': 'Counter-Strike 2',
+                'rating': 'Calificación:',
+                'similar-games': 'Juegos del mismo estilo:',
+                'copyright': '© 2025 GamingBox. Todos los derechos reservados.'
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        // Fonction pour changer la langue
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+
+            // Mettre à jour le drapeau actuel
+            updateCurrentFlag(lang);
+
+            // Traduire tous les éléments
+            translatePage();
+
+            // Fermer le dropdown
+            closeLanguageDropdown();
+        }
+
+        // Fonction pour mettre à jour le drapeau actuel
+        function updateCurrentFlag(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangSpan = document.getElementById('currentLang');
+
+            if (!currentFlag || !currentLangSpan) return;
+
+            switch (lang) {
+                case 'fr':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `
+                        <rect width="3" height="2" fill="#002654"/>
+                        <rect width="2" height="2" fill="#FFFFFF"/>
+                        <rect width="1" height="2" fill="#ED2939"/>
+                    `;
+                    currentLangSpan.textContent = 'FR';
+                    break;
+                case 'en':
+                    currentFlag.setAttribute('viewBox', '0 0 50 30');
+                    currentFlag.innerHTML = `
+                        <rect width="50" height="30" fill="#012169"/>
+                        <path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/>
+                        <path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/>
+                        <path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/>
+                        <path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>
+                    `;
+                    currentLangSpan.textContent = 'EN';
+                    break;
+                case 'es':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `
+                        <rect width="3" height="2" fill="#C60B1E"/>
+                        <rect width="3" height="0.66" y="0.67" fill="#FFC400"/>
+                    `;
+                    currentLangSpan.textContent = 'ES';
+                    break;
+            }
+        }
+
+        // Fonction pour traduire la page
+        function translatePage() {
+            // Traduire tous les éléments avec data-translate
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+
+            // Traduire la description complète
+            const descriptionElement = document.getElementById('cs2-description');
+            if (descriptionElement) {
+                descriptionElement.innerHTML = createCS2Description();
+            }
+
+            // Traduire le titre de la page
+            document.title = translations[currentLanguage]['page-title'] || 'Présentation et Notation des Jeux';
+        }
+
+        // Fonction pour créer la description de CS2 traduite
+        function createCS2Description() {
+            const lang = currentLanguage;
+
+            if (lang === 'en') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 is a competitive first-person shooter developed by Valve. The player can play as a member of special forces or a terrorist, each team having different objectives, such as planting or defusing a bomb, or eliminating the opposing team.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game stands out for its tactical gameplay mechanics and realistic approach to combat. Players must work as a team to succeed in their missions, using varied strategies and resource management like money to buy weapons and equipment.</p>
+                    <br><br>
+
+                    <p><strong>Strategic and competitive gameplay:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;One of the major aspects of the game is its team strategy. Players must coordinate their actions to achieve objectives while eliminating the opposing team. The game offers a wide variety of weapons and tactics, making each match unique.</p>
+                    <br><br>
+
+                    <p><strong>Maps and game modes:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The maps are varied and each map presents different challenges depending on the mission objective. Counter-Strike 2 offers several game modes, including the classic bomb mode and deathmatch modes, where players face waves of enemies.</p>
+                    <br><br>
+
+                    <p><strong>Skins and customization:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game also allows aesthetic customization of weapons and characters through skins that players can buy, trade or earn. These skins do not affect gameplay but add a social and economic dimension to the game.</p>
+                    <br><br>
+
+                    <p><strong>Community and competitions:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 has an active and dynamic community. Many competitive tournaments take place around the world, with professional players competing for significant rewards. The game has a well-established eSports scene.</p>
+                    <br><br>
+
+                    <p><strong>An evolution of the genre:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 has been acclaimed for its solid gameplay and regular updates. It continues to evolve while remaining faithful to the roots of the series, offering a realistic and tactical shooting experience that has become a standard in the competitive gaming genre.</p>
+                `;
+            } else if (lang === 'es') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 es un juego de disparos en primera persona competitivo desarrollado por Valve. El jugador puede encarnar a un miembro de las fuerzas especiales o a un terrorista, cada equipo teniendo objetivos diferentes, como plantar o desactivar una bomba, o eliminar al equipo contrario.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego se destaca por sus mecánicas de juego tácticas y su enfoque realista del combate. Los jugadores deben trabajar en equipo para tener éxito en sus misiones, utilizando estrategias variadas y gestión de recursos como dinero para comprar armas y equipamiento.</p>
+                    <br><br>
+
+                    <p><strong>Jugabilidad estratégica y competitiva:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Uno de los aspectos principales del juego es su estrategia de equipo. Los jugadores deben coordinar sus acciones para alcanzar los objetivos mientras eliminan al equipo contrario. El juego ofrece una gran variedad de armas y tácticas, haciendo que cada partida sea única.</p>
+                    <br><br>
+
+                    <p><strong>Mapas y modos de juego:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Los mapas son variados y cada mapa presenta desafíos diferentes dependiendo del objetivo de la misión. Counter-Strike 2 ofrece varios modos de juego, incluyendo el modo bomba clásico y modos de juego a muerte, donde los jugadores enfrentan oleadas de enemigos.</p>
+                    <br><br>
+
+                    <p><strong>Skins y personalización:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego también permite la personalización estética de armas y personajes a través de skins que los jugadores pueden comprar, intercambiar o ganar. Estos skins no afectan la jugabilidad pero agregan una dimensión social y económica al juego.</p>
+                    <br><br>
+
+                    <p><strong>Comunidad y competiciones:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 tiene una comunidad activa y dinámica. Muchos torneos competitivos tienen lugar en todo el mundo, con jugadores profesionales que compiten por recompensas importantes. El juego tiene una escena eSports bien establecida.</p>
+                    <br><br>
+
+                    <p><strong>Una evolución del género:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 ha sido aclamado por su jugabilidad sólida y sus actualizaciones regulares. Continúa evolucionando mientras permanece fiel a las raíces de la serie, ofreciendo una experiencia de tiro realista y táctica que se ha convertido en un estándar en el género de juegos competitivos.</p>
+                `;
+            } else {
+                // Français (par défaut)
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 est un jeu de tir à la première personne compétitif développé par Valve. Le joueur peut incarner un membre des forces spéciales ou un terroriste, chaque équipe ayant des objectifs différents, comme poser ou désamorcer une bombe, ou éliminer l'équipe adverse.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par ses mécaniques de jeu tactiques et son approche réaliste des combats. Les joueurs doivent travailler en équipe pour réussir leurs missions, en utilisant des stratégies variées et une gestion des ressources comme l'argent pour acheter des armes et des équipements.</p>
+                    <br><br>
+
+                    <p><strong>Un gameplay stratégique et compétitif :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'un des aspects majeurs du jeu est sa stratégie d'équipe. Les joueurs doivent coordonner leurs actions pour atteindre les objectifs tout en éliminant l'équipe adverse. Le jeu offre une grande variété d'armes et de tactiques, permettant à chaque partie d'être unique.</p>
+                    <br><br>
+
+                    <p><strong>Les cartes et les modes de jeu :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les cartes sont variées et chaque carte présente des défis différents en fonction de l'objectif de la mission. Counter-Strike 2 propose plusieurs modes de jeu, incluant le classique mode bombe et les modes de jeu à mort, où les joueurs affrontent des vagues d'ennemis.</p>
+                    <br><br>
+
+                    <p><strong>Les skins et la personnalisation :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu permet également une personnalisation esthétique des armes et des personnages grâce à des skins que les joueurs peuvent acheter, échanger ou gagner. Ces skins n'affectent pas le gameplay mais ajoutent une dimension sociale et économique au jeu.</p>
+                    <br><br>
+
+                    <p><strong>La communauté et les compétitions :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 possède une communauté active et dynamique. De nombreux tournois compétitifs ont lieu à travers le monde, avec des joueurs professionnels qui s'affrontent pour des récompenses importantes. Le jeu a une scène eSports bien établie.</p>
+                    <br><br>
+
+                    <p><strong>Une évolution du genre :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Counter-Strike 2 a été acclamé pour son gameplay solide et ses mises à jour régulières. Il continue d'évoluer tout en restant fidèle aux racines de la série, offrant une expérience de tir réaliste et tactique qui est devenue un standard dans le genre des jeux compétitifs.</p>
+                `;
+            }
+        }
+
+        // Fonction pour basculer le dropdown de langue
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        // Fonction pour fermer le dropdown de langue
+        function closeLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+        }
+
+        // Fermer le dropdown si on clique ailleurs
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown && !dropdown.contains(event.target)) {
+                closeLanguageDropdown();
+            }
+        });
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Charger la langue sauvegardée
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'fr';
+            changeLanguage(savedLanguage);
+        });
+    </script>
 
 </body>
 
