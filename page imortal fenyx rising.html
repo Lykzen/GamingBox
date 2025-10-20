@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
     <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Styles de base pour la mise en page */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +28,6 @@
             flex-direction: column;
         }
 
-        /* Header modernisé */
         header {
             background-color: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
@@ -49,7 +48,6 @@
             font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
-        /* Navigation avec effets */
         nav {
             display: flex;
             justify-content: center;
@@ -57,16 +55,43 @@
             background-color: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
@@ -74,24 +99,106 @@
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
         }
 
-        /* Contenu principal */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         main {
             flex: 1;
             padding: 20px 15px;
             max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
-        }
-
-        section {
-            margin-bottom: 30px;
-        }
-
-        .container {
             width: 100%;
         }
 
@@ -109,7 +216,6 @@
             margin: 20px 0;
         }
 
-        /* Style pour les titres */
         h2,
         h3 {
             color: rgb(143, 137, 137);
@@ -118,7 +224,6 @@
             text-align: center;
         }
 
-        /* Premier paragraphe avec le nouveau style */
         .first-paragraph {
             font-family: 'Poppins', sans-serif;
             font-size: clamp(1rem, 2vw, 1.2rem);
@@ -133,7 +238,6 @@
             color: #333;
         }
 
-        /* Petites images avec disposition moderne */
         .small-images {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -142,7 +246,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -164,7 +268,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -175,7 +279,6 @@
             color: #000;
         }
 
-        /* Footer stylisé */
         footer {
             background-color: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
@@ -186,337 +289,354 @@
             margin-top: auto;
         }
 
-        /* Styles généraux des liens */
-        a {
-            text-decoration: none;
-            color: #ff6600;
-            font-size: 18px;
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
-        }
-
-        a::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ff6600;
-            transition: width 0.3s ease-in-out;
-        }
-
-        a:hover {
-            color: #ffffff;
-        }
-
-        a:hover::after {
-            width: 100%;
-        }
-
-        /* MEDIA QUERIES AMÉLIORÉES */
-
-        /* Tablettes et écrans moyens */
-        @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
+        @media only screen and (max-width: 1200px) {
+            .hamburger {
+                display: block;
             }
 
-            header {
-                padding: 15px 10px;
-            }
-
-            nav {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
                 flex-direction: column;
-                padding: 15px 10px;
-                gap: 10px;
+                background-color: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                transition: left 0.3s ease-in-out;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                left: 0;
             }
 
             nav a {
-                margin: 5px 0;
-                font-size: 16px;
-            }
-
-            main {
-                padding: 15px 10px;
-            }
-
-            .main-image {
                 width: 100%;
-                height: auto;
-                max-width: 500px;
+                padding: 12px 20px;
             }
 
-            .small-images {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .small-images div {
+            .language-selector {
+                position: static;
+                transform: none;
                 width: 100%;
-                height: 300px;
             }
 
-            .small-images img {
+            .language-button {
                 width: 100%;
-                height: 150px;
             }
 
-            .first-paragraph {
-                padding: 15px;
-                margin: 20px 10px;
-                text-align: left;
-            }
-
-            .rating {
-                font-size: 20px;
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
             }
         }
 
-        /* Smartphones */
-        @media (max-width: 480px) {
-            header {
-                padding: 12px 8px;
-            }
-
-            header h1 {
-                font-size: 1.3rem;
-                letter-spacing: 1px;
-            }
-
-            nav {
-                padding: 12px 8px;
-            }
-
-            main {
-                padding: 12px 8px;
-            }
-
+        @media (max-width: 768px) {
             .small-images {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 12px;
-                margin: 15px 5px;
-                font-size: 0.95rem;
-                line-height: 1.5;
-            }
-
-            .main-image {
-                max-width: 100%;
-                margin: 0 auto;
-            }
-
-            footer {
-                font-size: 0.9em;
-                padding: 12px;
-            }
-        }
-
-        /* Très petits écrans */
-        @media (max-width: 320px) {
-            header h1 {
-                font-size: 1.1rem;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 280px;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 10px;
-                margin: 10px 2px;
-                font-size: 0.9rem;
-            }
-
-            nav a {
-                font-size: 14px;
-            }
-        }
-
-        /* Grands écrans */
-        @media (min-width: 1200px) {
-            main {
-                padding: 40px 20px;
-            }
-
-            .small-images {
-                grid-template-columns: repeat(4, 1fr);
-                max-width: 1200px;
+                max-width: 400px;
                 margin: 30px auto 0;
-            }
-
-            .first-paragraph {
-                max-width: 1000px;
-                padding: 30px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- En-tête du site web -->
+    <div class="overlay" id="overlay"></div>
+
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
 
-    <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
+        <button class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
 
-    </nav>
-
-    <!-- Contenu principal -->
-    <main>
-        <!-- Section "Jeux" -->
-        <section id="games">
-            <center>
-                <h2 style="color: rgb(143, 137, 137);">Imortal Fenyx Rising</h2>
-            </center>
-
-            <div class="container">
-                <center><img src="images-html/Immortals-Fenyx-Rising-html.webp" alt="Image de  Imortal Fenyx"
-                        class="main-image" width="650 " height="400">
-                </center>
-                <center>
-                    <p class="rating">Note : 8.5/10</p>
-                </center>
-
-                <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph" style="color: #333;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;Immortals Fenyx Rising est un jeu d'action-aventure en monde ouvert
-                    développé par Ubisoft. Le joueur incarne Fenyx, un jeune guerrier ou une jeune guerrière, chargé(e)
-                    de sauver les dieux de l'Olympe d'une menace ancestrale : le titan Typhon. Pour accomplir cette
-                    mission, Fenyx devra explorer un vaste monde inspiré de la mythologie grecque et surmonter de
-                    nombreux défis.
-                    <br><br>
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son ton humoristique, son univers coloré et son
-                    système de progression inspiré des mythes grecs. Chaque région du monde est dédiée à un dieu et
-                    propose des épreuves uniques, alliant exploration, combat et résolution d'énigmes.
-                    <br><br>
-
-                    <strong>Un monde ouvert inspiré de la mythologie grecque :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'île d'Or est divisée en plusieurs régions thématiques, chacune dominée par
-                    un dieu comme Athéna, Arès ou Aphrodite. Chaque région offre des défis spécifiques, des ennemis
-                    mythologiques et des secrets à découvrir, rendant l'exploration immersive et enrichissante.
-                    <br><br>
-
-                    <strong>Un gameplay varié et dynamique :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Fenyx dispose de nombreuses compétences, comme le vol à l'aide des ailes de
-                    Dédale, la manipulation d'objets avec la force d'Héraclès, ou l'utilisation d'armes divines comme
-                    l'épée et la hache. Le combat repose sur des attaques rapides, des combos et des esquives
-                    stratégiques face aux créatures mythologiques.
-                    <br><br>
-
-                    <strong>Les cryptes du Tartare et les énigmes :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Les cryptes du Tartare sont des donjons remplis d'énigmes et de défis
-                    d'adresse qui récompensent les joueurs avec des améliorations pour Fenyx. Ces énigmes mettent à
-                    l'épreuve la logique et la maîtrise des pouvoirs divins, offrant un équilibre entre réflexion et
-                    action.
-                    <br><br>
-
-                    <strong>Personnalisation et progression :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Les joueurs peuvent personnaliser l'apparence et les capacités de Fenyx en
-                    trouvant de nouvelles armures, armes et potions. La progression est basée sur la collecte de
-                    ressources pour améliorer l'endurance, la santé et les compétences en combat et en exploration.
-                    <br><br>
-
-                    <strong>Une narration légère et humoristique :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'histoire est racontée avec humour à travers les dialogues entre Zeus et
-                    Prométhée, qui commentent les actions de Fenyx et apportent une touche décalée à la quête épique. Ce
-                    ton humoristique rend le jeu accessible tout en conservant une intrigue captivante.
-                    <br><br>
-
-                    <strong>Exploration et secrets :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'île d'Or regorge de secrets cachés, de coffres légendaires, et de quêtes
-                    annexes qui permettent aux joueurs d'approfondir leur compréhension du monde et d'obtenir des
-                    récompenses précieuses pour améliorer Fenyx.
-                    <br><br>
-
-
-                </p>
-
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
-                </center>
-
-                <br>
-                <br>
-
-                <div class="small-images">
-                    <div>
-                        <img src="" width="300" height="150" alt="
-                        ">
-                        <p>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p></p>
-                    </div>
-                    <div>
-                        <img src="images-html/Breath-of-the-Wild-html.webp" width="300" height="150" alt="botw">
-                        <p>The Lengend of Zelda breath of the wild
-                        <p>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="images-html/totk-html.webp" width="300" height="150" alt="totk">
-                        <p>The Lengend of Zelda Tears of the Kingdome
-                        </p>
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>
+                            Français
+                        </button>
+                        <button onclick="changeLanguage('en')">
+                            <svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>
+                            English
+                        </button>
+                        <button onclick="changeLanguage('es')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="1" y="0.5" fill="#FFC400" />
+                            </svg>
+                            Español
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </nav>
 
-            <br>
-            <br>
-            <br>
-            <br>
+    <main>
+        <section id="games">
+            <center>
+                <h2 data-translate="ifr-title">Immortals Fenyx Rising</h2>
+            </center>
+
+            <div class="container">
+                <center>
+                    <img src="images-html/Immortals-Fenyx-Rising-html.webp" alt="Immortals Fenyx Rising"
+                        class="main-image" width="650" height="400">
+                </center>
+                <center>
+                    <p class="rating"><span data-translate="rating">Note :</span> 8.5/10</p>
+                </center>
+
+                <div class="first-paragraph" id="ifr-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Immortals Fenyx Rising est un jeu d'action-aventure en monde ouvert
+                        développé par Ubisoft. Le joueur incarne Fenyx, un jeune guerrier ou une jeune guerrière,
+                        chargé(e) de sauver les dieux de l'Olympe d'une menace ancestrale : le titan Typhon. Pour
+                        accomplir cette mission, Fenyx devra explorer un vaste monde inspiré de la mythologie grecque et
+                        surmonter de nombreux défis.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son ton humoristique, son univers coloré et son
+                        système de progression inspiré des mythes grecs. Chaque région du monde est dédiée à un dieu et
+                        propose des épreuves uniques, alliant exploration, combat et résolution d'énigmes.</p>
+                    <br><br>
+
+                    <p><strong>Un monde ouvert inspiré de la mythologie grecque :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'île d'Or est divisée en plusieurs régions thématiques, chacune dominée
+                        par un dieu comme Athéna, Arès ou Aphrodite. Chaque région offre des défis spécifiques, des
+                        ennemis mythologiques et des secrets à découvrir, rendant l'exploration immersive et
+                        enrichissante.</p>
+                    <br><br>
+
+                    <p><strong>Un gameplay varié et dynamique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Fenyx dispose de nombreuses compétences, comme le vol à l'aide des ailes
+                        de Dédale, la manipulation d'objets avec la force d'Héraclès, ou l'utilisation d'armes divines
+                        comme l'épée et la hache. Le combat repose sur des attaques rapides, des combos et des esquives
+                        stratégiques face aux créatures mythologiques.</p>
+                    <br><br>
+
+                    <p><strong>Les cryptes du Tartare et les énigmes :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les cryptes du Tartare sont des donjons remplis d'énigmes et de défis
+                        d'adresse qui récompensent les joueurs avec des améliorations pour Fenyx. Ces énigmes mettent à
+                        l'épreuve la logique et la maîtrise des pouvoirs divins, offrant un équilibre entre réflexion et
+                        action.</p>
+                    <br><br>
+
+                    <p><strong>Personnalisation et progression :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les joueurs peuvent personnaliser l'apparence et les capacités de Fenyx
+                        en trouvant de nouvelles armures, armes et potions. La progression est basée sur la collecte de
+                        ressources pour améliorer l'endurance, la santé et les compétences en combat et en exploration.
+                    </p>
+                    <br><br>
+
+                    <p><strong>Une narration légère et humoristique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'histoire est racontée avec humour à travers les dialogues entre Zeus et
+                        Prométhée, qui commentent les actions de Fenyx et apportent une touche décalée à la quête
+                        épique. Ce ton humoristique rend le jeu accessible tout en conservant une intrigue captivante.
+                    </p>
+                    <br><br>
+
+                    <p><strong>Exploration et secrets :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'île d'Or regorge de secrets cachés, de coffres légendaires, et de
+                        quêtes annexes qui permettent aux joueurs d'approfondir leur compréhension du monde et d'obtenir
+                        des récompenses précieuses pour améliorer Fenyx.</p>
+                </div>
+
+                <br><br><br><br>
+
+                <center>
+                    <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
+                </center>
+
+                <br><br>
+
+                <div class="small-images">
+                    <div>
+                        <img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div>
+                        <img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div>
+                        <img src="images-html/Breath-of-the-Wild-html.webp" alt="BOTW">
+                        <p>The Legend of Zelda: Breath of the Wild</p>
+                    </div>
+                    <div>
+                        <img src="images-html/totk-html.webp" alt="TOTK">
+                        <p>The Legend of Zelda: Tears of the Kingdom</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
-    <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('overlay');
 
+        if (hamburger) hamburger.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            overlay.classList.remove('active');
+            hamburger.querySelector('i').className = 'fa-solid fa-bars';
+        }
+
+        if (navLinks) {
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        const translations = {
+            fr: {
+                'page-title': 'Présentation et Notation des Jeux',
+                'site-title': 'GamingBox : Présentation et Notation',
+                'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !',
+                'nav-home': 'Accueil',
+                'ifr-title': 'Immortals Fenyx Rising',
+                'rating': 'Note :',
+                'similar-games': 'Des jeux dans le même style :',
+                'copyright': '© 2025 GamingBox. Tous droits réservés.'
+            },
+            en: {
+                'page-title': 'Game Presentation and Rating',
+                'site-title': 'GamingBox: Presentation and Rating',
+                'site-subtitle': 'Discover popular games and their objective ratings!',
+                'nav-home': 'Home',
+                'ifr-title': 'Immortals Fenyx Rising',
+                'rating': 'Rating:',
+                'similar-games': 'Games in the same style:',
+                'copyright': '© 2025 GamingBox. All rights reserved.'
+            },
+            es: {
+                'page-title': 'Presentación y Calificación de Juegos',
+                'site-title': 'GamingBox: Presentación y Calificación',
+                'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!',
+                'nav-home': 'Inicio',
+                'ifr-title': 'Immortals Fenyx Rising',
+                'rating': 'Calificación:',
+                'similar-games': 'Juegos del mismo estilo:',
+                'copyright': '© 2025 GamingBox. Todos los derechos reservados.'
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateCurrentFlag(lang);
+            translatePage();
+            closeLanguageDropdown();
+        }
+
+        function updateCurrentFlag(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangSpan = document.getElementById('currentLang');
+            if (!currentFlag || !currentLangSpan) return;
+
+            const flags = {
+                fr: { viewBox: '0 0 3 2', svg: '<rect width="3" height="2" fill="#002654"/><rect width="2" height="2" fill="#FFFFFF"/><rect width="1" height="2" fill="#ED2939"/>', text: 'FR' },
+                en: { viewBox: '0 0 50 30', svg: '<rect width="50" height="30" fill="#012169"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>', text: 'EN' },
+                es: { viewBox: '0 0 3 2', svg: '<rect width="3" height="2" fill="#C60B1E"/><rect width="3" height="0.66" y="0.67" fill="#FFC400"/>', text: 'ES' }
+            };
+
+            currentFlag.setAttribute('viewBox', flags[lang].viewBox);
+            currentFlag.innerHTML = flags[lang].svg;
+            currentLangSpan.textContent = flags[lang].text;
+        }
+
+        function translatePage() {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLanguage]?.[key]) {
+                    el.textContent = translations[currentLanguage][key];
+                }
+            });
+
+            const desc = document.getElementById('ifr-description');
+            if (desc) desc.innerHTML = createIFRDescription();
+            document.title = translations[currentLanguage]['page-title'];
+        }
+
+        function createIFRDescription() {
+            const descriptions = {
+                en: `<p>&nbsp;&nbsp;&nbsp;&nbsp;Immortals Fenyx Rising is an open-world action-adventure game developed by Ubisoft. The player embodies Fenyx, a young warrior, tasked with saving the gods of Olympus from an ancient threat: the titan Typhon. To accomplish this mission, Fenyx must explore a vast world inspired by Greek mythology and overcome many challenges.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;The game stands out for its humorous tone, colorful universe and progression system inspired by Greek myths. Each region of the world is dedicated to a god and offers unique challenges, combining exploration, combat and puzzle solving.</p><br><br><p><strong>An open world inspired by Greek mythology:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The Golden Isle is divided into several thematic regions, each dominated by a god like Athena, Ares or Aphrodite. Each region offers specific challenges, mythological enemies and secrets to discover, making exploration immersive and rewarding.</p><br><br><p><strong>Varied and dynamic gameplay:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Fenyx has many skills, such as flying with Daedalus' wings, manipulating objects with Heracles' strength, or using divine weapons like the sword and axe. Combat relies on quick attacks, combos and strategic dodges against mythological creatures.</p><br><br><p><strong>Tartarus vaults and puzzles:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Tartarus vaults are dungeons filled with puzzles and skill challenges that reward players with upgrades for Fenyx. These puzzles test logic and mastery of divine powers, offering a balance between reflection and action.</p><br><br><p><strong>Customization and progression:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Players can customize Fenyx's appearance and abilities by finding new armor, weapons and potions. Progression is based on collecting resources to improve stamina, health and skills in combat and exploration.</p><br><br><p><strong>Light and humorous narration:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The story is told with humor through dialogues between Zeus and Prometheus, who comment on Fenyx's actions and bring an offbeat touch to the epic quest. This humorous tone makes the game accessible while maintaining a captivating plot.</p><br><br><p><strong>Exploration and secrets:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The Golden Isle is full of hidden secrets, legendary chests, and side quests that allow players to deepen their understanding of the world and obtain valuable rewards to improve Fenyx.</p>`,
+                es: `<p>&nbsp;&nbsp;&nbsp;&nbsp;Immortals Fenyx Rising es un juego de acción y aventura en mundo abierto desarrollado por Ubisoft. El jugador encarna a Fenyx, un joven guerrero o guerrera, encargado de salvar a los dioses del Olimpo de una amenaza ancestral: el titán Tifón. Para cumplir esta misión, Fenyx deberá explorar un vasto mundo inspirado en la mitología griega y superar muchos desafíos.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;El juego se destaca por su tono humorístico, su universo colorido y su sistema de progresión inspirado en los mitos griegos. Cada región del mundo está dedicada a un dios y ofrece pruebas únicas, combinando exploración, combate y resolución de acertijos.</p><br><br><p><strong>Un mundo abierto inspirado en la mitología griega:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;La Isla Dorada está dividida en varias regiones temáticas, cada una dominada por un dios como Atenea, Ares o Afrodita. Cada región ofrece desafíos específicos, enemigos mitológicos y secretos por descubrir, haciendo que la exploración sea inmersiva y gratificante.</p><br><br><p><strong>Jugabilidad variada y dinámica:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Fenyx dispone de muchas habilidades, como volar con las alas de Dédalo, manipular objetos con la fuerza de Hércules, o usar armas divinas como la espada y el hacha. El combate se basa en ataques rápidos, combos y esquivas estratégicas contra criaturas mitológicas.</p><br><br><p><strong>Las criptas del Tártaro y los acertijos:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Las criptas del Tártaro son mazmorras llenas de acertijos y desafíos de habilidad que recompensan a los jugadores con mejoras para Fenyx. Estos acertijos ponen a prueba la lógica y el dominio de los poderes divinos, ofreciendo un equilibrio entre reflexión y acción.</p><br><br><p><strong>Personalización y progresión:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Los jugadores pueden personalizar la apariencia y las capacidades de Fenyx encontrando nuevas armaduras, armas y pociones. La progresión se basa en la recolección de recursos para mejorar la resistencia, la salud y las habilidades en combate y exploración.</p><br><br><p><strong>Una narración ligera y humorística:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;La historia se cuenta con humor a través de los diálogos entre Zeus y Prometeo, quienes comentan las acciones de Fenyx y aportan un toque peculiar a la búsqueda épica. Este tono humorístico hace que el juego sea accesible mientras mantiene una trama cautivadora.</p><br><br><p><strong>Exploración y secretos:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;La Isla Dorada está llena de secretos ocultos, cofres legendarios y misiones secundarias que permiten a los jugadores profundizar su comprensión del mundo y obtener recompensas valiosas para mejorar a Fenyx.</p>`,
+                fr: `<p>&nbsp;&nbsp;&nbsp;&nbsp;Immortals Fenyx Rising est un jeu d'action-aventure en monde ouvert développé par Ubisoft. Le joueur incarne Fenyx, un jeune guerrier ou une jeune guerrière, chargé(e) de sauver les dieux de l'Olympe d'une menace ancestrale : le titan Typhon. Pour accomplir cette mission, Fenyx devra explorer un vaste monde inspiré de la mythologie grecque et surmonter de nombreux défis.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son ton humoristique, son univers coloré et son système de progression inspiré des mythes grecs. Chaque région du monde est dédiée à un dieu et propose des épreuves uniques, alliant exploration, combat et résolution d'énigmes.</p><br><br><p><strong>Un monde ouvert inspiré de la mythologie grecque :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;L'île d'Or est divisée en plusieurs régions thématiques, chacune dominée par un dieu comme Athéna, Arès ou Aphrodite. Chaque région offre des défis spécifiques, des ennemis mythologiques et des secrets à découvrir, rendant l'exploration immersive et enrichissante.</p><br><br><p><strong>Un gameplay varié et dynamique :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Fenyx dispose de nombreuses compétences, comme le vol à l'aide des ailes de Dédale, la manipulation d'objets avec la force d'Héraclès, ou l'utilisation d'armes divines comme l'épée et la hache. Le combat repose sur des attaques rapides, des combos et des esquives stratégiques face aux créatures mythologiques.</p><br><br><p><strong>Les cryptes du Tartare et les énigmes :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Les cryptes du Tartare sont des donjons remplis d'énigmes et de défis d'adresse qui récompensent les joueurs avec des améliorations pour Fenyx. Ces énigmes mettent à l'épreuve la logique et la maîtrise des pouvoirs divins, offrant un équilibre entre réflexion et action.</p><br><br><p><strong>Personnalisation et progression :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Les joueurs peuvent personnaliser l'apparence et les capacités de Fenyx en trouvant de nouvelles armures, armes et potions. La progression est basée sur la collecte de ressources pour améliorer l'endurance, la santé et les compétences en combat et en exploration.</p><br><br><p><strong>Une narration légère et humoristique :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;L'histoire est racontée avec humour à travers les dialogues entre Zeus et Prométhée, qui commentent les actions de Fenyx et apportent une touche décalée à la quête épique. Ce ton humoristique rend le jeu accessible tout en conservant une intrigue captivante.</p><br><br><p><strong>Exploration et secrets :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;L'île d'Or regorge de secrets cachés, de coffres légendaires, et de quêtes annexes qui permettent aux joueurs d'approfondir leur compréhension du monde et d'obtenir des récompenses précieuses pour améliorer Fenyx.</p>`
+            };
+
+            return descriptions[currentLanguage] || descriptions.fr;
+        }
+
+        function toggleLanguageDropdown() {
+            document.querySelector('.language-dropdown')?.classList.toggle('show');
+        }
+
+        function closeLanguageDropdown() {
+            document.querySelector('.language-dropdown')?.classList.remove('show');
+        }
+
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.language-dropdown');
+            const languageButton = document.querySelector('.language-button');
+            if (dropdown && !dropdown.contains(event.target) && event.target !== languageButton) {
+                closeLanguageDropdown();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            translatePage();
+        });
+    </script>
 
 </body>
 

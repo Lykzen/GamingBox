@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
     <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles de base pour la mise en page */
         * {
@@ -57,16 +58,50 @@
             background-color: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        /* Cacher le hamburger par défaut */
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .hamburger i {
+            margin: 0;
+            transform: none;
+        }
+
+        /* Liens de navigation - affichage normal sur desktop */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
@@ -74,8 +109,112 @@
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
+        }
+
+        /* Sélecteur de langue */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content button:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .dropdown-content button:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        /* Overlay pour le menu mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
         }
 
         /* Contenu principal */
@@ -142,7 +281,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -164,7 +303,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -217,6 +356,73 @@
 
         /* MEDIA QUERIES AMÉLIORÉES */
 
+        /* Responsive - Menu Hamburger apparaît quand l'écran devient trop petit */
+        @media only screen and (max-width: 1200px) {
+
+            /* Afficher le hamburger */
+            .hamburger {
+                display: block;
+            }
+
+            /* Menu mobile en sidebar */
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                text-align: center;
+                transition: left 0.3s ease-in-out;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+                justify-content: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            nav a {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            /* Mettre le sélecteur de langue dans le menu */
+            .language-selector {
+                position: static;
+                transform: none;
+                width: 100%;
+            }
+
+            .language-button {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .dropdown-content button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .language-dropdown.show .dropdown-content {
+                display: block;
+            }
+        }
+
         /* Tablettes et écrans moyens */
         @media (max-width: 768px) {
             body {
@@ -228,14 +434,7 @@
             }
 
             nav {
-                flex-direction: column;
                 padding: 15px 10px;
-                gap: 10px;
-            }
-
-            nav a {
-                margin: 5px 0;
-                font-size: 16px;
             }
 
             main {
@@ -249,8 +448,10 @@
             }
 
             .small-images {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
                 gap: 15px;
+                max-width: 400px;
+                margin: 30px auto 0;
             }
 
             .small-images div {
@@ -296,13 +497,13 @@
             .small-images {
                 grid-template-columns: 1fr;
                 gap: 15px;
+                max-width: 350px;
+                margin: 30px auto 0;
             }
 
             .small-images div {
                 width: 100%;
                 height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
             }
 
             .small-images img {
@@ -334,10 +535,16 @@
                 font-size: 1.1rem;
             }
 
+            .small-images {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                max-width: 280px;
+                margin: 30px auto 0;
+            }
+
             .small-images div {
                 width: 100%;
                 height: 300px;
-                max-width: 280px;
             }
 
             .small-images img {
@@ -377,17 +584,68 @@
 </head>
 
 <body>
+    <!-- Overlay pour le menu mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- En-tête du site web -->
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
 
     <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
+        <!-- Bouton hamburger -->
+        <button class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
+        <!-- Liens de navigation -->
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
 
+            <!-- Sélecteur de langue dans le menu -->
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>
+                            Français
+                        </button>
+                        <button onclick="changeLanguage('en')">
+                            <svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>
+                            English
+                        </button>
+                        <button onclick="changeLanguage('es')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="1" y="0.5" fill="#FFC400" />
+                            </svg>
+                            Español
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Contenu principal -->
@@ -395,82 +653,79 @@
         <!-- Section "Jeux" -->
         <section id="games">
             <center>
-                <h2 style="color: rgb(143, 137, 137);">God of War 2018</h2>
+                <h2 data-translate="gow-title">God of War 2018</h2>
             </center>
 
             <div class="container">
-                <center><img src="images-html/god of war 2018-html.jpg" alt="Image de  God of War 2018"
-                        class="main-image" width="650 " height="400">
+                <center><img src="images-html/god of war 2018-html.jpg" alt="God of War 2018" class="main-image"
+                        width="650" height="400">
                 </center>
                 <center>
-                    <p class="rating">Note : 9.6/10</p>
+                    <p class="rating"><span data-translate="rating">Note :</span> 9.6/10</p>
                 </center>
 
                 <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph" style="color: #333;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;God of War (2018) est un jeu d'action-aventure développé par Santa Monica
-                    Studio et publié par Sony Interactive Entertainment. Le jeu suit Kratos, un ancien dieu de la
-                    guerre, et son fils Atreus dans un voyage à travers les royaumes de la mythologie nordique.
-                    Ensemble, ils cherchent à accomplir la dernière volonté de la mère d'Atreus : répandre ses cendres
-                    au sommet de la plus haute montagne.
+                <div class="first-paragraph" id="gow-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War (2018) est un jeu d'action-aventure développé par Santa Monica
+                        Studio et publié par Sony Interactive Entertainment. Le jeu suit Kratos, un ancien dieu de la
+                        guerre, et son fils Atreus dans un voyage à travers les royaumes de la mythologie nordique.
+                        Ensemble, ils cherchent à accomplir la dernière volonté de la mère d'Atreus : répandre ses
+                        cendres au sommet de la plus haute montagne.</p>
                     <br><br>
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par sa narration immersive et son gameplay axé sur le
-                    combat stratégique et l'exploration. Contrairement aux précédents opus, ce volet adopte une caméra à
-                    la troisième personne en plan rapproché, offrant une expérience plus intime et immersive.
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par sa narration immersive et son gameplay axé sur le
+                        combat stratégique et l'exploration. Contrairement aux précédents opus, ce volet adopte une
+                        caméra à la troisième personne en plan rapproché, offrant une expérience plus intime et
+                        immersive.</p>
                     <br><br>
 
-                    <strong>Un système de combat renouvelé :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'un des aspects majeurs du jeu est son système de combat dynamique basé sur
-                    la hache Léviathan de Kratos. Cette arme emblématique peut être lancée et rappelée à volonté,
-                    introduisant des mécaniques stratégiques de combat et de résolution d'énigmes. Atreus assiste
-                    également Kratos en combat, en utilisant un arc pour distraire ou affaiblir les ennemis.
+                    <p><strong>Un système de combat renouvelé :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'un des aspects majeurs du jeu est son système de combat dynamique basé
+                        sur la hache Léviathan de Kratos. Cette arme emblématique peut être lancée et rappelée à
+                        volonté, introduisant des mécaniques stratégiques de combat et de résolution d'énigmes. Atreus
+                        assiste également Kratos en combat, en utilisant un arc pour distraire ou affaiblir les ennemis.
+                    </p>
                     <br><br>
 
-                    <strong>Exploration et progression :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu offre un monde semi-ouvert avec de nombreuses quêtes secondaires et
-                    secrets à découvrir. Les joueurs peuvent explorer les différents royaumes nordiques, résoudre des
-                    énigmes environnementales et affronter des créatures mythologiques. La progression repose sur
-                    l'amélioration de l'équipement et des compétences via un système de RPG léger.
+                    <p><strong>Exploration et progression :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu offre un monde semi-ouvert avec de nombreuses quêtes secondaires
+                        et secrets à découvrir. Les joueurs peuvent explorer les différents royaumes nordiques, résoudre
+                        des énigmes environnementales et affronter des créatures mythologiques. La progression repose
+                        sur l'amélioration de l'équipement et des compétences via un système de RPG léger.</p>
                     <br><br>
 
-                    <strong>Une relation père-fils au cœur de l'histoire :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'histoire de God of War met l'accent sur la relation entre Kratos et
-                    Atreus, mêlant moments d'émotion et apprentissage. Kratos doit apprendre à être un mentor pour son
-                    fils tout en luttant contre son passé violent et ses propres démons intérieurs.
+                    <p><strong>Une relation père-fils au cœur de l'histoire :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'histoire de God of War met l'accent sur la relation entre Kratos et
+                        Atreus, mêlant moments d'émotion et apprentissage. Kratos doit apprendre à être un mentor pour
+                        son fils tout en luttant contre son passé violent et ses propres démons intérieurs.</p>
                     <br><br>
 
-                    <strong>Les royaumes et la mythologie nordique :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu s'inspire de la mythologie nordique et permet aux joueurs d'explorer
-                    des lieux mythiques comme Midgard, Alfheim et Helheim. Chaque royaume offre des paysages uniques,
-                    des créatures légendaires et des défis spécifiques liés à la culture et aux légendes nordiques.
+                    <p><strong>Les royaumes et la mythologie nordique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu s'inspire de la mythologie nordique et permet aux joueurs
+                        d'explorer des lieux mythiques comme Midgard, Alfheim et Helheim. Chaque royaume offre des
+                        paysages uniques, des créatures légendaires et des défis spécifiques liés à la culture et aux
+                        légendes nordiques.</p>
                     <br><br>
 
-                    <strong>Les énigmes et l'interaction avec l'environnement :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'exploration est enrichie par de nombreuses énigmes environnementales
-                    nécessitant l'utilisation de la hache Léviathan et des capacités d'Atreus. Les joueurs doivent
-                    analyser leur environnement et interagir avec différents éléments pour progresser dans l'aventure.
+                    <p><strong>Les énigmes et l'interaction avec l'environnement :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'exploration est enrichie par de nombreuses énigmes environnementales
+                        nécessitant l'utilisation de la hache Léviathan et des capacités d'Atreus. Les joueurs doivent
+                        analyser leur environnement et interagir avec différents éléments pour progresser dans
+                        l'aventure.</p>
                     <br><br>
 
-                    <strong>Graphismes et bande-son immersifs :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;God of War est salué pour ses graphismes époustouflants et sa direction
-                    artistique impressionnante. Les environnements sont détaillés et magnifiquement rendus, tandis que
-                    la bande-son orchestrale ajoute de la profondeur émotionnelle et de l'épique à l'expérience de jeu.
+                    <p><strong>Graphismes et bande-son immersifs :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War est salué pour ses graphismes époustouflants et sa direction
+                        artistique impressionnante. Les environnements sont détaillés et magnifiquement rendus, tandis
+                        que la bande-son orchestrale ajoute de la profondeur émotionnelle et de l'épique à l'expérience
+                        de jeu.</p>
                     <br><br>
 
-                    <strong>Une refonte de la saga :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Avec ce volet, la série God of War a évolué en introduisant une narration
-                    plus profonde et des mécaniques de jeu modernisées. Le jeu a été acclamé par la critique et les
-                    joueurs pour son approche plus mature, son gameplay raffiné et son univers captivant.
-                    <br>
-                </p>
+                    <p><strong>Une refonte de la saga :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Avec ce volet, la série God of War a évolué en introduisant une narration
+                        plus profonde et des mécaniques de jeu modernisées. Le jeu a été acclamé par la critique et les
+                        joueurs pour son approche plus mature, son gameplay raffiné et son univers captivant.</p>
+                </div>
 
                 <br>
                 <br>
@@ -478,7 +733,7 @@
                 <br>
 
                 <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
+                    <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
                 </center>
 
                 <br>
@@ -486,10 +741,8 @@
 
                 <div class="small-images">
                     <div>
-                        <img src="images-html/GOT-html.jpg" width="300" height="150" alt="Ghost of Tsushima
-                        ">
-                        <p>Ghost of Tsushima
-                        </p>
+                        <img src="images-html/GOT-html.jpg" width="300" height="150" alt="Ghost of Tsushima">
+                        <p>Ghost of Tsushima</p>
                     </div>
                     <div>
                         <img src="images-html/elden-ring-html.jpg" width="300" height="150" alt="Elden Ring">
@@ -502,8 +755,7 @@
                     </div>
                     <div>
                         <img src="images-html/ds-html.jpg" width="300" height="150" alt="Dark Souls">
-                        <p>Dark Souls
-                        </p>
+                        <p>Dark Souls</p>
                     </div>
                 </div>
             </div>
@@ -517,10 +769,299 @@
 
     <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        // Gestion du menu hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('overlay');
 
+        if (hamburger) {
+            hamburger.addEventListener('click', toggleMenu);
+        }
+        if (overlay) {
+            overlay.addEventListener('click', closeMenu);
+        }
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            overlay.classList.remove('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+
+        // Fermer le menu lors du clic sur un lien
+        if (navLinks) {
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        // Traductions complètes
+        const translations = {
+            fr: {
+                'page-title': 'Présentation et Notation des Jeux',
+                'site-title': 'GamingBox : Présentation et Notation',
+                'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !',
+                'nav-home': 'Accueil',
+                'gow-title': 'God of War 2018',
+                'rating': 'Note :',
+                'similar-games': 'Des jeux dans le même style :',
+                'copyright': '© 2025 GamingBox. Tous droits réservés.'
+            },
+            en: {
+                'page-title': 'Game Presentation and Rating',
+                'site-title': 'GamingBox: Presentation and Rating',
+                'site-subtitle': 'Discover popular games and their objective ratings!',
+                'nav-home': 'Home',
+                'gow-title': 'God of War 2018',
+                'rating': 'Rating:',
+                'similar-games': 'Games in the same style:',
+                'copyright': '© 2025 GamingBox. All rights reserved.'
+            },
+            es: {
+                'page-title': 'Presentación y Calificación de Juegos',
+                'site-title': 'GamingBox: Presentación y Calificación',
+                'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!',
+                'nav-home': 'Inicio',
+                'gow-title': 'God of War 2018',
+                'rating': 'Calificación:',
+                'similar-games': 'Juegos del mismo estilo:',
+                'copyright': '© 2025 GamingBox. Todos los derechos reservados.'
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        // Fonction pour changer la langue
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateCurrentFlag(lang);
+            translatePage();
+            closeLanguageDropdown();
+        }
+
+        // Fonction pour mettre à jour le drapeau actuel
+        function updateCurrentFlag(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangSpan = document.getElementById('currentLang');
+
+            if (!currentFlag || !currentLangSpan) return;
+
+            switch (lang) {
+                case 'fr':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `
+                        <rect width="3" height="2" fill="#002654"/>
+                        <rect width="2" height="2" fill="#FFFFFF"/>
+                        <rect width="1" height="2" fill="#ED2939"/>
+                    `;
+                    currentLangSpan.textContent = 'FR';
+                    break;
+                case 'en':
+                    currentFlag.setAttribute('viewBox', '0 0 50 30');
+                    currentFlag.innerHTML = `
+                        <rect width="50" height="30" fill="#012169"/>
+                        <path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/>
+                        <path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/>
+                        <path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/>
+                        <path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>
+                    `;
+                    currentLangSpan.textContent = 'EN';
+                    break;
+                case 'es':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `
+                        <rect width="3" height="2" fill="#C60B1E"/>
+                        <rect width="3" height="0.66" y="0.67" fill="#FFC400"/>
+                    `;
+                    currentLangSpan.textContent = 'ES';
+                    break;
+            }
+        }
+
+        // Fonction pour traduire la page
+        function translatePage() {
+            // Traduire tous les éléments avec data-translate
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+
+            // Traduire la description complète
+            const descriptionElement = document.getElementById('gow-description');
+            if (descriptionElement) {
+                descriptionElement.innerHTML = createGOWDescription();
+            }
+
+            // Traduire le titre de la page
+            document.title = translations[currentLanguage]['page-title'] || 'Présentation et Notation des Jeux';
+        }
+
+        // Fonction pour créer la description de God of War traduite
+        function createGOWDescription() {
+            const lang = currentLanguage;
+
+            if (lang === 'en') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War (2018) is an action-adventure game developed by Santa Monica Studio and published by Sony Interactive Entertainment. The game follows Kratos, a former god of war, and his son Atreus on a journey through the realms of Norse mythology. Together, they seek to fulfill Atreus' mother's last wish: to spread her ashes at the top of the highest mountain.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game stands out for its immersive storytelling and gameplay focused on strategic combat and exploration. Unlike previous installments, this chapter adopts a close-up third-person camera, offering a more intimate and immersive experience.</p>
+                    <br><br>
+
+                    <p><strong>A renewed combat system:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;One of the major aspects of the game is its dynamic combat system based on Kratos' Leviathan Axe. This iconic weapon can be thrown and recalled at will, introducing strategic mechanics for combat and puzzle solving. Atreus also assists Kratos in combat, using a bow to distract or weaken enemies.</p>
+                    <br><br>
+
+                    <p><strong>Exploration and progression:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game offers a semi-open world with numerous side quests and secrets to discover. Players can explore different Norse realms, solve environmental puzzles and face mythological creatures. Progression relies on upgrading equipment and skills through a light RPG system.</p>
+                    <br><br>
+
+                    <p><strong>A father-son relationship at the heart of the story:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The story of God of War emphasizes the relationship between Kratos and Atreus, mixing emotional moments and learning. Kratos must learn to be a mentor to his son while struggling with his violent past and his own inner demons.</p>
+                    <br><br>
+
+                    <p><strong>Realms and Norse mythology:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game draws inspiration from Norse mythology and allows players to explore mythical places like Midgard, Alfheim and Helheim. Each realm offers unique landscapes, legendary creatures and specific challenges related to Norse culture and legends.</p>
+                    <br><br>
+
+                    <p><strong>Puzzles and environmental interaction:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Exploration is enriched by numerous environmental puzzles requiring the use of the Leviathan Axe and Atreus' abilities. Players must analyze their environment and interact with different elements to progress through the adventure.</p>
+                    <br><br>
+
+                    <p><strong>Immersive graphics and soundtrack:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War is praised for its stunning graphics and impressive art direction. Environments are detailed and beautifully rendered, while the orchestral soundtrack adds emotional depth and epic quality to the gaming experience.</p>
+                    <br><br>
+
+                    <p><strong>A saga overhaul:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;With this installment, the God of War series evolved by introducing deeper storytelling and modernized game mechanics. The game has been acclaimed by critics and players for its more mature approach, refined gameplay and captivating universe.</p>
+                `;
+            } else if (lang === 'es') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War (2018) es un juego de acción y aventura desarrollado por Santa Monica Studio y publicado por Sony Interactive Entertainment. El juego sigue a Kratos, un antiguo dios de la guerra, y su hijo Atreus en un viaje a través de los reinos de la mitología nórdica. Juntos, buscan cumplir el último deseo de la madre de Atreus: esparcir sus cenizas en la cima de la montaña más alta.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego se destaca por su narrativa inmersiva y su jugabilidad centrada en el combate estratégico y la exploración. A diferencia de las entregas anteriores, este capítulo adopta una cámara en tercera persona en primer plano, ofreciendo una experiencia más íntima e inmersiva.</p>
+                    <br><br>
+
+                    <p><strong>Un sistema de combate renovado:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Uno de los aspectos principales del juego es su sistema de combate dinámico basado en el Hacha Leviatán de Kratos. Esta arma icónica puede lanzarse y recuperarse a voluntad, introduciendo mecánicas estratégicas de combate y resolución de acertijos. Atreus también asiste a Kratos en combate, usando un arco para distraer o debilitar a los enemigos.</p>
+                    <br><br>
+
+                    <p><strong>Exploración y progresión:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego ofrece un mundo semiabierto con numerosas misiones secundarias y secretos por descubrir. Los jugadores pueden explorar diferentes reinos nórdicos, resolver acertijos ambientales y enfrentar criaturas mitológicas. La progresión se basa en la mejora del equipo y las habilidades a través de un sistema RPG ligero.</p>
+                    <br><br>
+
+                    <p><strong>Una relación padre-hijo en el corazón de la historia:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;La historia de God of War enfatiza la relación entre Kratos y Atreus, mezclando momentos emotivos y de aprendizaje. Kratos debe aprender a ser un mentor para su hijo mientras lucha con su pasado violento y sus propios demonios internos.</p>
+                    <br><br>
+
+                    <p><strong>Los reinos y la mitología nórdica:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego se inspira en la mitología nórdica y permite a los jugadores explorar lugares míticos como Midgard, Alfheim y Helheim. Cada reino ofrece paisajes únicos, criaturas legendarias y desafíos específicos relacionados con la cultura y las leyendas nórdicas.</p>
+                    <br><br>
+
+                    <p><strong>Los acertijos y la interacción con el entorno:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;La exploración se enriquece con numerosos acertijos ambientales que requieren el uso del Hacha Leviatán y las habilidades de Atreus. Los jugadores deben analizar su entorno e interactuar con diferentes elementos para progresar en la aventura.</p>
+                    <br><br>
+
+                    <p><strong>Gráficos y banda sonora inmersivos:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War es elogiado por sus impresionantes gráficos y su impresionante dirección artística. Los entornos están detallados y bellamente renderizados, mientras que la banda sonora orquestal añade profundidad emocional y calidad épica a la experiencia de juego.</p>
+                    <br><br>
+
+                    <p><strong>Una renovación de la saga:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Con esta entrega, la serie God of War evolucionó introduciendo una narrativa más profunda y mecánicas de juego modernizadas. El juego ha sido aclamado por la crítica y los jugadores por su enfoque más maduro, jugabilidad refinada y universo cautivador.</p>
+                `;
+            } else {
+                // Français (par défaut)
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War (2018) est un jeu d'action-aventure développé par Santa Monica Studio et publié par Sony Interactive Entertainment. Le jeu suit Kratos, un ancien dieu de la guerre, et son fils Atreus dans un voyage à travers les royaumes de la mythologie nordique. Ensemble, ils cherchent à accomplir la dernière volonté de la mère d'Atreus : répandre ses cendres au sommet de la plus haute montagne.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par sa narration immersive et son gameplay axé sur le combat stratégique et l'exploration. Contrairement aux précédents opus, ce volet adopte une caméra à la troisième personne en plan rapproché, offrant une expérience plus intime et immersive.</p>
+                    <br><br>
+
+                    <p><strong>Un système de combat renouvelé :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'un des aspects majeurs du jeu est son système de combat dynamique basé sur la hache Léviathan de Kratos. Cette arme emblématique peut être lancée et rappelée à volonté, introduisant des mécaniques stratégiques de combat et de résolution d'énigmes. Atreus assiste également Kratos en combat, en utilisant un arc pour distraire ou affaiblir les ennemis.</p>
+                    <br><br>
+
+                    <p><strong>Exploration et progression :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu offre un monde semi-ouvert avec de nombreuses quêtes secondaires et secrets à découvrir. Les joueurs peuvent explorer les différents royaumes nordiques, résoudre des énigmes environnementales et affronter des créatures mythologiques. La progression repose sur l'amélioration de l'équipement et des compétences via un système de RPG léger.</p>
+                    <br><br>
+
+                    <p><strong>Une relation père-fils au cœur de l'histoire :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'histoire de God of War met l'accent sur la relation entre Kratos et Atreus, mêlant moments d'émotion et apprentissage. Kratos doit apprendre à être un mentor pour son fils tout en luttant contre son passé violent et ses propres démons intérieurs.</p>
+                    <br><br>
+
+                    <p><strong>Les royaumes et la mythologie nordique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu s'inspire de la mythologie nordique et permet aux joueurs d'explorer des lieux mythiques comme Midgard, Alfheim et Helheim. Chaque royaume offre des paysages uniques, des créatures légendaires et des défis spécifiques liés à la culture et aux légendes nordiques.</p>
+                    <br><br>
+
+                    <p><strong>Les énigmes et l'interaction avec l'environnement :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'exploration est enrichie par de nombreuses énigmes environnementales nécessitant l'utilisation de la hache Léviathan et des capacités d'Atreus. Les joueurs doivent analyser leur environnement et interagir avec différents éléments pour progresser dans l'aventure.</p>
+                    <br><br>
+
+                    <p><strong>Graphismes et bande-son immersifs :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;God of War est salué pour ses graphismes époustouflants et sa direction artistique impressionnante. Les environnements sont détaillés et magnifiquement rendus, tandis que la bande-son orchestrale ajoute de la profondeur émotionnelle et de l'épique à l'expérience de jeu.</p>
+                    <br><br>
+
+                    <p><strong>Une refonte de la saga :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Avec ce volet, la série God of War a évolué en introduisant une narration plus profonde et des mécaniques de jeu modernisées. Le jeu a été acclamé par la critique et les joueurs pour son approche plus mature, son gameplay raffiné et son univers captivant.</p>
+                `;
+            }
+        }
+
+        // Fonction pour basculer le dropdown de langue
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        // Fonction pour fermer le dropdown de langue
+        function closeLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+        }
+
+        // Fermer le dropdown si on clique ailleurs
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.language-dropdown');
+            const languageButton = document.querySelector('.language-button');
+            if (dropdown && !dropdown.contains(event.target) && event.target !== languageButton) {
+                closeLanguageDropdown();
+            }
+        });
+
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function () {
+            // Charger la langue par défaut (français)
+            translatePage();
+        });
+    </script>
 
 </body>
 

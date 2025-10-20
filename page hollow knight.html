@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
     <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Styles de base pour la mise en page */
         * {
@@ -57,16 +58,50 @@
             background-color: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        /* Cacher le hamburger par défaut */
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .hamburger i {
+            margin: 0;
+            transform: none;
+        }
+
+        /* Liens de navigation - affichage normal sur desktop */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
@@ -74,8 +109,112 @@
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
+        }
+
+        /* Sélecteur de langue */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content button:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .dropdown-content button:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        /* Overlay pour le menu mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
         }
 
         /* Contenu principal */
@@ -142,7 +281,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -164,7 +303,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -217,6 +356,73 @@
 
         /* MEDIA QUERIES AMÉLIORÉES */
 
+        /* Responsive - Menu Hamburger apparaît quand l'écran devient trop petit */
+        @media only screen and (max-width: 1200px) {
+
+            /* Afficher le hamburger */
+            .hamburger {
+                display: block;
+            }
+
+            /* Menu mobile en sidebar */
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                flex-direction: column;
+                background-color: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                text-align: center;
+                transition: left 0.3s ease-in-out;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+                justify-content: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            nav a {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            /* Mettre le sélecteur de langue dans le menu */
+            .language-selector {
+                position: static;
+                transform: none;
+                width: 100%;
+            }
+
+            .language-button {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .dropdown-content button {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .language-dropdown.show .dropdown-content {
+                display: block;
+            }
+        }
+
         /* Tablettes et écrans moyens */
         @media (max-width: 768px) {
             body {
@@ -228,14 +434,7 @@
             }
 
             nav {
-                flex-direction: column;
                 padding: 15px 10px;
-                gap: 10px;
-            }
-
-            nav a {
-                margin: 5px 0;
-                font-size: 16px;
             }
 
             main {
@@ -249,8 +448,10 @@
             }
 
             .small-images {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
                 gap: 15px;
+                max-width: 400px;
+                margin: 30px auto 0;
             }
 
             .small-images div {
@@ -296,13 +497,13 @@
             .small-images {
                 grid-template-columns: 1fr;
                 gap: 15px;
+                max-width: 350px;
+                margin: 30px auto 0;
             }
 
             .small-images div {
                 width: 100%;
                 height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
             }
 
             .small-images img {
@@ -334,10 +535,16 @@
                 font-size: 1.1rem;
             }
 
+            .small-images {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                max-width: 280px;
+                margin: 30px auto 0;
+            }
+
             .small-images div {
                 width: 100%;
                 height: 300px;
-                max-width: 280px;
             }
 
             .small-images img {
@@ -377,17 +584,68 @@
 </head>
 
 <body>
+    <!-- Overlay pour le menu mobile -->
+    <div class="overlay" id="overlay"></div>
+
     <!-- En-tête du site web -->
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
 
     <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
+        <!-- Bouton hamburger -->
+        <button class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
+        <!-- Liens de navigation -->
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
 
+            <!-- Sélecteur de langue dans le menu -->
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>
+                            Français
+                        </button>
+                        <button onclick="changeLanguage('en')">
+                            <svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>
+                            English
+                        </button>
+                        <button onclick="changeLanguage('es')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="1" y="0.5" fill="#FFC400" />
+                            </svg>
+                            Español
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Contenu principal -->
@@ -395,78 +653,70 @@
         <!-- Section "Jeux" -->
         <section id="games">
             <center>
-                <h2 style="color: rgb(143, 137, 137);">Hollow knight</h2>
+                <h2 data-translate="hk-title">Hollow Knight</h2>
             </center>
 
             <div class="container">
-                <center><img src="images-html/hollow knight-html.jpg" alt="Image de  Hollow kight" class="main-image"
-                        width="650 " height="400">
+                <center><img src="images-html/hollow knight-html.jpg" alt="Hollow Knight" class="main-image" width="650"
+                        height="400">
                 </center>
                 <center>
-                    <p class="rating">Note : 9.4/10</p>
+                    <p class="rating"><span data-translate="rating">Note :</span> 9.4/10</p>
                 </center>
 
                 <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph" style="color: #333;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight est un jeu d'action-aventure de type metroidvania développé
-                    par Team Cherry. Le joueur incarne un petit chevalier insectoïde qui explore les ruines du royaume
-                    déchu d'Hallownest, un monde souterrain rempli de créatures corrompues, de mystères et de défis
-                    redoutables. L'objectif est de découvrir les secrets du royaume tout en affrontant de puissants
-                    ennemis et en débloquant de nouvelles capacités.
+                <div class="first-paragraph" id="hk-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight est un jeu d'action-aventure de type metroidvania développé
+                        par Team Cherry. Le joueur incarne un petit chevalier insectoïde qui explore les ruines du
+                        royaume déchu d'Hallownest, un monde souterrain rempli de créatures corrompues, de mystères et
+                        de défis redoutables. L'objectif est de découvrir les secrets du royaume tout en affrontant de
+                        puissants ennemis et en débloquant de nouvelles capacités.</p>
                     <br><br>
 
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son vaste monde interconnecté, rempli de zones
-                    uniques et de secrets cachés. L'exploration est libre, et les joueurs peuvent choisir leur propre
-                    chemin, tout en débloquant de nouvelles compétences pour progresser davantage.
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son vaste monde interconnecté, rempli de zones
+                        uniques et de secrets cachés. L'exploration est libre, et les joueurs peuvent choisir leur
+                        propre chemin, tout en débloquant de nouvelles compétences pour progresser davantage.</p>
                     <br><br>
 
-                    <strong>Un gameplay exigeant et précis :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight propose un système de combat fluide et exigeant, reposant sur
-                    l'esquive, l'attaque au corps à corps avec l'aiguille du chevalier, et l'utilisation de sorts
-                    magiques. Les combats contre les ennemis et les boss nécessitent de la patience et de la maîtrise
-                    des mécaniques de jeu pour survivre.
+                    <p><strong>Un gameplay exigeant et précis :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight propose un système de combat fluide et exigeant, reposant
+                        sur l'esquive, l'attaque au corps à corps avec l'aiguille du chevalier, et l'utilisation de
+                        sorts magiques. Les combats contre les ennemis et les boss nécessitent de la patience et de la
+                        maîtrise des mécaniques de jeu pour survivre.</p>
                     <br><br>
 
-                    <strong>Exploration et progression :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le monde d'Hallownest est conçu pour l'exploration, avec des passages
-                    cachés, des raccourcis et des zones inaccessibles au départ. Le joueur débloque progressivement de
-                    nouvelles capacités, comme le dash, le double saut ou la capacité de frapper vers le bas pour
-                    accéder à de nouvelles parties du monde.
+                    <p><strong>Exploration et progression :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le monde d'Hallownest est conçu pour l'exploration, avec des passages
+                        cachés, des raccourcis et des zones inaccessibles au départ. Le joueur débloque progressivement
+                        de nouvelles capacités, comme le dash, le double saut ou la capacité de frapper vers le bas pour
+                        accéder à de nouvelles parties du monde.</p>
                     <br><br>
 
-                    <strong>Une ambiance immersive et mélancolique :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'univers du jeu est marqué par une atmosphère sombre et mélancolique, avec
-                    des environnements détaillés et une bande-son envoûtante. Chaque zone possède une identité visuelle
-                    et sonore unique, renforçant l'immersion dans le monde d'Hallownest.
+                    <p><strong>Une ambiance immersive et mélancolique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'univers du jeu est marqué par une atmosphère sombre et mélancolique,
+                        avec des environnements détaillés et une bande-son envoûtante. Chaque zone possède une identité
+                        visuelle et sonore unique, renforçant l'immersion dans le monde d'Hallownest.</p>
                     <br><br>
 
-                    <strong>Les charmes et la personnalisation :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight propose un système de charmes qui permet aux joueurs de
-                    personnaliser leur style de jeu. Ces charmes offrent divers avantages, comme une meilleure
-                    régénération d'âme, une portée d'attaque accrue ou une amélioration des capacités défensives.
+                    <p><strong>Les charmes et la personnalisation :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight propose un système de charmes qui permet aux joueurs de
+                        personnaliser leur style de jeu. Ces charmes offrent divers avantages, comme une meilleure
+                        régénération d'âme, une portée d'attaque accrue ou une amélioration des capacités défensives.
+                    </p>
                     <br><br>
 
-                    <strong>Des ennemis et des boss variés :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu propose une grande variété d'ennemis et de boss aux patterns uniques,
-                    chacun demandant une approche différente. Certains affrontements sont mémorables et représentent de
-                    véritables défis qui mettent à l'épreuve les compétences du joueur.
+                    <p><strong>Des ennemis et des boss variés :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu propose une grande variété d'ennemis et de boss aux patterns
+                        uniques, chacun demandant une approche différente. Certains affrontements sont mémorables et
+                        représentent de véritables défis qui mettent à l'épreuve les compétences du joueur.</p>
                     <br><br>
 
-                    <strong>Une histoire cryptique et captivante :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le lore de Hollow Knight est raconté de manière indirecte à travers des
-                    dialogues, des descriptions d'objets et des indices visuels dans le monde. Le joueur doit explorer
-                    et rassembler les fragments d'histoire pour comprendre la chute d'Hallownest et le rôle du chevalier
-                    dans ce destin tragique.
-                    <br><br>
-                    <br>
-
-                </p>
+                    <p><strong>Une histoire cryptique et captivante :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le lore de Hollow Knight est raconté de manière indirecte à travers des
+                        dialogues, des descriptions d'objets et des indices visuels dans le monde. Le joueur doit
+                        explorer et rassembler les fragments d'histoire pour comprendre la chute d'Hallownest et le rôle
+                        du chevalier dans ce destin tragique.</p>
+                </div>
 
                 <br>
                 <br>
@@ -474,7 +724,7 @@
                 <br>
 
                 <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
+                    <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
                 </center>
 
                 <br>
@@ -482,25 +732,20 @@
 
                 <div class="small-images">
                     <div>
-                        <img src="images-html/silksong-html.jpg" width="300" height="150" alt="silksonG
-                        ">
-                        <p>Hollow Knight : SILKSONG
-                        </p>
+                        <img src="images-html/silksong-html.jpg" width="300" height="150" alt="Silksong">
+                        <p>Hollow Knight: SILKSONG</p>
                     </div>
                     <div>
                         <img src="images-html/elden-ring-html.jpg" width="300" height="150" alt="Elden Ring">
                         <p>Elden Ring</p>
                     </div>
                     <div>
-                        <img src="images-html/undertail-html.jpg" width="300" height="150" alt="undertale">
-                        <p>Undertail
-
-                        </p>
+                        <img src="images-html/undertail-html.jpg" width="300" height="150" alt="Undertale">
+                        <p>Undertale</p>
                     </div>
                     <div>
                         <img src="images-html/ds-html.jpg" width="300" height="150" alt="Dark Souls">
-                        <p>Dark Souls
-                        </p>
+                        <p>Dark Souls</p>
                     </div>
                 </div>
             </div>
@@ -514,10 +759,261 @@
 
     <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        // Gestion du menu hamburger
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('overlay');
 
+        if (hamburger) {
+            hamburger.addEventListener('click', toggleMenu);
+        }
+        if (overlay) {
+            overlay.addEventListener('click', closeMenu);
+        }
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            overlay.classList.remove('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+
+        // Fermer le menu lors du clic sur un lien
+        if (navLinks) {
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        // Traductions complètes
+        const translations = {
+            fr: {
+                'page-title': 'Présentation et Notation des Jeux',
+                'site-title': 'GamingBox : Présentation et Notation',
+                'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !',
+                'nav-home': 'Accueil',
+                'hk-title': 'Hollow Knight',
+                'rating': 'Note :',
+                'similar-games': 'Des jeux dans le même style :',
+                'copyright': '© 2025 GamingBox. Tous droits réservés.'
+            },
+            en: {
+                'page-title': 'Game Presentation and Rating',
+                'site-title': 'GamingBox: Presentation and Rating',
+                'site-subtitle': 'Discover popular games and their objective ratings!',
+                'nav-home': 'Home',
+                'hk-title': 'Hollow Knight',
+                'rating': 'Rating:',
+                'similar-games': 'Games in the same style:',
+                'copyright': '© 2025 GamingBox. All rights reserved.'
+            },
+            es: {
+                'page-title': 'Presentación y Calificación de Juegos',
+                'site-title': 'GamingBox: Presentación y Calificación',
+                'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!',
+                'nav-home': 'Inicio',
+                'hk-title': 'Hollow Knight',
+                'rating': 'Calificación:',
+                'similar-games': 'Juegos del mismo estilo:',
+                'copyright': '© 2025 GamingBox. Todos los derechos reservados.'
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateCurrentFlag(lang);
+            translatePage();
+            closeLanguageDropdown();
+        }
+
+        function updateCurrentFlag(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangSpan = document.getElementById('currentLang');
+
+            if (!currentFlag || !currentLangSpan) return;
+
+            switch (lang) {
+                case 'fr':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `<rect width="3" height="2" fill="#002654"/><rect width="2" height="2" fill="#FFFFFF"/><rect width="1" height="2" fill="#ED2939"/>`;
+                    currentLangSpan.textContent = 'FR';
+                    break;
+                case 'en':
+                    currentFlag.setAttribute('viewBox', '0 0 50 30');
+                    currentFlag.innerHTML = `<rect width="50" height="30" fill="#012169"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>`;
+                    currentLangSpan.textContent = 'EN';
+                    break;
+                case 'es':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `<rect width="3" height="2" fill="#C60B1E"/><rect width="3" height="0.66" y="0.67" fill="#FFC400"/>`;
+                    currentLangSpan.textContent = 'ES';
+                    break;
+            }
+        }
+
+        function translatePage() {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            elementsToTranslate.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    element.textContent = translations[currentLanguage][key];
+                }
+            });
+
+            const descriptionElement = document.getElementById('hk-description');
+            if (descriptionElement) {
+                descriptionElement.innerHTML = createHKDescription();
+            }
+
+            document.title = translations[currentLanguage]['page-title'] || 'Présentation et Notation des Jeux';
+        }
+
+        function createHKDescription() {
+            const lang = currentLanguage;
+
+            if (lang === 'en') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight is a metroidvania-style action-adventure game developed by Team Cherry. The player embodies a small insectoid knight who explores the ruins of the fallen kingdom of Hallownest, an underground world filled with corrupted creatures, mysteries and formidable challenges. The goal is to discover the secrets of the kingdom while fighting powerful enemies and unlocking new abilities.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game stands out for its vast interconnected world, filled with unique areas and hidden secrets. Exploration is free, and players can choose their own path, while unlocking new skills to progress further.</p>
+                    <br><br>
+
+                    <p><strong>Demanding and precise gameplay:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight offers a fluid and demanding combat system, based on dodging, melee attacks with the knight's needle, and the use of magic spells. Fights against enemies and bosses require patience and mastery of game mechanics to survive.</p>
+                    <br><br>
+
+                    <p><strong>Exploration and progression:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The world of Hallownest is designed for exploration, with hidden passages, shortcuts and areas inaccessible at first. The player gradually unlocks new abilities, such as the dash, double jump or the ability to strike downwards to access new parts of the world.</p>
+                    <br><br>
+
+                    <p><strong>An immersive and melancholic atmosphere:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game's universe is marked by a dark and melancholic atmosphere, with detailed environments and an enchanting soundtrack. Each area has a unique visual and sound identity, reinforcing immersion in the world of Hallownest.</p>
+                    <br><br>
+
+                    <p><strong>Charms and customization:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight offers a charm system that allows players to customize their playstyle. These charms offer various advantages, such as better soul regeneration, increased attack range or improved defensive capabilities.</p>
+                    <br><br>
+
+                    <p><strong>Varied enemies and bosses:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The game offers a wide variety of enemies and bosses with unique patterns, each requiring a different approach. Some encounters are memorable and represent real challenges that test the player's skills.</p>
+                    <br><br>
+
+                    <p><strong>A cryptic and captivating story:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;The lore of Hollow Knight is told indirectly through dialogues, object descriptions and visual clues in the world. The player must explore and gather story fragments to understand the fall of Hallownest and the knight's role in this tragic fate.</p>
+                `;
+            } else if (lang === 'es') {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight es un juego de acción y aventura de tipo metroidvania desarrollado por Team Cherry. El jugador encarna a un pequeño caballero insectoide que explora las ruinas del reino caído de Hallownest, un mundo subterráneo lleno de criaturas corruptas, misterios y desafíos formidables. El objetivo es descubrir los secretos del reino mientras se enfrentan enemigos poderosos y se desbloquean nuevas habilidades.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego se destaca por su vasto mundo interconectado, lleno de zonas únicas y secretos ocultos. La exploración es libre, y los jugadores pueden elegir su propio camino, mientras desbloquean nuevas habilidades para progresar más.</p>
+                    <br><br>
+
+                    <p><strong>Jugabilidad exigente y precisa:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight ofrece un sistema de combate fluido y exigente, basado en la esquiva, los ataques cuerpo a cuerpo con la aguja del caballero y el uso de hechizos mágicos. Los combates contra enemigos y jefes requieren paciencia y dominio de las mecánicas del juego para sobrevivir.</p>
+                    <br><br>
+
+                    <p><strong>Exploración y progresión:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El mundo de Hallownest está diseñado para la exploración, con pasajes ocultos, atajos y zonas inaccesibles al principio. El jugador desbloquea progresivamente nuevas habilidades, como el dash, el doble salto o la capacidad de golpear hacia abajo para acceder a nuevas partes del mundo.</p>
+                    <br><br>
+
+                    <p><strong>Una atmósfera inmersiva y melancólica:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El universo del juego está marcado por una atmósfera oscura y melancólica, con entornos detallados y una banda sonora encantadora. Cada zona posee una identidad visual y sonora única, reforzando la inmersión en el mundo de Hallownest.</p>
+                    <br><br>
+
+                    <p><strong>Los amuletos y la personalización:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight ofrece un sistema de amuletos que permite a los jugadores personalizar su estilo de juego. Estos amuletos ofrecen diversas ventajas, como una mejor regeneración de alma, un alcance de ataque aumentado o una mejora de las capacidades defensivas.</p>
+                    <br><br>
+
+                    <p><strong>Enemigos y jefes variados:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;El juego ofrece una gran variedad de enemigos y jefes con patrones únicos, cada uno requiriendo un enfoque diferente. Algunos enfrentamientos son memorables y representan desafíos reales que ponen a prueba las habilidades del jugador.</p>
+                    <br><br>
+
+                    <p><strong>Una historia críptica y cautivadora:</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;La tradición de Hollow Knight se cuenta de manera indirecta a través de diálogos, descripciones de objetos e indicios visuales en el mundo. El jugador debe explorar y reunir fragmentos de historia para comprender la caída de Hallownest y el papel del caballero en este destino trágico.</p>
+                `;
+            } else {
+                return `
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight est un jeu d'action-aventure de type metroidvania développé par Team Cherry. Le joueur incarne un petit chevalier insectoïde qui explore les ruines du royaume déchu d'Hallownest, un monde souterrain rempli de créatures corrompues, de mystères et de défis redoutables. L'objectif est de découvrir les secrets du royaume tout en affrontant de puissants ennemis et en débloquant de nouvelles capacités.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son vaste monde interconnecté, rempli de zones uniques et de secrets cachés. L'exploration est libre, et les joueurs peuvent choisir leur propre chemin, tout en débloquant de nouvelles compétences pour progresser davantage.</p>
+                    <br><br>
+
+                    <p><strong>Un gameplay exigeant et précis :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight propose un système de combat fluide et exigeant, reposant sur l'esquive, l'attaque au corps à corps avec l'aiguille du chevalier, et l'utilisation de sorts magiques. Les combats contre les ennemis et les boss nécessitent de la patience et de la maîtrise des mécaniques de jeu pour survivre.</p>
+                    <br><br>
+
+                    <p><strong>Exploration et progression :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le monde d'Hallownest est conçu pour l'exploration, avec des passages cachés, des raccourcis et des zones inaccessibles au départ. Le joueur débloque progressivement de nouvelles capacités, comme le dash, le double saut ou la capacité de frapper vers le bas pour accéder à de nouvelles parties du monde.</p>
+                    <br><br>
+
+                    <p><strong>Une ambiance immersive et mélancolique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'univers du jeu est marqué par une atmosphère sombre et mélancolique, avec des environnements détaillés et une bande-son envoûtante. Chaque zone possède une identité visuelle et sonore unique, renforçant l'immersion dans le monde d'Hallownest.</p>
+                    <br><br>
+
+                    <p><strong>Les charmes et la personnalisation :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight propose un système de charmes qui permet aux joueurs de personnaliser leur style de jeu. Ces charmes offrent divers avantages, comme une meilleure régénération d'âme, une portée d'attaque accrue ou une amélioration des capacités défensives.</p>
+                    <br><br>
+
+                    <p><strong>Des ennemis et des boss variés :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu propose une grande variété d'ennemis et de boss aux patterns uniques, chacun demandant une approche différente. Certains affrontements sont mémorables et représentent de véritables défis qui mettent à l'épreuve les compétences du joueur.</p>
+                    <br><br>
+
+                    <p><strong>Une histoire cryptique et captivante :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le lore de Hollow Knight est raconté de manière indirecte à travers des dialogues, des descriptions d'objets et des indices visuels dans le monde. Le joueur doit explorer et rassembler les fragments d'histoire pour comprendre la chute d'Hallownest et le rôle du chevalier dans ce destin tragique.</p>
+                `;
+            }
+        }
+
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function closeLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+        }
+
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.language-dropdown');
+            const languageButton = document.querySelector('.language-button');
+            if (dropdown && !dropdown.contains(event.target) && event.target !== languageButton) {
+                closeLanguageDropdown();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            translatePage();
+        });
+    </script>
 
 </body>
 

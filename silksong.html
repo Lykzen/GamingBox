@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
     <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Styles de base pour la mise en page */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +28,6 @@
             flex-direction: column;
         }
 
-        /* Header modernisé */
         header {
             background-color: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
@@ -49,7 +48,6 @@
             font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
-        /* Navigation avec effets */
         nav {
             display: flex;
             justify-content: center;
@@ -57,16 +55,43 @@
             background-color: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
             transition: all 0.3s ease-in-out;
@@ -74,24 +99,107 @@
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
         }
 
-        /* Contenu principal */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         main {
             flex: 1;
             padding: 20px 15px;
             max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
-        }
-
-        section {
-            margin-bottom: 30px;
-        }
-
-        .container {
             width: 100%;
         }
 
@@ -109,7 +217,6 @@
             margin: 20px 0;
         }
 
-        /* Style pour les titres */
         h2,
         h3 {
             color: rgb(143, 137, 137);
@@ -118,7 +225,6 @@
             text-align: center;
         }
 
-        /* Premier paragraphe avec le nouveau style */
         .first-paragraph {
             font-family: 'Poppins', sans-serif;
             font-size: clamp(1rem, 2vw, 1.2rem);
@@ -133,7 +239,6 @@
             color: #333;
         }
 
-        /* Petites images avec disposition moderne */
         .small-images {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -142,7 +247,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -164,7 +269,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -175,7 +280,6 @@
             color: #000;
         }
 
-        /* Footer stylisé */
         footer {
             background-color: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
@@ -186,342 +290,374 @@
             margin-top: auto;
         }
 
-        /* Styles généraux des liens */
-        a {
-            text-decoration: none;
-            color: #ff6600;
-            font-size: 18px;
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
-        }
-
-        a::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ff6600;
-            transition: width 0.3s ease-in-out;
-        }
-
-        a:hover {
-            color: #ffffff;
-        }
-
-        a:hover::after {
-            width: 100%;
-        }
-
-        /* MEDIA QUERIES AMÉLIORÉES */
-
-        /* Tablettes et écrans moyens */
-        @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
+        @media only screen and (max-width: 1200px) {
+            .hamburger {
+                display: block;
             }
 
-            header {
-                padding: 15px 10px;
-            }
-
-            nav {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
                 flex-direction: column;
-                padding: 15px 10px;
-                gap: 10px;
+                background-color: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                text-align: center;
+                transition: left 0.3s ease-in-out;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+                justify-content: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
             }
 
             nav a {
-                margin: 5px 0;
-                font-size: 16px;
-            }
-
-            main {
-                padding: 15px 10px;
-            }
-
-            .main-image {
                 width: 100%;
-                height: auto;
-                max-width: 500px;
+                padding: 12px 20px;
             }
 
-            .small-images {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .small-images div {
+            .language-selector {
+                position: static;
+                transform: none;
                 width: 100%;
-                height: 300px;
             }
 
-            .small-images img {
+            .language-button {
                 width: 100%;
-                height: 150px;
             }
 
-            .first-paragraph {
-                padding: 15px;
-                margin: 20px 10px;
-                text-align: left;
-            }
-
-            .rating {
-                font-size: 20px;
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
             }
         }
 
-        /* Smartphones */
-        @media (max-width: 480px) {
-            header {
-                padding: 12px 8px;
-            }
-
-            header h1 {
-                font-size: 1.3rem;
-                letter-spacing: 1px;
-            }
-
-            nav {
-                padding: 12px 8px;
-            }
-
-            main {
-                padding: 12px 8px;
-            }
-
+        @media (max-width: 768px) {
             .small-images {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 12px;
-                margin: 15px 5px;
-                font-size: 0.95rem;
-                line-height: 1.5;
-            }
-
-            .main-image {
-                max-width: 100%;
-                margin: 0 auto;
-            }
-
-            footer {
-                font-size: 0.9em;
-                padding: 12px;
-            }
-        }
-
-        /* Très petits écrans */
-        @media (max-width: 320px) {
-            header h1 {
-                font-size: 1.1rem;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 280px;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 10px;
-                margin: 10px 2px;
-                font-size: 0.9rem;
-            }
-
-            nav a {
-                font-size: 14px;
-            }
-        }
-
-        /* Grands écrans */
-        @media (min-width: 1200px) {
-            main {
-                padding: 40px 20px;
-            }
-
-            .small-images {
-                grid-template-columns: repeat(4, 1fr);
-                max-width: 1200px;
+                max-width: 400px;
                 margin: 30px auto 0;
             }
+        }
 
-            .first-paragraph {
-                max-width: 1000px;
-                padding: 30px;
+        @media (max-width: 480px) {
+            .small-images {
+                max-width: 350px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- En-tête du site web -->
+    <div class="overlay" id="overlay"></div>
+
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
 
-    <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
+        <button class="hamburger" id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
 
-    </nav>
-
-    <!-- Contenu principal -->
-    <main>
-        <!-- Section "Jeux" -->
-        <section id="games">
-            <center>
-                <h2 style="color: rgb(143, 137, 137);">Hollow knight : SILKSONG</h2>
-            </center>
-
-            <div class="container">
-                <center><img src="images-html/silksong-html.jpg " alt="Image de  Hollow kight silksong"
-                        class="main-image" width="650 " height="400">
-                </center>
-                <center>
-                    <p class="rating">Note : 4.7/5</p>
-                </center>
-
-                <p class="first-paragraph" style="color: #333;">&nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    Hollow Knight: Silksong est un jeu d'action-aventure en 2D développé par
-                    Team Cherry. Le joueur incarne Hornet,
-                    princesse-protectrice de Hallownest,
-                    qui se retrouve capturée et transportée dans un nouveau royaume mystérieux
-                    appelé Pharloom.
-                    Le but du jeu est de percer les secrets de ce monde,
-                    gravir jusqu'au sommet du royaume,
-                    et découvrir la vérité sur son destin. <br><br>&nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    Le jeu conserve l'essence du metroidvania avec une grande liberté
-                    d'exploration,
-                    mais introduit de nouvelles mécaniques de déplacement et de combat adaptées
-                    à la vitesse et l'agilité de Hornet.
-                    Celle-ci peut bondir,
-                    grimper,
-                    filer à travers les ennemis et utiliser son aiguillon pour exécuter des
-                    attaques fluides et précises. <br><br><strong>Un système de combat affiné et
-                        varié :</strong><br>&nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    Contrairement au Chevalier du premier opus,
-                    Hornet dispose d'un arsenal plus dynamique,
-                    combinant attaques rapides,
-                    projectiles et acrobaties.
-                    Elle peut également fabriquer et utiliser divers outils grâce à des
-                    ressources collectées,
-                    renforçant sa survie et ses capacités en combat. <br><br><strong>Les
-                        quêtes et les PNJ :</strong><br>&nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    Pharloom regorge de personnages mystérieux,
-                    chacun avec ses propres histoires,
-                    quêtes et objectifs.
-                    Ces rencontres enrichissent l'univers et offrent aux joueurs des missions
-                    secondaires variées,
-                    allant de la recherche d'objets rares à l'affrontement de puissants
-                    adversaires. <br><br><strong>Exploration et environnement :</strong><br>&nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    Le royaume de Pharloom est vaste et vertical,
-                    composé de forêts luxuriantes,
-                    de cités en ruines,
-                    de cavernes obscures et de temples anciens.
-                    Chaque zone recèle des secrets,
-                    des ennemis uniques et des défis de plateforme exigeants.
-                    L'accent est mis sur la fluidité des déplacements et la découverte
-                    d'environnements interconnectés. <br><br><strong>Une évolution du premier
-                        opus :</strong><br>&nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    Silksong reprend l'héritage de Hollow Knight,
-                    mais renouvelle l'expérience avec une héroïne plus vive,
-                    un système de progression enrichi,
-                    et une approche plus narrative.
-                    Attendu avec impatience,
-                    le jeu promet une aventure encore plus intense,
-                    centrée sur l'exploration,
-                    les combats rapides et la poésie sombre de son univers.
-                </p>
-
-
-                <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
-                </center>
-
-                <br>
-                <br>
-
-                <div class="small-images">
-                    <div>
-                        <img src="images-html/hollow knight-html.jpg" width="300" height="150" alt="HK
-                        ">
-                        <p>Hollow Knight
-                        </p>
-                    </div>
-                    <div>
-                        <img src="images-html/elden-ring-html.jpg" width="300" height="150" alt="Elden Ring">
-                        <p>Elden Ring</p>
-                    </div>
-                    <div>
-                        <img src="images-html/undertail-html.jpg" width="300" height="150" alt="undertale">
-                        <p>Undertail
-
-                        </p>
-                    </div>
-                    <div>
-                        <img src="images-html/ds-html.jpg" width="300" height="150" alt="Dark Souls">
-                        <p>Dark Souls
-                        </p>
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>
+                            Français
+                        </button>
+                        <button onclick="changeLanguage('en')">
+                            <svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>
+                            English
+                        </button>
+                        <button onclick="changeLanguage('es')">
+                            <svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="1" y="0.5" fill="#FFC400" />
+                            </svg>
+                            Español
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+    </nav>
 
-            <br>
-            <br>
-            <br>
-            <br>
+    <main>
+        <section id="games">
+            <center>
+                <h2 data-translate="ss-title">Hollow Knight: SILKSONG</h2>
+            </center>
+
+            <div class="container">
+                <center>
+                    <img src="images-html/silksong-html.jpg" alt="Hollow Knight Silksong" class="main-image" width="650"
+                        height="400">
+                </center>
+                <center>
+                    <p class="rating"><span data-translate="rating">Note :</span> 4.7/5</p>
+                </center>
+
+                <div class="first-paragraph" id="ss-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight: Silksong est un jeu d'action-aventure en 2D développé par
+                        Team Cherry. Le joueur incarne Hornet, princesse-protectrice de Hallownest, qui se retrouve
+                        capturée et transportée dans un nouveau royaume mystérieux appelé Pharloom. Le but du jeu est de
+                        percer les secrets de ce monde, gravir jusqu'au sommet du royaume, et découvrir la vérité sur
+                        son destin.</p>
+                    <br><br>
+
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu conserve l'essence du metroidvania avec une grande liberté
+                        d'exploration, mais introduit de nouvelles mécaniques de déplacement et de combat adaptées à la
+                        vitesse et l'agilité de Hornet. Celle-ci peut bondir, grimper, filer à travers les ennemis et
+                        utiliser son aiguillon pour exécuter des attaques fluides et précises.</p>
+                    <br><br>
+
+                    <p><strong>Un système de combat affiné et varié :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Contrairement au Chevalier du premier opus, Hornet dispose d'un arsenal
+                        plus dynamique, combinant attaques rapides, projectiles et acrobaties. Elle peut également
+                        fabriquer et utiliser divers outils grâce à des ressources collectées, renforçant sa survie et
+                        ses capacités en combat.</p>
+                    <br><br>
+
+                    <p><strong>Les quêtes et les PNJ :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Pharloom regorge de personnages mystérieux, chacun avec ses propres
+                        histoires, quêtes et objectifs. Ces rencontres enrichissent l'univers et offrent aux joueurs des
+                        missions secondaires variées, allant de la recherche d'objets rares à l'affrontement de
+                        puissants adversaires.</p>
+                    <br><br>
+
+                    <p><strong>Exploration et environnement :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le royaume de Pharloom est vaste et vertical, composé de forêts
+                        luxuriantes, de cités en ruines, de cavernes obscures et de temples anciens. Chaque zone recèle
+                        des secrets, des ennemis uniques et des défis de plateforme exigeants. L'accent est mis sur la
+                        fluidité des déplacements et la découverte d'environnements interconnectés.</p>
+                    <br><br>
+
+                    <p><strong>Une évolution du premier opus :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Silksong reprend l'héritage de Hollow Knight, mais renouvelle
+                        l'expérience avec une héroïne plus vive, un système de progression enrichi, et une approche plus
+                        narrative. Attendu avec impatience, le jeu promet une aventure encore plus intense, centrée sur
+                        l'exploration, les combats rapides et la poésie sombre de son univers.</p>
+                </div>
+
+                <br><br><br><br>
+
+                <center>
+                    <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
+                </center>
+
+                <br><br>
+
+                <div class="small-images">
+                    <div>
+                        <img src="images-html/hollow knight-html.jpg" alt="Hollow Knight">
+                        <p>Hollow Knight</p>
+                    </div>
+                    <div>
+                        <img src="images-html/elden-ring-html.jpg" alt="Elden Ring">
+                        <p>Elden Ring</p>
+                    </div>
+                    <div>
+                        <img src="images-html/undertail-html.jpg" alt="Undertale">
+                        <p>Undertale</p>
+                    </div>
+                    <div>
+                        <img src="images-html/ds-html.jpg" alt="Dark Souls">
+                        <p>Dark Souls</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
-    <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
 
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('overlay');
 
+        if (hamburger) {
+            hamburger.addEventListener('click', toggleMenu);
+        }
+        if (overlay) {
+            overlay.addEventListener('click', closeMenu);
+        }
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        function closeMenu() {
+            navLinks.classList.remove('active');
+            overlay.classList.remove('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+
+        if (navLinks) {
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        }
+
+        const translations = {
+            fr: {
+                'page-title': 'Présentation et Notation des Jeux',
+                'site-title': 'GamingBox : Présentation et Notation',
+                'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !',
+                'nav-home': 'Accueil',
+                'ss-title': 'Hollow Knight: SILKSONG',
+                'rating': 'Note :',
+                'similar-games': 'Des jeux dans le même style :',
+                'copyright': '© 2025 GamingBox. Tous droits réservés.'
+            },
+            en: {
+                'page-title': 'Game Presentation and Rating',
+                'site-title': 'GamingBox: Presentation and Rating',
+                'site-subtitle': 'Discover popular games and their objective ratings!',
+                'nav-home': 'Home',
+                'ss-title': 'Hollow Knight: SILKSONG',
+                'rating': 'Rating:',
+                'similar-games': 'Games in the same style:',
+                'copyright': '© 2025 GamingBox. All rights reserved.'
+            },
+            es: {
+                'page-title': 'Presentación y Calificación de Juegos',
+                'site-title': 'GamingBox: Presentación y Calificación',
+                'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!',
+                'nav-home': 'Inicio',
+                'ss-title': 'Hollow Knight: SILKSONG',
+                'rating': 'Calificación:',
+                'similar-games': 'Juegos del mismo estilo:',
+                'copyright': '© 2025 GamingBox. Todos los derechos reservados.'
+            }
+        };
+
+        let currentLanguage = 'fr';
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateCurrentFlag(lang);
+            translatePage();
+            closeLanguageDropdown();
+        }
+
+        function updateCurrentFlag(lang) {
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLangSpan = document.getElementById('currentLang');
+            if (!currentFlag || !currentLangSpan) return;
+
+            switch (lang) {
+                case 'fr':
+                    currentFlag.innerHTML = `<rect width="3" height="2" fill="#002654"/><rect width="2" height="2" fill="#FFFFFF"/><rect width="1" height="2" fill="#ED2939"/>`;
+                    currentLangSpan.textContent = 'FR';
+                    break;
+                case 'en':
+                    currentFlag.setAttribute('viewBox', '0 0 50 30');
+                    currentFlag.innerHTML = `<rect width="50" height="30" fill="#012169"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>`;
+                    currentLangSpan.textContent = 'EN';
+                    break;
+                case 'es':
+                    currentFlag.setAttribute('viewBox', '0 0 3 2');
+                    currentFlag.innerHTML = `<rect width="3" height="2" fill="#C60B1E"/><rect width="3" height="0.66" y="0.67" fill="#FFC400"/>`;
+                    currentLangSpan.textContent = 'ES';
+                    break;
+            }
+        }
+
+        function translatePage() {
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLanguage]?.[key]) {
+                    el.textContent = translations[currentLanguage][key];
+                }
+            });
+
+            const desc = document.getElementById('ss-description');
+            if (desc) desc.innerHTML = createSSDescription();
+            document.title = translations[currentLanguage]['page-title'];
+        }
+
+        function createSSDescription() {
+            if (currentLanguage === 'en') {
+                return `<p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight: Silksong is a 2D action-adventure game developed by Team Cherry. The player embodies Hornet, princess-protector of Hallownest, who finds herself captured and transported to a new mysterious kingdom called Pharloom. The game's goal is to uncover the secrets of this world, climb to the top of the kingdom, and discover the truth about her destiny.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;The game retains the essence of metroidvania with great freedom of exploration, but introduces new movement and combat mechanics adapted to Hornet's speed and agility. She can leap, climb, dash through enemies and use her needle to execute fluid and precise attacks.</p><br><br><p><strong>A refined and varied combat system:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Unlike the Knight from the first game, Hornet has a more dynamic arsenal, combining quick attacks, projectiles and acrobatics. She can also craft and use various tools thanks to collected resources, strengthening her survival and combat abilities.</p><br><br><p><strong>Quests and NPCs:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Pharloom is full of mysterious characters, each with their own stories, quests and objectives. These encounters enrich the universe and offer players varied side missions, from searching for rare objects to facing powerful adversaries.</p><br><br><p><strong>Exploration and environment:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The kingdom of Pharloom is vast and vertical, composed of lush forests, ruined cities, dark caverns and ancient temples. Each area holds secrets, unique enemies and demanding platforming challenges. The emphasis is on fluid movement and discovering interconnected environments.</p><br><br><p><strong>An evolution of the first opus:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Silksong takes up the legacy of Hollow Knight, but renews the experience with a livelier heroine, an enriched progression system, and a more narrative approach. Eagerly awaited, the game promises an even more intense adventure, centered on exploration, fast combat and the dark poetry of its universe.</p>`;
+            } else if (currentLanguage === 'es') {
+                return `<p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight: Silksong es un juego de acción y aventura en 2D desarrollado por Team Cherry. El jugador encarna a Hornet, princesa-protectora de Hallownest, que se encuentra capturada y transportada a un nuevo reino misterioso llamado Pharloom. El objetivo del juego es descubrir los secretos de este mundo, escalar hasta la cima del reino y descubrir la verdad sobre su destino.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;El juego conserva la esencia del metroidvania con gran libertad de exploración, pero introduce nuevas mecánicas de movimiento y combate adaptadas a la velocidad y agilidad de Hornet. Ella puede saltar, escalar, atravesar enemigos y usar su aguja para ejecutar ataques fluidos y precisos.</p><br><br><p><strong>Un sistema de combate refinado y variado:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;A diferencia del Caballero del primer juego, Hornet dispone de un arsenal más dinámico, combinando ataques rápidos, proyectiles y acrobacias. También puede fabricar y usar diversas herramientas gracias a los recursos recolectados, reforzando su supervivencia y capacidades de combate.</p><br><br><p><strong>Las misiones y los PNJ:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Pharloom está lleno de personajes misteriosos, cada uno con sus propias historias, misiones y objetivos. Estos encuentros enriquecen el universo y ofrecen a los jugadores misiones secundarias variadas, desde la búsqueda de objetos raros hasta el enfrentamiento con adversarios poderosos.</p><br><br><p><strong>Exploración y entorno:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;El reino de Pharloom es vasto y vertical, compuesto por bosques exuberantes, ciudades en ruinas, cavernas oscuras y templos antiguos. Cada zona alberga secretos, enemigos únicos y desafíos de plataforma exigentes. El énfasis está en la fluidez de los movimientos y el descubrimiento de entornos interconectados.</p><br><br><p><strong>Una evolución del primer opus:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Silksong retoma el legado de Hollow Knight, pero renueva la experiencia con una heroína más viva, un sistema de progresión enriquecido y un enfoque más narrativo. Esperado con impaciencia, el juego promete una aventura aún más intensa, centrada en la exploración, los combates rápidos y la poesía oscura de su universo.</p>`;
+            } else {
+                return `<p>&nbsp;&nbsp;&nbsp;&nbsp;Hollow Knight: Silksong est un jeu d'action-aventure en 2D développé par Team Cherry. Le joueur incarne Hornet, princesse-protectrice de Hallownest, qui se retrouve capturée et transportée dans un nouveau royaume mystérieux appelé Pharloom. Le but du jeu est de percer les secrets de ce monde, gravir jusqu'au sommet du royaume, et découvrir la vérité sur son destin.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu conserve l'essence du metroidvania avec une grande liberté d'exploration, mais introduit de nouvelles mécaniques de déplacement et de combat adaptées à la vitesse et l'agilité de Hornet. Celle-ci peut bondir, grimper, filer à travers les ennemis et utiliser son aiguillon pour exécuter des attaques fluides et précises.</p><br><br><p><strong>Un système de combat affiné et varié :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Contrairement au Chevalier du premier opus, Hornet dispose d'un arsenal plus dynamique, combinant attaques rapides, projectiles et acrobaties. Elle peut également fabriquer et utiliser divers outils grâce à des ressources collectées, renforçant sa survie et ses capacités en combat.</p><br><br><p><strong>Les quêtes et les PNJ :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Pharloom regorge de personnages mystérieux, chacun avec ses propres histoires, quêtes et objectifs. Ces rencontres enrichissent l'univers et offrent aux joueurs des missions secondaires variées, allant de la recherche d'objets rares à l'affrontement de puissants adversaires.</p><br><br><p><strong>Exploration et environnement :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Le royaume de Pharloom est vaste et vertical, composé de forêts luxuriantes, de cités en ruines, de cavernes obscures et de temples anciens. Chaque zone recèle des secrets, des ennemis uniques et des défis de plateforme exigeants. L'accent est mis sur la fluidité des déplacements et la découverte d'environnements interconnectés.</p><br><br><p><strong>Une évolution du premier opus :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Silksong reprend l'héritage de Hollow Knight, mais renouvelle l'expérience avec une héroïne plus vive, un système de progression enrichi, et une approche plus narrative. Attendu avec impatience, le jeu promet une aventure encore plus intense, centrée sur l'exploration, les combats rapides et la poésie sombre de son univers.</p>`;
+            }
+        }
+
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+            }
+        }
+
+        function closeLanguageDropdown() {
+            const dropdown = document.querySelector('.language-dropdown');
+            if (dropdown) {
+                dropdown.classList.remove('show');
+            }
+        }
+
+        document.addEventListener('click', function (event) {
+            const dropdown = document.querySelector('.language-dropdown');
+            const languageButton = document.querySelector('.language-button');
+            if (dropdown && !dropdown.contains(event.target) && event.target !== languageButton) {
+                closeLanguageDropdown();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            translatePage();
+        });
+    </script>
 
 </body>
 
