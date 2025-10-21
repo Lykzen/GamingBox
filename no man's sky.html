@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
-    <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Styles de base pour la mise en page */
         * {
             margin: 0;
             padding: 0;
@@ -17,20 +16,15 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #1e1e2f;
-            background-image: url('images-html/black-prism-concept-ai-generated.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: #1e1e2f url('images-html/black-prism-concept-ai-generated.jpg') center/cover fixed;
             color: #e0e0e0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header modernisé */
         header {
-            background-color: rgba(20, 20, 30, 0.9);
+            background: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
             padding: 20px 15px;
             text-align: center;
@@ -49,49 +43,157 @@
             font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
-        /* Navigation avec effets */
         nav {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(30, 30, 40, 0.9);
+            background: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background: white;
+            color: black;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s;
         }
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
         }
 
-        /* Contenu principal */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         main {
             flex: 1;
             padding: 20px 15px;
             max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
-        }
-
-        section {
-            margin-bottom: 30px;
-        }
-
-        .container {
             width: 100%;
         }
 
@@ -109,7 +211,6 @@
             margin: 20px 0;
         }
 
-        /* Style pour les titres */
         h2,
         h3 {
             color: rgb(143, 137, 137);
@@ -118,7 +219,6 @@
             text-align: center;
         }
 
-        /* Premier paragraphe avec le nouveau style */
         .first-paragraph {
             font-family: 'Poppins', sans-serif;
             font-size: clamp(1rem, 2vw, 1.2rem);
@@ -126,14 +226,13 @@
             margin: 30px auto;
             padding: 20px;
             max-width: 1000px;
-            background-color: #ffffff;
+            background: #fff;
             border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: justify;
             color: #333;
         }
 
-        /* Petites images avec disposition moderne */
         .small-images {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -142,7 +241,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -150,9 +249,9 @@
             border: 1px solid #444;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
+            background: #fff;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .small-images div:hover {
@@ -164,7 +263,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -175,9 +274,8 @@
             color: #000;
         }
 
-        /* Footer stylisé */
         footer {
-            background-color: rgba(20, 20, 30, 0.9);
+            background: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
             text-align: center;
             padding: 15px;
@@ -186,339 +284,202 @@
             margin-top: auto;
         }
 
-        /* Styles généraux des liens */
-        a {
-            text-decoration: none;
-            color: #ff6600;
-            font-size: 18px;
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
-        }
-
-        a::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ff6600;
-            transition: width 0.3s ease-in-out;
-        }
-
-        a:hover {
-            color: #ffffff;
-        }
-
-        a:hover::after {
-            width: 100%;
-        }
-
-        /* MEDIA QUERIES AMÉLIORÉES */
-
-        /* Tablettes et écrans moyens */
-        @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
+        @media (max-width: 1200px) {
+            .hamburger {
+                display: block;
             }
 
-            header {
-                padding: 15px 10px;
-            }
-
-            nav {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
                 flex-direction: column;
-                padding: 15px 10px;
-                gap: 10px;
+                background: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                transition: left 0.3s;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                left: 0;
             }
 
             nav a {
-                margin: 5px 0;
-                font-size: 16px;
-            }
-
-            main {
-                padding: 15px 10px;
-            }
-
-            .main-image {
                 width: 100%;
-                height: auto;
-                max-width: 500px;
+                padding: 12px 20px;
             }
 
-            .small-images {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .small-images div {
+            .language-selector {
+                position: static;
+                transform: none;
                 width: 100%;
-                height: 300px;
             }
 
-            .small-images img {
+            .language-button {
                 width: 100%;
-                height: 150px;
             }
 
-            .first-paragraph {
-                padding: 15px;
-                margin: 20px 10px;
-                text-align: left;
-            }
-
-            .rating {
-                font-size: 20px;
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
             }
         }
 
-        /* Smartphones */
-        @media (max-width: 480px) {
-            header {
-                padding: 12px 8px;
-            }
-
-            header h1 {
-                font-size: 1.3rem;
-                letter-spacing: 1px;
-            }
-
-            nav {
-                padding: 12px 8px;
-            }
-
-            main {
-                padding: 12px 8px;
-            }
-
+        @media (max-width: 768px) {
             .small-images {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 12px;
-                margin: 15px 5px;
-                font-size: 0.95rem;
-                line-height: 1.5;
-            }
-
-            .main-image {
-                max-width: 100%;
-                margin: 0 auto;
-            }
-
-            footer {
-                font-size: 0.9em;
-                padding: 12px;
-            }
-        }
-
-        /* Très petits écrans */
-        @media (max-width: 320px) {
-            header h1 {
-                font-size: 1.1rem;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 280px;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 10px;
-                margin: 10px 2px;
-                font-size: 0.9rem;
-            }
-
-            nav a {
-                font-size: 14px;
-            }
-        }
-
-        /* Grands écrans */
-        @media (min-width: 1200px) {
-            main {
-                padding: 40px 20px;
-            }
-
-            .small-images {
-                grid-template-columns: repeat(4, 1fr);
-                max-width: 1200px;
+                max-width: 400px;
                 margin: 30px auto 0;
-            }
-
-            .first-paragraph {
-                max-width: 1000px;
-                padding: 30px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- En-tête du site web -->
+    <div class="overlay" id="overlay"></div>
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
-
-    <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
-
-
-    </nav>
-
-    <!-- Contenu principal -->
-    <main>
-        <!-- Section "Jeux" -->
-        <section id="games">
-            <center>
-                <h2 style="color: rgb(143, 137, 137);">No Man's Sky</h2>
-            </center>
-
-            <div class="container">
-                <center><img src="images-html/no man s sky-html.jpg" alt="Image de  no man s sky" class="main-image"
-                        width="650 " height="400">
-                </center>
-                <center>
-                    <p class="rating">Note : 8.8/10</p>
-                </center>
-
-                <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph" style="color: #333;">
-
-                    <strong>Un univers procédural infini :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky propose un univers en constante évolution, où chaque planète
-                    est unique en termes de biomes, de conditions climatiques et de formes de vie. Les joueurs peuvent
-                    découvrir des environnements allant de mondes luxuriants et paisibles à des planètes inhospitalières
-                    avec des tempêtes extrêmes et une faune agressive.
-                    <br><br>
-
-                    <strong>Exploration et survie :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Les joueurs doivent gérer leur survie en récoltant des ressources pour
-                    alimenter leur combinaison, réparer leur vaisseau et fabriquer des équipements essentiels. Chaque
-                    planète présente des défis environnementaux tels que des températures extrêmes, des radiations ou
-                    des créatures hostiles.
-                    <br><br>
-
-                    <strong>Commerce et gestion des ressources :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'économie du jeu repose sur l'exploitation de ressources rares, la
-                    fabrication d'objets et le commerce avec les différentes factions extraterrestres. Les joueurs
-                    peuvent acheter et vendre des matériaux, améliorer leur équipement et établir des bases pour
-                    automatiser la production.
-                    <br><br>
-
-                    <strong>Combats spatiaux et exploration galactique :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky intègre des combats spatiaux où les joueurs affrontent des
-                    pirates, protègent des convois marchands ou explorent d'anciennes ruines spatiales. La galaxie est
-                    peuplée de différentes factions qui peuvent être alliées ou hostiles selon les interactions du
-                    joueur.
-                    <br><br>
-
-                    <strong>Construction de bases et personnalisation :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Les joueurs peuvent construire des bases sur n'importe quelle planète pour
-                    stocker des ressources, abriter des PNJ et développer des infrastructures avancées. La
-                    personnalisation est un aspect clé du jeu, permettant de modifier vaisseaux, exocombinaisons et
-                    équipements selon les besoins.
-                    <br><br>
-
-                    <strong>Multijoueur et exploration partagée :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le mode multijoueur permet aux joueurs d'explorer l'univers ensemble, de
-                    collaborer pour construire des bases, d'échanger des ressources et d'affronter des dangers
-                    cosmiques. Les découvertes peuvent être partagées avec la communauté, créant un univers en
-                    perpétuelle expansion.
-                    <br><br>
-
-                    <strong>Un jeu en constante évolution :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Depuis son lancement, No Man's Sky a reçu de nombreuses mises à jour
-                    gratuites qui ont enrichi le contenu avec de nouvelles fonctionnalités, comme l'ajout de véhicules
-                    terrestres, de nouveaux biomes, de missions scénarisées et de mécanismes de gestion avancés.
-                    <br><br>
-
-
-                    <br>
-                </p>
-
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
-                </center>
-
-                <br>
-                <br>
-
-                <div class="small-images">
-                    <div>
-                        <img src="" width="300" height="150" alt="
-                        ">
-                        <p>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p></p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p>
-                        <p>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p>
-                        </p>
+        <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span><i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')"><svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>Français</button>
+                        <button onclick="changeLanguage('en')"><svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>English</button>
+                        <button onclick="changeLanguage('es')"><svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="0.66" y="0.67" fill="#FFC400" />
+                            </svg>Español</button>
                     </div>
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
+        </div>
+    </nav>
+    <main>
+        <section id="games">
+            <center>
+                <h2 data-translate="nms-title">No Man's Sky</h2>
+            </center>
+            <div class="container">
+                <center><img src="images-html/no man s sky-html.jpg" alt="No Man's Sky" class="main-image" width="650"
+                        height="400"></center>
+                <center>
+                    <p class="rating"><span data-translate="rating">Note :</span> 8.8/10</p>
+                </center>
+                <div class="first-paragraph" id="nms-description">
+                    <p><strong>Un univers procédural infini :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky propose un univers en constante évolution, où chaque planète
+                        est unique en termes de biomes, de conditions climatiques et de formes de vie. Les joueurs
+                        peuvent découvrir des environnements allant de mondes luxuriants et paisibles à des planètes
+                        inhospitalières avec des tempêtes extrêmes et une faune agressive.</p>
+                    <br><br>
+                    <p><strong>Exploration et survie :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les joueurs doivent gérer leur survie en récoltant des ressources pour
+                        alimenter leur combinaison, réparer leur vaisseau et fabriquer des équipements essentiels.
+                        Chaque planète présente des défis environnementaux tels que des températures extrêmes, des
+                        radiations ou des créatures hostiles.</p>
+                    <br><br>
+                    <p><strong>Commerce et gestion des ressources :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'économie du jeu repose sur l'exploitation de ressources rares, la
+                        fabrication d'objets et le commerce avec les différentes factions extraterrestres. Les joueurs
+                        peuvent acheter et vendre des matériaux, améliorer leur équipement et établir des bases pour
+                        automatiser la production.</p>
+                    <br><br>
+                    <p><strong>Combats spatiaux et exploration galactique :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky intègre des combats spatiaux où les joueurs affrontent des
+                        pirates, protègent des convois marchands ou explorent d'anciennes ruines spatiales. La galaxie
+                        est peuplée de différentes factions qui peuvent être alliées ou hostiles selon les interactions
+                        du joueur.</p>
+                    <br><br>
+                    <p><strong>Construction de bases et personnalisation :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les joueurs peuvent construire des bases sur n'importe quelle planète
+                        pour stocker des ressources, abriter des PNJ et développer des infrastructures avancées. La
+                        personnalisation est un aspect clé du jeu, permettant de modifier vaisseaux, exocombinaisons et
+                        équipements selon les besoins.</p>
+                    <br><br>
+                    <p><strong>Multijoueur et exploration partagée :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le mode multijoueur permet aux joueurs d'explorer l'univers ensemble, de
+                        collaborer pour construire des bases, d'échanger des ressources et d'affronter des dangers
+                        cosmiques. Les découvertes peuvent être partagées avec la communauté, créant un univers en
+                        perpétuelle expansion.</p>
+                    <br><br>
+                    <p><strong>Un jeu en constante évolution :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Depuis son lancement, No Man's Sky a reçu de nombreuses mises à jour
+                        gratuites qui ont enrichi le contenu avec de nouvelles fonctionnalités, comme l'ajout de
+                        véhicules terrestres, de nouveaux biomes, de missions scénarisées et de mécanismes de gestion
+                        avancés.</p>
+                </div>
+                <br><br><br><br>
+                <center>
+                    <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
+                </center>
+                <br><br>
+                <div class="small-images">
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-
-    <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
-
-
-
+    <script>
+        const hamburger = document.getElementById('hamburger'), navLinks = document.getElementById('navLinks'), overlay = document.getElementById('overlay');
+        if (hamburger) hamburger.addEventListener('click', toggleMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+        function toggleMenu() { navLinks.classList.toggle('active'); overlay.classList.toggle('active'); hamburger.querySelector('i').classList.toggle('fa-bars'); hamburger.querySelector('i').classList.toggle('fa-times'); }
+        function closeMenu() { navLinks.classList.remove('active'); overlay.classList.remove('active'); hamburger.querySelector('i').className = 'fa-solid fa-bars'; }
+        if (navLinks) navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+        const translations = { fr: { 'page-title': 'Présentation et Notation des Jeux', 'site-title': 'GamingBox : Présentation et Notation', 'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !', 'nav-home': 'Accueil', 'nms-title': "No Man's Sky", 'rating': 'Note :', 'similar-games': 'Des jeux dans le même style :', 'copyright': '© 2025 GamingBox. Tous droits réservés.' }, en: { 'page-title': 'Game Presentation and Rating', 'site-title': 'GamingBox: Presentation and Rating', 'site-subtitle': 'Discover popular games and their objective ratings!', 'nav-home': 'Home', 'nms-title': "No Man's Sky", 'rating': 'Rating:', 'similar-games': 'Games in the same style:', 'copyright': '© 2025 GamingBox. All rights reserved.' }, es: { 'page-title': 'Presentación y Calificación de Juegos', 'site-title': 'GamingBox: Presentación y Calificación', 'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!', 'nav-home': 'Inicio', 'nms-title': "No Man's Sky", 'rating': 'Calificación:', 'similar-games': 'Juegos del mismo estilo:', 'copyright': '© 2025 GamingBox. Todos los derechos reservados.' } };
+        let currentLanguage = 'fr';
+        function changeLanguage(lang) { currentLanguage = lang; updateCurrentFlag(lang); translatePage(); closeLanguageDropdown(); }
+        function updateCurrentFlag(lang) { const f = document.getElementById('currentFlag'), s = document.getElementById('currentLang'); if (!f || !s) return; const flags = { fr: { viewBox: '0 0 3 2', svg: '<rect width="3" height="2" fill="#002654"/><rect width="2" height="2" fill="#FFFFFF"/><rect width="1" height="2" fill="#ED2939"/>', text: 'FR' }, en: { viewBox: '0 0 50 30', svg: '<rect width="50" height="30" fill="#012169"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>', text: 'EN' }, es: { viewBox: '0 0 3 2', svg: '<rect width="3" height="2" fill="#C60B1E"/><rect width="3" height="0.66" y="0.67" fill="#FFC400"/>', text: 'ES' } }; f.setAttribute('viewBox', flags[lang].viewBox); f.innerHTML = flags[lang].svg; s.textContent = flags[lang].text; }
+        function translatePage() { document.querySelectorAll('[data-translate]').forEach(el => { const key = el.getAttribute('data-translate'); if (translations[currentLanguage]?.[key]) el.textContent = translations[currentLanguage][key]; }); const desc = document.getElementById('nms-description'); if (desc) desc.innerHTML = createNMSDescription(); document.title = translations[currentLanguage]['page-title']; }
+        function createNMSDescription() { const d = { en: `<p><strong>An infinite procedural universe:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky offers a constantly evolving universe, where each planet is unique in terms of biomes, climatic conditions and life forms. Players can discover environments ranging from lush and peaceful worlds to inhospitable planets with extreme storms and aggressive fauna.</p><br><br><p><strong>Exploration and survival:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Players must manage their survival by gathering resources to power their suit, repair their ship and craft essential equipment. Each planet presents environmental challenges such as extreme temperatures, radiation or hostile creatures.</p><br><br><p><strong>Trade and resource management:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The game's economy is based on exploiting rare resources, crafting objects and trading with different alien factions. Players can buy and sell materials, upgrade their equipment and establish bases to automate production.</p><br><br><p><strong>Space combat and galactic exploration:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky integrates space combat where players fight pirates, protect merchant convoys or explore ancient space ruins. The galaxy is populated by different factions that can be allied or hostile depending on player interactions.</p><br><br><p><strong>Base building and customization:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Players can build bases on any planet to store resources, shelter NPCs and develop advanced infrastructure. Customization is a key aspect of the game, allowing ships, exosuits and equipment to be modified according to needs.</p><br><br><p><strong>Multiplayer and shared exploration:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Multiplayer mode allows players to explore the universe together, collaborate to build bases, exchange resources and face cosmic dangers. Discoveries can be shared with the community, creating an ever-expanding universe.</p><br><br><p><strong>A constantly evolving game:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Since its launch, No Man's Sky has received numerous free updates that have enriched the content with new features, such as the addition of ground vehicles, new biomes, scripted missions and advanced management mechanics.</p>`, es: `<p><strong>Un universo procedural infinito:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky ofrece un universo en constante evolución, donde cada planeta es único en términos de biomas, condiciones climáticas y formas de vida. Los jugadores pueden descubrir entornos que van desde mundos exuberantes y pacíficos hasta planetas inhóspitos con tormentas extremas y fauna agresiva.</p><br><br><p><strong>Exploración y supervivencia:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Los jugadores deben gestionar su supervivencia recolectando recursos para alimentar su traje, reparar su nave y fabricar equipos esenciales. Cada planeta presenta desafíos ambientales como temperaturas extremas, radiación o criaturas hostiles.</p><br><br><p><strong>Comercio y gestión de recursos:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;La economía del juego se basa en la explotación de recursos raros, la fabricación de objetos y el comercio con diferentes facciones extraterrestres. Los jugadores pueden comprar y vender materiales, mejorar su equipo y establecer bases para automatizar la producción.</p><br><br><p><strong>Combates espaciales y exploración galáctica:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky integra combates espaciales donde los jugadores enfrentan piratas, protegen convoyes mercantes o exploran antiguas ruinas espaciales. La galaxia está poblada por diferentes facciones que pueden ser aliadas u hostiles según las interacciones del jugador.</p><br><br><p><strong>Construcción de bases y personalización:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Los jugadores pueden construir bases en cualquier planeta para almacenar recursos, albergar NPCs y desarrollar infraestructuras avanzadas. La personalización es un aspecto clave del juego, permitiendo modificar naves, exotrajes y equipos según las necesidades.</p><br><br><p><strong>Multijugador y exploración compartida:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;El modo multijugador permite a los jugadores explorar el universo juntos, colaborar para construir bases, intercambiar recursos y enfrentar peligros cósmicos. Los descubrimientos pueden ser compartidos con la comunidad, creando un universo en perpetua expansión.</p><br><br><p><strong>Un juego en constante evolución:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Desde su lanzamiento, No Man's Sky ha recibido numerosas actualizaciones gratuitas que han enriquecido el contenido con nuevas funcionalidades, como la adición de vehículos terrestres, nuevos biomas, misiones con guión y mecánicas de gestión avanzadas.</p>`, fr: `<p><strong>Un univers procédural infini :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky propose un univers en constante évolution, où chaque planète est unique en termes de biomes, de conditions climatiques et de formes de vie. Les joueurs peuvent découvrir des environnements allant de mondes luxuriants et paisibles à des planètes inhospitalières avec des tempêtes extrêmes et une faune agressive.</p><br><br><p><strong>Exploration et survie :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Les joueurs doivent gérer leur survie en récoltant des ressources pour alimenter leur combinaison, réparer leur vaisseau et fabriquer des équipements essentiels. Chaque planète présente des défis environnementaux tels que des températures extrêmes, des radiations ou des créatures hostiles.</p><br><br><p><strong>Commerce et gestion des ressources :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;L'économie du jeu repose sur l'exploitation de ressources rares, la fabrication d'objets et le commerce avec les différentes factions extraterrestres. Les joueurs peuvent acheter et vendre des matériaux, améliorer leur équipement et établir des bases pour automatiser la production.</p><br><br><p><strong>Combats spatiaux et exploration galactique :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;No Man's Sky intègre des combats spatiaux où les joueurs affrontent des pirates, protègent des convois marchands ou explorent d'anciennes ruines spatiales. La galaxie est peuplée de différentes factions qui peuvent être alliées ou hostiles selon les interactions du joueur.</p><br><br><p><strong>Construction de bases et personnalisation :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Les joueurs peuvent construire des bases sur n'importe quelle planète pour stocker des ressources, abriter des PNJ et développer des infrastructures avancées. La personnalisation est un aspect clé du jeu, permettant de modifier vaisseaux, exocombinaisons et équipements selon les besoins.</p><br><br><p><strong>Multijoueur et exploration partagée :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Le mode multijoueur permet aux joueurs d'explorer l'univers ensemble, de collaborer pour construire des bases, d'échanger des ressources et d'affronter des dangers cosmiques. Les découvertes peuvent être partagées avec la communauté, créant un univers en perpétuelle expansion.</p><br><br><p><strong>Un jeu en constante évolution :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Depuis son lancement, No Man's Sky a reçu de nombreuses mises à jour gratuites qui ont enrichi le contenu avec de nouvelles fonctionnalités, comme l'ajout de véhicules terrestres, de nouveaux biomes, de missions scénarisées et de mécanismes de gestion avancés.</p>` }; return d[currentLanguage] || d.fr; }
+        function toggleLanguageDropdown() { document.querySelector('.language-dropdown')?.classList.toggle('show'); }
+        function closeLanguageDropdown() { document.querySelector('.language-dropdown')?.classList.remove('show'); }
+        document.addEventListener('click', e => { const d = document.querySelector('.language-dropdown'), b = document.querySelector('.language-button'); if (d && !d.contains(e.target) && e.target !== b) closeLanguageDropdown(); });
+        document.addEventListener('DOMContentLoaded', () => translatePage());
+    </script>
 </body>
 
 </html>

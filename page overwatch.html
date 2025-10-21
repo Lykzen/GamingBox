@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Présentation et Notation des Jeux</title>
+    <title data-translate="page-title">Présentation et Notation des Jeux</title>
     <link rel="icon" type="image/png" href="images-html/logo gaming box.png">
-    <link rel="shortcut icon" type="image/png" href="images-html/logo gaming box.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Styles de base pour la mise en page */
         * {
             margin: 0;
             padding: 0;
@@ -17,20 +16,15 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #1e1e2f;
-            background-image: url('images-html/black-prism-concept-ai-generated.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: #1e1e2f url('images-html/black-prism-concept-ai-generated.jpg') center/cover fixed;
             color: #e0e0e0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header modernisé */
         header {
-            background-color: rgba(20, 20, 30, 0.9);
+            background: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
             padding: 20px 15px;
             text-align: center;
@@ -49,49 +43,157 @@
             font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
-        /* Navigation avec effets */
         nav {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(30, 30, 40, 0.9);
+            background: rgba(30, 30, 40, 0.9);
             padding: 12px 15px;
             width: 100%;
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            gap: 30px;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .hamburger:hover {
+            background: white;
+            color: black;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin: 0 25px;
             font-size: clamp(16px, 2vw, 18px);
             font-weight: 500;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s;
         }
 
         nav a:hover {
             color: #ff6600;
-            text-decoration: none;
             transform: scale(1.05);
         }
 
-        /* Contenu principal */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1002;
+        }
+
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-button {
+            background: transparent;
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 80px;
+            justify-content: center;
+        }
+
+        .language-button:hover {
+            background: white;
+            color: black;
+        }
+
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            flex-shrink: 0;
+            border-radius: 2px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: rgba(30, 30, 40, 0.95);
+            min-width: 120px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #444;
+            right: 0;
+            top: 100%;
+            margin-top: 5px;
+            z-index: 1001;
+        }
+
+        .dropdown-content button {
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .language-dropdown.show .dropdown-content {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         main {
             flex: 1;
             padding: 20px 15px;
             max-width: 1200px;
             margin: 0 auto;
-            width: 100%;
-        }
-
-        section {
-            margin-bottom: 30px;
-        }
-
-        .container {
             width: 100%;
         }
 
@@ -109,7 +211,6 @@
             margin: 20px 0;
         }
 
-        /* Style pour les titres */
         h2,
         h3 {
             color: rgb(143, 137, 137);
@@ -118,7 +219,6 @@
             text-align: center;
         }
 
-        /* Premier paragraphe avec le nouveau style */
         .first-paragraph {
             font-family: 'Poppins', sans-serif;
             font-size: clamp(1rem, 2vw, 1.2rem);
@@ -126,14 +226,13 @@
             margin: 30px auto;
             padding: 20px;
             max-width: 1000px;
-            background-color: #ffffff;
+            background: #fff;
             border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: justify;
             color: #333;
         }
 
-        /* Petites images avec disposition moderne */
         .small-images {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -142,7 +241,7 @@
         }
 
         .small-images div {
-            width: 300px;
+            width: 100%;
             height: 300px;
             display: flex;
             justify-content: center;
@@ -150,9 +249,9 @@
             border: 1px solid #444;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
+            background: #fff;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .small-images div:hover {
@@ -164,7 +263,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: cover;
-            width: 300px;
+            width: 100%;
             height: 150px;
         }
 
@@ -175,9 +274,8 @@
             color: #000;
         }
 
-        /* Footer stylisé */
         footer {
-            background-color: rgba(20, 20, 30, 0.9);
+            background: rgba(20, 20, 30, 0.9);
             color: #e0e0e0;
             text-align: center;
             padding: 15px;
@@ -186,338 +284,201 @@
             margin-top: auto;
         }
 
-        /* Styles généraux des liens */
-        a {
-            text-decoration: none;
-            color: #ff6600;
-            font-size: 18px;
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s ease-in-out;
-        }
-
-        a::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #ff6600;
-            transition: width 0.3s ease-in-out;
-        }
-
-        a:hover {
-            color: #ffffff;
-        }
-
-        a:hover::after {
-            width: 100%;
-        }
-
-        /* MEDIA QUERIES AMÉLIORÉES */
-
-        /* Tablettes et écrans moyens */
-        @media (max-width: 768px) {
-            body {
-                background-attachment: scroll;
+        @media (max-width: 1200px) {
+            .hamburger {
+                display: block;
             }
 
-            header {
-                padding: 15px 10px;
-            }
-
-            nav {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 0;
                 flex-direction: column;
-                padding: 15px 10px;
-                gap: 10px;
+                background: rgba(30, 30, 40, 0.98);
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                transition: left 0.3s;
+                padding: 80px 20px 20px;
+                gap: 15px;
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            .nav-links.active {
+                left: 0;
             }
 
             nav a {
-                margin: 5px 0;
-                font-size: 16px;
-            }
-
-            main {
-                padding: 15px 10px;
-            }
-
-            .main-image {
                 width: 100%;
-                height: auto;
-                max-width: 500px;
+                padding: 12px 20px;
             }
 
-            .small-images {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .small-images div {
+            .language-selector {
+                position: static;
+                transform: none;
                 width: 100%;
-                height: 300px;
             }
 
-            .small-images img {
+            .language-button {
                 width: 100%;
-                height: 150px;
             }
 
-            .first-paragraph {
-                padding: 15px;
-                margin: 20px 10px;
-                text-align: left;
-            }
-
-            .rating {
-                font-size: 20px;
+            .dropdown-content {
+                position: static;
+                margin-top: 10px;
+                width: 100%;
             }
         }
 
-        /* Smartphones */
-        @media (max-width: 480px) {
-            header {
-                padding: 12px 8px;
-            }
-
-            header h1 {
-                font-size: 1.3rem;
-                letter-spacing: 1px;
-            }
-
-            nav {
-                padding: 12px 8px;
-            }
-
-            main {
-                padding: 12px 8px;
-            }
-
+        @media (max-width: 768px) {
             .small-images {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 12px;
-                margin: 15px 5px;
-                font-size: 0.95rem;
-                line-height: 1.5;
-            }
-
-            .main-image {
-                max-width: 100%;
-                margin: 0 auto;
-            }
-
-            footer {
-                font-size: 0.9em;
-                padding: 12px;
-            }
-        }
-
-        /* Très petits écrans */
-        @media (max-width: 320px) {
-            header h1 {
-                font-size: 1.1rem;
-            }
-
-            .small-images div {
-                width: 100%;
-                height: 300px;
-                max-width: 280px;
-            }
-
-            .small-images img {
-                width: 100%;
-                height: 150px;
-            }
-
-            .first-paragraph {
-                padding: 10px;
-                margin: 10px 2px;
-                font-size: 0.9rem;
-            }
-
-            nav a {
-                font-size: 14px;
-            }
-        }
-
-        /* Grands écrans */
-        @media (min-width: 1200px) {
-            main {
-                padding: 40px 20px;
-            }
-
-            .small-images {
-                grid-template-columns: repeat(4, 1fr);
-                max-width: 1200px;
+                max-width: 400px;
                 margin: 30px auto 0;
-            }
-
-            .first-paragraph {
-                max-width: 1000px;
-                padding: 30px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- En-tête du site web -->
+    <div class="overlay" id="overlay"></div>
     <header>
-        <h1>GamingBox : Présentation et Notation</h1>
-        <p>Découvrez les jeux populaires et leur notation objective !</p>
+        <h1 data-translate="site-title">GamingBox : Présentation et Notation</h1>
+        <p data-translate="site-subtitle">Découvrez les jeux populaires et leur notation objective !</p>
     </header>
-
-    <!-- Barre de navigation -->
     <nav>
-        <a href="index.html">Accueil</a>
-
-
-    </nav>
-
-    <!-- Contenu principal -->
-    <main>
-        <!-- Section "Jeux" -->
-        <section id="games">
-            <center>
-                <h2 style="color: rgb(143, 137, 137);">Overwatch</h2>
-            </center>
-
-            <div class="container">
-                <center><img src="images-html/overwatche -html.webp" alt="Image de  overwatch" class="main-image"
-                        width="650 " height="400">
-                </center>
-                <center>
-                    <p class="rating">Note : 8.7/10</p>
-                </center>
-
-                <!-- Premier paragraphe avec le nouveau style -->
-                <p class="first-paragraph" style="color: #333;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;Overwatch est un jeu de tir à la première personne en équipe développé par
-                    Blizzard Entertainment. Il se déroule dans un futur proche où des héros du monde entier s'affrontent
-                    dans des combats rapides et stratégiques. Chaque joueur choisit un héros unique doté de compétences
-                    spécifiques pour remplir des objectifs variés en coopération avec son équipe.
-                    <br><br>
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son style visuel coloré, son gameplay accessible
-                    mais profond, et son accent sur le travail d'équipe. Les joueurs doivent collaborer pour capturer
-                    des points, escorter des charges utiles ou défendre des objectifs stratégiques.
-                    <br><br>
-
-                    <strong>Des héros aux capacités uniques :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Overwatch propose un large éventail de héros classés en trois rôles : tanks,
-                    dégâts et supports. Chaque héros possède des capacités spéciales, une arme principale et une
-                    capacité ultime pouvant renverser le cours d'une bataille.
-                    <br><br>
-
-                    <strong>Des modes de jeu variés :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Le jeu offre plusieurs modes, dont les matchs compétitifs, les parties
-                    rapides, les jeux personnalisés et les événements saisonniers. Chaque mode apporte des défis
-                    uniques, allant de la capture d'objectifs au mode arcade proposant des règles de jeu alternatives.
-                    <br><br>
-
-                    <strong>Des cartes inspirées du monde entier :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Les affrontements se déroulent sur des cartes variées inspirées de lieux
-                    réels, comme Numbani, Hanamura ou King's Row. Chaque carte est conçue pour encourager la stratégie
-                    et l'utilisation intelligente des capacités des héros.
-                    <br><br>
-
-                    <strong>Un jeu axé sur la coopération :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;La coopération est essentielle dans Overwatch, chaque joueur ayant un rôle
-                    clé à jouer dans l'équipe. Les tanks absorbent les dégâts, les supports soignent et améliorent les
-                    alliés, tandis que les dégâts éliminent les adversaires et sécurisent les objectifs.
-                    <br><br>
-
-                    <strong>Événements saisonniers et mises à jour :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Blizzard propose régulièrement des événements saisonniers tels que les Jeux
-                    d'été, Halloween et l'Anniversaire, introduisant de nouveaux modes de jeu, des cosmétiques exclusifs
-                    et des défis uniques pour les joueurs.
-                    <br><br>
-
-                    <strong>Un univers riche en histoire :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;L'univers d'Overwatch est enrichi par un lore profond raconté à travers des
-                    cinématiques, des bandes dessinées et des événements en jeu. L'histoire explore les origines des
-                    héros, les conflits entre factions et la lutte pour un avenir meilleur.
-                    <br><br>
-
-                    <strong>Un phénomène e-sport :</strong>
-                    <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Overwatch est devenu un jeu incontournable de l'e-sport grâce à l'Overwatch
-                    League, une compétition mondiale regroupant les meilleures équipes professionnelles s'affrontant
-                    pour la gloire et des récompenses prestigieuses.
-                    <br><br>
-
-
-                    <br>
-                    <br>
-                </p>
-
-                <br>
-                <br>
-                <br>
-                <br>
-
-                <center>
-                    <h3 style="color: rgb(143, 137, 137);">Des jeux dans le même style : </h3>
-                </center>
-
-                <br>
-                <br>
-
-                <div class="small-images">
-                    <div>
-                        <img src="" width="300" height="150" alt="
-                        ">
-                        <p>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p></p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p>
-                        <p>
-                        </p>
-                    </div>
-                    <div>
-                        <img src="" width="300" height="150" alt="">
-                        <p>
-                        </p>
+        <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+        <div class="nav-links" id="navLinks">
+            <a href="index.html" data-translate="nav-home">Accueil</a>
+            <div class="language-selector">
+                <div class="language-dropdown">
+                    <button class="language-button" onclick="toggleLanguageDropdown()">
+                        <svg class="flag-icon" id="currentFlag" viewBox="0 0 3 2">
+                            <rect width="3" height="2" fill="#002654" />
+                            <rect width="2" height="2" fill="#FFFFFF" />
+                            <rect width="1" height="2" fill="#ED2939" />
+                        </svg>
+                        <span id="currentLang">FR</span><i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <button onclick="changeLanguage('fr')"><svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#002654" />
+                                <rect width="2" height="2" fill="#FFFFFF" />
+                                <rect width="1" height="2" fill="#ED2939" />
+                            </svg>Français</button>
+                        <button onclick="changeLanguage('en')"><svg class="flag-icon" viewBox="0 0 5 3">
+                                <rect width="5" height="3" fill="#012169" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#fff" stroke-width="0.6" />
+                                <path d="m0,0 5,3m0-3L0,3" stroke="#C8102E" stroke-width="0.4" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#fff" stroke-width="1" />
+                                <path d="M2.5,0v3M0,1.5h5" stroke="#C8102E" stroke-width="0.6" />
+                            </svg>English</button>
+                        <button onclick="changeLanguage('es')"><svg class="flag-icon" viewBox="0 0 3 2">
+                                <rect width="3" height="2" fill="#C60B1E" />
+                                <rect width="3" height="0.66" y="0.67" fill="#FFC400" />
+                            </svg>Español</button>
                     </div>
                 </div>
             </div>
-
-            <br>
-            <br>
-            <br>
-            <br>
+        </div>
+    </nav>
+    <main>
+        <section id="games">
+            <center>
+                <h2 data-translate="ow-title">Overwatch</h2>
+            </center>
+            <div class="container">
+                <center><img src="images-html/overwatche -html.webp" alt="Overwatch" class="main-image" width="650"
+                        height="400"></center>
+                <center>
+                    <p class="rating"><span data-translate="rating">Note :</span> 8.7/10</p>
+                </center>
+                <div class="first-paragraph" id="ow-description">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch est un jeu de tir à la première personne en équipe développé
+                        par Blizzard Entertainment. Il se déroule dans un futur proche où des héros du monde entier
+                        s'affrontent dans des combats rapides et stratégiques. Chaque joueur choisit un héros unique
+                        doté de compétences spécifiques pour remplir des objectifs variés en coopération avec son
+                        équipe.</p>
+                    <br><br>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son style visuel coloré, son gameplay accessible
+                        mais profond, et son accent sur le travail d'équipe. Les joueurs doivent collaborer pour
+                        capturer des points, escorter des charges utiles ou défendre des objectifs stratégiques.</p>
+                    <br><br>
+                    <p><strong>Des héros aux capacités uniques :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch propose un large éventail de héros classés en trois rôles :
+                        tanks, dégâts et supports. Chaque héros possède des capacités spéciales, une arme principale et
+                        une capacité ultime pouvant renverser le cours d'une bataille.</p>
+                    <br><br>
+                    <p><strong>Des modes de jeu variés :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu offre plusieurs modes, dont les matchs compétitifs, les parties
+                        rapides, les jeux personnalisés et les événements saisonniers. Chaque mode apporte des défis
+                        uniques, allant de la capture d'objectifs au mode arcade proposant des règles de jeu
+                        alternatives.</p>
+                    <br><br>
+                    <p><strong>Des cartes inspirées du monde entier :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Les affrontements se déroulent sur des cartes variées inspirées de lieux
+                        réels, comme Numbani, Hanamura ou King's Row. Chaque carte est conçue pour encourager la
+                        stratégie et l'utilisation intelligente des capacités des héros.</p>
+                    <br><br>
+                    <p><strong>Un jeu axé sur la coopération :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;La coopération est essentielle dans Overwatch, chaque joueur ayant un
+                        rôle clé à jouer dans l'équipe. Les tanks absorbent les dégâts, les supports soignent et
+                        améliorent les alliés, tandis que les dégâts éliminent les adversaires et sécurisent les
+                        objectifs.</p>
+                    <br><br>
+                    <p><strong>Événements saisonniers et mises à jour :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Blizzard propose régulièrement des événements saisonniers tels que les
+                        Jeux d'été, Halloween et l'Anniversaire, introduisant de nouveaux modes de jeu, des cosmétiques
+                        exclusifs et des défis uniques pour les joueurs.</p>
+                    <br><br>
+                    <p><strong>Un univers riche en histoire :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;L'univers d'Overwatch est enrichi par un lore profond raconté à travers
+                        des cinématiques, des bandes dessinées et des événements en jeu. L'histoire explore les origines
+                        des héros, les conflits entre factions et la lutte pour un avenir meilleur.</p>
+                    <br><br>
+                    <p><strong>Un phénomène e-sport :</strong></p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch est devenu un jeu incontournable de l'e-sport grâce à
+                        l'Overwatch League, une compétition mondiale regroupant les meilleures équipes professionnelles
+                        s'affrontant pour la gloire et des récompenses prestigieuses.</p>
+                </div>
+                <br><br><br><br>
+                <center>
+                    <h3 data-translate="similar-games">Des jeux dans le même style :</h3>
+                </center>
+                <br><br>
+                <div class="small-images">
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                    <div><img src="" alt="">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-
-    <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 GamingBox. Tous droits réservés.</p>
+        <p data-translate="copyright">&copy; 2025 GamingBox. Tous droits réservés.</p>
     </footer>
+    <script>
+        const hamburger = document.getElementById('hamburger'), navLinks = document.getElementById('navLinks'), overlay = document.getElementById('overlay');
+        if (hamburger) hamburger.addEventListener('click', () => { navLinks.classList.toggle('active'); overlay.classList.toggle('active'); hamburger.querySelector('i').classList.toggle('fa-bars'); hamburger.querySelector('i').classList.toggle('fa-times'); });
+        if (overlay) overlay.addEventListener('click', () => { navLinks.classList.remove('active'); overlay.classList.remove('active'); hamburger.querySelector('i').className = 'fa-solid fa-bars'; });
+        if (navLinks) navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { navLinks.classList.remove('active'); overlay.classList.remove('active'); hamburger.querySelector('i').className = 'fa-solid fa-bars'; }));
+        const translations = { fr: { 'page-title': 'Présentation et Notation des Jeux', 'site-title': 'GamingBox : Présentation et Notation', 'site-subtitle': 'Découvrez les jeux populaires et leur notation objective !', 'nav-home': 'Accueil', 'ow-title': 'Overwatch', 'rating': 'Note :', 'similar-games': 'Des jeux dans le même style :', 'copyright': '© 2025 GamingBox. Tous droits réservés.' }, en: { 'page-title': 'Game Presentation and Rating', 'site-title': 'GamingBox: Presentation and Rating', 'site-subtitle': 'Discover popular games and their objective ratings!', 'nav-home': 'Home', 'ow-title': 'Overwatch', 'rating': 'Rating:', 'similar-games': 'Games in the same style:', 'copyright': '© 2025 GamingBox. All rights reserved.' }, es: { 'page-title': 'Presentación y Calificación de Juegos', 'site-title': 'GamingBox: Presentación y Calificación', 'site-subtitle': '¡Descubre juegos populares y sus calificaciones objetivas!', 'nav-home': 'Inicio', 'ow-title': 'Overwatch', 'rating': 'Calificación:', 'similar-games': 'Juegos del mismo estilo:', 'copyright': '© 2025 GamingBox. Todos los derechos reservados.' } };
+        let currentLanguage = 'fr';
+        function changeLanguage(lang) { currentLanguage = lang; const f = document.getElementById('currentFlag'), s = document.getElementById('currentLang'); if (f && s) { const flags = { fr: { v: '0 0 3 2', svg: '<rect width="3" height="2" fill="#002654"/><rect width="2" height="2" fill="#FFFFFF"/><rect width="1" height="2" fill="#ED2939"/>', t: 'FR' }, en: { v: '0 0 50 30', svg: '<rect width="50" height="30" fill="#012169"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L50,30 M50,0 L0,30" stroke="#C8102E" stroke-width="4"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#fff" stroke-width="10"/><path d="M25,0 L25,30 M0,15 L50,15" stroke="#C8102E" stroke-width="6"/>', t: 'EN' }, es: { v: '0 0 3 2', svg: '<rect width="3" height="2" fill="#C60B1E"/><rect width="3" height="0.66" y="0.67" fill="#FFC400"/>', t: 'ES' } }; f.setAttribute('viewBox', flags[lang].v); f.innerHTML = flags[lang].svg; s.textContent = flags[lang].t; } document.querySelectorAll('[data-translate]').forEach(el => { const key = el.getAttribute('data-translate'); if (translations[lang]?.[key]) el.textContent = translations[lang][key]; }); const desc = document.getElementById('ow-description'); if (desc) desc.innerHTML = ({ en: `<p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch is a team-based first-person shooter developed by Blizzard Entertainment. It takes place in the near future where heroes from around the world compete in fast-paced and strategic battles. Each player chooses a unique hero with specific abilities to complete various objectives in cooperation with their team.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;The game stands out for its colorful visual style, accessible yet deep gameplay, and emphasis on teamwork. Players must collaborate to capture points, escort payloads or defend strategic objectives.</p><br><br><p><strong>Heroes with unique abilities:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch offers a wide range of heroes classified into three roles: tanks, damage and supports. Each hero has special abilities, a primary weapon and an ultimate ability that can turn the tide of battle.</p><br><br><p><strong>Varied game modes:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The game offers several modes, including competitive matches, quick play, custom games and seasonal events. Each mode brings unique challenges, from capturing objectives to arcade mode featuring alternative game rules.</p><br><br><p><strong>Maps inspired from around the world:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Battles take place on varied maps inspired by real locations, such as Numbani, Hanamura or King's Row. Each map is designed to encourage strategy and intelligent use of hero abilities.</p><br><br><p><strong>A game focused on cooperation:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Cooperation is essential in Overwatch, with each player having a key role to play in the team. Tanks absorb damage, supports heal and buff allies, while damage dealers eliminate enemies and secure objectives.</p><br><br><p><strong>Seasonal events and updates:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Blizzard regularly offers seasonal events such as Summer Games, Halloween and Anniversary, introducing new game modes, exclusive cosmetics and unique challenges for players.</p><br><br><p><strong>A universe rich in story:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;The Overwatch universe is enriched by deep lore told through cinematics, comics and in-game events. The story explores the origins of heroes, conflicts between factions and the struggle for a better future.</p><br><br><p><strong>An esports phenomenon:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch has become a must-have esports game thanks to the Overwatch League, a worldwide competition bringing together the best professional teams competing for glory and prestigious rewards.</p>`, es: `<p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch es un juego de disparos en primera persona en equipo desarrollado por Blizzard Entertainment. Tiene lugar en un futuro cercano donde héroes de todo el mundo compiten en batallas rápidas y estratégicas. Cada jugador elige un héroe único con habilidades específicas para cumplir diversos objetivos en cooperación con su equipo.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;El juego se destaca por su estilo visual colorido, su jugabilidad accesible pero profunda, y su énfasis en el trabajo en equipo. Los jugadores deben colaborar para capturar puntos, escoltar cargas o defender objetivos estratégicos.</p><br><br><p><strong>Héroes con habilidades únicas:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch ofrece una amplia gama de héroes clasificados en tres roles: tanques, daño y soportes. Cada héroe posee habilidades especiales, un arma principal y una habilidad definitiva que puede cambiar el rumbo de una batalla.</p><br><br><p><strong>Modos de juego variados:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;El juego ofrece varios modos, incluyendo partidas competitivas, partidas rápidas, juegos personalizados y eventos estacionales. Cada modo aporta desafíos únicos, desde la captura de objetivos hasta el modo arcade que propone reglas de juego alternativas.</p><br><br><p><strong>Mapas inspirados del mundo entero:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Los enfrentamientos se desarrollan en mapas variados inspirados en lugares reales, como Numbani, Hanamura o King's Row. Cada mapa está diseñado para fomentar la estrategia y el uso inteligente de las habilidades de los héroes.</p><br><br><p><strong>Un juego centrado en la cooperación:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;La cooperación es esencial en Overwatch, con cada jugador teniendo un papel clave en el equipo. Los tanques absorben daño, los soportes curan y mejoran a los aliados, mientras que los de daño eliminan enemigos y aseguran objetivos.</p><br><br><p><strong>Eventos estacionales y actualizaciones:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Blizzard ofrece regularmente eventos estacionales como los Juegos de Verano, Halloween y Aniversario, introduciendo nuevos modos de juego, cosméticos exclusivos y desafíos únicos para los jugadores.</p><br><br><p><strong>Un universo rico en historia:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;El universo de Overwatch se enriquece con una tradición profunda contada a través de cinemáticas, cómics y eventos en el juego. La historia explora los orígenes de los héroes, los conflictos entre facciones y la lucha por un futuro mejor.</p><br><br><p><strong>Un fenómeno de los deportes electrónicos:</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch se ha convertido en un juego imprescindible de los deportes electrónicos gracias a la Overwatch League, una competición mundial que reúne a los mejores equipos profesionales compitiendo por la gloria y recompensas prestigiosas.</p>`, fr: `<p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch est un jeu de tir à la première personne en équipe développé par Blizzard Entertainment. Il se déroule dans un futur proche où des héros du monde entier s'affrontent dans des combats rapides et stratégiques. Chaque joueur choisit un héros unique doté de compétences spécifiques pour remplir des objectifs variés en coopération avec son équipe.</p><br><br><p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu se distingue par son style visuel coloré, son gameplay accessible mais profond, et son accent sur le travail d'équipe. Les joueurs doivent collaborer pour capturer des points, escorter des charges utiles ou défendre des objectifs stratégiques.</p><br><br><p><strong>Des héros aux capacités uniques :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch propose un large éventail de héros classés en trois rôles : tanks, dégâts et supports. Chaque héros possède des capacités spéciales, une arme principale et une capacité ultime pouvant renverser le cours d'une bataille.</p><br><br><p><strong>Des modes de jeu variés :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Le jeu offre plusieurs modes, dont les matchs compétitifs, les parties rapides, les jeux personnalisés et les événements saisonniers. Chaque mode apporte des défis uniques, allant de la capture d'objectifs au mode arcade proposant des règles de jeu alternatives.</p><br><br><p><strong>Des cartes inspirées du monde entier :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Les affrontements se déroulent sur des cartes variées inspirées de lieux réels, comme Numbani, Hanamura ou King's Row. Chaque carte est conçue pour encourager la stratégie et l'utilisation intelligente des capacités des héros.</p><br><br><p><strong>Un jeu axé sur la coopération :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;La coopération est essentielle dans Overwatch, chaque joueur ayant un rôle clé à jouer dans l'équipe. Les tanks absorbent les dégâts, les supports soignent et améliorent les alliés, tandis que les dégâts éliminent les adversaires et sécurisent les objectifs.</p><br><br><p><strong>Événements saisonniers et mises à jour :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Blizzard propose régulièrement des événements saisonniers tels que les Jeux d'été, Halloween et l'Anniversaire, introduisant de nouveaux modes de jeu, des cosmétiques exclusifs et des défis uniques pour les joueurs.</p><br><br><p><strong>Un univers riche en histoire :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;L'univers d'Overwatch est enrichi par un lore profond raconté à travers des cinématiques, des bandes dessinées et des événements en jeu. L'histoire explore les origines des héros, les conflits entre factions et la lutte pour un avenir meilleur.</p><br><br><p><strong>Un phénomène e-sport :</strong></p><p>&nbsp;&nbsp;&nbsp;&nbsp;Overwatch est devenu un jeu incontournable de l'e-sport grâce à l'Overwatch League, une compétition mondiale regroupant les meilleures équipes professionnelles s'affrontant pour la gloire et des récompenses prestigieuses.</p>` }[lang] || ''); document.title = translations[lang]['page-title']; document.querySelector('.language-dropdown')?.classList.remove('show'); }
+        function toggleLanguageDropdown() { document.querySelector('.language-dropdown')?.classList.toggle('show'); }
+        document.addEventListener('click', e => { const d = document.querySelector('.language-dropdown'), b = document.querySelector('.language-button'); if (d && !d.contains(e.target) && e.target !== b) d.classList.remove('show'); });
+        document.addEventListener('DOMContentLoaded', () => changeLanguage('fr'));
+    </script>
+</body>
+
+</html>
